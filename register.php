@@ -101,7 +101,7 @@ if(isset($_POST['submit'])){
 	<form class="registerForm" action="register.php" method="POST">
 		<input type="text" name="firstname" placeholder="First Name" value="<?php if(isset($_POST['firstname'])){echo $_POST['firstname'];}?>">
 		<input type="text" name="lastname" placeholder="Last Name" value="<?php if(isset($_POST['lastname'])){echo $_POST['lastname'];}?>">
-		<input type="text" name="email" placeholder="Email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];}?>">
+		<input type="email" name="email" placeholder="Email" value="<?php if(isset($_POST['email'])){echo $_POST['email'];}?>">
 		<input type="password" name="password" placeholder="Password">
 		<input type="password" name="confirmed_password" placeholder="Confirm Password">
 		<input type="submit" name="submit" value="Register &#187;">
