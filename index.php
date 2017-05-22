@@ -8,5 +8,15 @@
 		die('Query failed(4):' . $db->errorInfo()[2]);
 	}
 
+	$sql = "SELECT * FROM test";
+	$stmnt = $db->prepare($sql);
+	if (!$stmnt->execute(array()))
+		die('Query failed:' . $db->errorInfo()[2]);
+
+	$result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+
+	foreach ($result as $r) {
+		echo $r->test;
+	}
 
 ?>
