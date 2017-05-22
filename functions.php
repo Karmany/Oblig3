@@ -7,20 +7,6 @@ function get_post($var){
 	return $var;
 }
 
-// Validation of username. Checks that username is between 5 and 15 characters,
-// Also checks that characters only include letters, numbers and '_'
-// Returns appropriate message, empty if everything is fine.
-function validate_username($username) {
-	$msg = "";
-	if (!preg_match("/^.{5,15}$/", $username)){
-		$msg .= "<p class='error'>User name should be between 5-15 characters.</p>";
-	}
-	if (preg_match("/[^\w]/", $username)){
-		$msg .= "<p class='error'>Username should only include letters, numbers and '_'.</p>";
-	}
-	return $msg;
-}
-
 // Validation of password. Checks that password contains a minimum of 5 characters.
 // Also checks that password contains at least one uppercase and lowercase letter
 // Returns appropriate message, empty if fine.
