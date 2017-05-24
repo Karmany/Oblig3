@@ -43,7 +43,7 @@ if (!isset($_SESSION['isloggedin']) && isset($_POST['login'])) {
 				// }
 
 				// Redirect user to index.php
-				header("Location: login.php");
+				header("Location: index.php");
 				die();
 			}
 			// Bad password
