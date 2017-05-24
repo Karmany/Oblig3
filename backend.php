@@ -35,11 +35,3 @@ if(isset($_POST['mode'])){
 			break;
 	}
 }
-// No POST request
-else {
-	$sql = "SELECT firstname, lastname, email FROM users";
-	$stmt = $db->prepare($sql);
-	$stmt->execute(array());
-	// fetchAll returns an array containing all posts
-	echo json_encode($stmt->fetchAll(PDO::FETCH_OBJ));
-}
