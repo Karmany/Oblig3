@@ -31,6 +31,7 @@ if (!isset($_SESSION['isloggedin']) && isset($_POST['login'])) {
 				$_SESSION['firstname'] = $user->firstname;
 				$_SESSION['lastname'] = $user->lastname;
 				$_SESSION['email'] = $email;
+				$_SESSION['profile_img'] = $user->profileImg;
 				$_SESSION['isloggedin'] = true;
 
 				// Retrieve admin list, see functions.php
