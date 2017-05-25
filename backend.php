@@ -66,7 +66,18 @@ if(isset($_POST['mode'])){
 					}
 				}
 			}
-
 			break;
+
+		// Edit password
+		case 'edit_password':
+			$user_id = $_POST['user_id'];
+			$current_password = $_POST['current_password'];
+			$new_password = $_POST['new_password'];
+			$confirm_password = $_POST['confirm_password'];
+
+			if(empty($current_password) || empty($new_password) || empty($confirm_password)){
+				echo json_encode(array("status"=>"fail", "message"=>"<p class='error'>No empty fields are allowed</p>"));
+			}
+
 	}
 }

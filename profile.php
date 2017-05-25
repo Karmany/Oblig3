@@ -68,10 +68,16 @@
                </div>
 
                <div class="edit_password col-sm-12">
-                  <div id="edit_password_message"><?=$msg?></div>
                   <h2>Password:</h2>
                   <form onsubmit="javascript:return false;">
-                     <input type="submit" value="Confirm >>">
+                     <div id="edit_password_message"><?=$msg?></div>
+                     <label for="current_password">Your current password:</label>
+                     <input type="password" name="current_password" id="current_password">
+                     <label for="new_password">New password:</label>
+                     <input type="password" name="new_password" id="new_password">
+                     <label for="confirm_password">Confirm password:</label>
+                     <input type="password" name="confirm_password" id="confirm_password">
+                     <input type="submit" value="Confirm >>" id="confirm_password_change">
                   </form>
                </div>
             </div>
@@ -81,6 +87,7 @@
 		<script>
 			// When page has loaded, run function
 			$(function(){
+            // ---- CHANGE NAME -----
 				$('#confirm_name_change').click(function(){
 					// Send data from form to backend
 					$.ajax({
@@ -106,6 +113,7 @@
 					});
 				})
 
+            // ---- CHANGE EMAIL ----
             $('#confirm_email_change').click(function(){
 					// Send data from form to backend
 					$.ajax({
@@ -121,6 +129,43 @@
                   $('#edit_email_message').html(response.message);
 					});
 				})
+
+            // ---- CHANGE PROFILE IMAGE ----
+            // $('#confirm_profile_img_change').click(function(){
+				// 	// Send data from form to backend
+				// 	$.ajax({
+				// 		url: 'backend.php',
+				// 		method: 'POST',
+				// 		data: {
+				// 			user_id: $('#user_id').val(),
+				// 			// img_path: ??????,
+            //          mode: 'edit_profile_img'
+				// 		}
+				// 	}).done(function(response){
+            //       // Give feedback
+            //       $('#edit_email_message').html(response.message);
+				// 	});
+				// })
+
+            // ---- CHANGE PASSWORD ----
+            $('#confirm_password_change').click(function(){
+               // Send data from form to backend
+               $.ajax({
+                  url: 'backend.php',
+                  method: 'POST',
+                  data: {
+                     user_id: $('#user_id').val(),
+                     current_password: $("#current_password").val(),
+                     new_password: $("#new_password").val(),
+                     confirm_password: $("#confirm_password").val(),
+                     mode: 'edit_password'
+                  }
+               }).done(function(response){
+                  // Give feedback
+                  $('#edit_password_message').html(response.message);
+               });
+            })
+
 			});
 		</script>
 	</body>
