@@ -32,7 +32,6 @@
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
                <h1>Welcome, <span id="greeting_txt_firstname"><?=$firstname?></span> <span id="greeting_txt_lastname"><?=$lastname?></span></h1>
-               <input type="hidden" name="user_id" value="<?=$user_id?>" id="user_id">
 
                <div class="edit_name col-sm-12">
                   <h2>Name:</h2>
@@ -96,7 +95,6 @@
 						url: 'profile_backend.php',
 						method: 'POST',
 						data: {
-							user_id: $('#user_id').val(),
 							firstname: $('#firstname').val(),
 							lastname: $('#lastname').val(),
 							mode: 'edit_name'
@@ -124,7 +122,6 @@
 						url: 'profile_backend.php',
 						method: 'POST',
 						data: {
-							user_id: $('#user_id').val(),
 							email: $('#email').val(),
                      mode: 'edit_email'
 						}
@@ -140,21 +137,21 @@
 				})
 
             // ---- CHANGE PROFILE IMAGE ----
-            // $('#confirm_profile_img_change').click(function(){
-				// 	// Send data from form to backend
-				// 	$.ajax({
-				// 		url: 'profile_backend.php',
-				// 		method: 'POST',
-				// 		data: {
-				// 			user_id: $('#user_id').val(),
-				// 			// img_path: ??????,
-            //          mode: 'edit_profile_img'
-				// 		}
-				// 	}).done(function(response){
-            //       // Give feedback
-            //       $('#edit_email_message').html(response.message);
-				// 	});
-				// })
+            $('#confirm_profile_img_change').click(function(){
+					// Send data from form to backend
+					$.ajax({
+						url: 'profile_backend.php',
+						method: 'POST',
+						data: {
+							// img_path: ??????,
+                     // new FormData(this),
+                     mode: 'edit_profile_image'
+						}
+					}).done(function(response){
+                  // Give feedback
+                  $('#edit_email_message').html(response.message);
+					});
+				})
 
             // ---- CHANGE PASSWORD ----
             $('#confirm_password_change').click(function(){
@@ -163,7 +160,6 @@
                   url: 'profile_backend.php',
                   method: 'POST',
                   data: {
-                     user_id: $('#user_id').val(),
                      current_password: $("#current_password").val(),
                      new_password: $("#new_password").val(),
                      confirm_password: $("#confirm_password").val(),

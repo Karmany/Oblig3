@@ -3,6 +3,7 @@ header ("Content-Type: application/json");
 session_start();
 require_once("connect.php");
 require_once("functions.php");
+$user_id = $_SESSION['user_id'];
 
 // Execute code based on the mode sent via POST
 if(isset($_POST['mode'])){
@@ -12,7 +13,6 @@ if(isset($_POST['mode'])){
 		// --------------------------
 		// Edit first and last name:
 		case 'edit_name':
-			$user_id = $_POST['user_id'];
 			$firstname = $_POST['firstname'];
 			$lastname = $_POST['lastname'];
 			if(empty($firstname) || empty($lastname)){
@@ -38,7 +38,6 @@ if(isset($_POST['mode'])){
 
 		// Edit email:
 		case 'edit_email':
-			$user_id = $_POST['user_id'];
 			$email = $_POST['email'];
 			if(empty($email)){
 				echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Email cannot be empty</p>"));
@@ -69,47 +68,55 @@ if(isset($_POST['mode'])){
 			}
 			break;
 
+		// Edit profile image
+		case 'edit_profile_image':
+			echo json_encode(array("id"=>$_SESSION['user_id']));
+			break;
+
+
 		// Edit password
 		case 'edit_password':
-			$user_id = $_POST['user_id'];
 			$current_password = $_POST['current_password'];
 			$new_password = $_POST['new_password'];
 			$confirm_password = $_POST['confirm_password'];
+			$msg = "";
 
-			if(empty($current_password) || empty($new_password) || empty($confirm_password)){
-				echo json_encode(array("status"=>"error", "message"=>"<p class='error'>No empty fields are allowed</p>"));
-			}else{
-				$sql = "SELECT password FROM users WHERE userID = ?";
-				$stmnt = $db->prepare($sql);
-				$stmnt->execute(array($user_id));
-				$result = $stmnt->fetch(PDO::FETCH_OBJ);
-
-				// Check that current password match the password stored for user in db
-				if(password_verify($current_password, $result->password)){
-					$msg = validate_password($new_password); // Validate password, see functions.php
-					if($new_password != $confirm_password){
-						$msg = "<p class='error'>Your new password and confirmed password does not match</p>";
-					}
-					// Password is valid
-					if($msg == ""){
-						// Hash the new password before storing in db
-						$new_password = password_hash($new_password, PASSWORD_DEFAULT);
-						$sql = "UPDATE users SET password = ? WHERE userID = ?";
-						$stmnt = $db->prepare($sql);
-						$res = $stmnt->execute(array($new_password, $user_id));
-
-						if($res == 1){ // Successfull query
-							echo json_encode(array("status"=>"success", "message"=>"<p class='success'>Your changes have been successfully updated</p>"));
-						}else{ // Error when running query
-							echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));
-						}
-					}else{ // Password did not pass validation
-						echo json_encode(array("status"=>"error", "message"=>$msg));
-					}
-				}else{ // Current password does not match the one stored in db
-					echo json_encode(array("status"=>"error", "message"=>"<p class='error>'Incorrect value for current password</p>"));
-				}
+			if(empty($current_password) || empty($new_password) || empty($confirm_password)){ // At least one empty input field
+				$msg .= "<p class='error'>No empty fields are allowed</p>";
 			}
-		break;
+			if($new_password != $confirm_password) { // Input in new and confirmed password do not match
+				$msg .= "<p class='error'>Your new password and confirmed password do not match</p>";
+			}
+
+			$sql = "SELECT password FROM users WHERE userID = ?";
+			$stmnt = $db->prepare($sql);
+			$stmnt->execute(array($user_id));
+			$result = $stmnt->fetch(PDO::FETCH_OBJ);
+
+			$msg .= validate_password($new_password); // Validate password, see functions.php
+			if(!password_verify($current_password, $result->password)){ // user's current password does not match the one stored in db
+				$msg .= "<p class='error'>Incorrect value for current password</p>";
+				// echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Incorrect value for current password</p>"));
+			}
+
+			// Password has passed validation and there are no errors
+			if($msg == ""){
+				// Hash the new password before storing in db
+				$new_password = password_hash($new_password, PASSWORD_DEFAULT);
+				$sql = "UPDATE users SET password = ? WHERE userID = ?";
+				$stmnt = $db->prepare($sql);
+				$res = $stmnt->execute(array($new_password, $user_id));
+
+				if($res == 1){ // Successfull query
+					echo json_encode(array("status"=>"success", "message"=>"<p class='success'>Your changes have been successfully updated</p>"));
+				}else{ // Error when running query
+					echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));
+				}
+
+			// Return error message(s)
+			}else{
+				echo json_encode(array("status"=>"error", "message"=>$msg));
+			}
+			break;
 	}
 }
