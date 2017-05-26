@@ -23,6 +23,8 @@
 	$lastname = $_SESSION['lastname'];
    $profile_img = $_SESSION['profile_img'];
    $msg = "";
+
+   print_r($_SESSION);
 	?>
 
 	<body id="profile">
@@ -91,7 +93,7 @@
 				$('#confirm_name_change').click(function(){
 					// Send data from form to backend
 					$.ajax({
-						url: 'backend.php',
+						url: 'profile_backend.php',
 						method: 'POST',
 						data: {
 							user_id: $('#user_id').val(),
@@ -100,16 +102,18 @@
 							mode: 'edit_name'
 						}
 					}).done(function(response){
-                  // Update the greeting text
-                  $('#greeting_txt_firstname').html(response.firstname);
-                  $('#greeting_txt_lastname').html(response.lastname);
-                  // Clear input values and update placeholder text
-                  $('#firstname').val('');
-                  $('#firstname').attr('placeholder', response.firstname);
-                  $('#lastname').val('');
-                  $('#lastname').attr('placeholder', response.lastname);
                   // Give feedback
                   $('#edit_name_message').html(response.message);
+                  if(response.status == 'success'){
+                     // Update the greeting text
+                     $('#greeting_txt_firstname').html(response.firstname);
+                     $('#greeting_txt_lastname').html(response.lastname);
+                     // Clear input values and update placeholder text
+                     $('#firstname').val('');
+                     $('#firstname').attr('placeholder', response.firstname);
+                     $('#lastname').val('');
+                     $('#lastname').attr('placeholder', response.lastname);
+                  }
 					});
 				})
 
@@ -117,7 +121,7 @@
             $('#confirm_email_change').click(function(){
 					// Send data from form to backend
 					$.ajax({
-						url: 'backend.php',
+						url: 'profile_backend.php',
 						method: 'POST',
 						data: {
 							user_id: $('#user_id').val(),
@@ -127,6 +131,11 @@
 					}).done(function(response){
                   // Give feedback
                   $('#edit_email_message').html(response.message);
+                  // Clear input field and update placeholder text
+                  if(response.status == 'success'){
+                     $('#email').val(''),
+                     $('#email').attr('placeholder', response.email)
+                  }
 					});
 				})
 
@@ -134,7 +143,7 @@
             // $('#confirm_profile_img_change').click(function(){
 				// 	// Send data from form to backend
 				// 	$.ajax({
-				// 		url: 'backend.php',
+				// 		url: 'profile_backend.php',
 				// 		method: 'POST',
 				// 		data: {
 				// 			user_id: $('#user_id').val(),
@@ -151,7 +160,7 @@
             $('#confirm_password_change').click(function(){
                // Send data from form to backend
                $.ajax({
-                  url: 'backend.php',
+                  url: 'profile_backend.php',
                   method: 'POST',
                   data: {
                      user_id: $('#user_id').val(),
@@ -163,6 +172,12 @@
                }).done(function(response){
                   // Give feedback
                   $('#edit_password_message').html(response.message);
+                  // Clear input fields
+                  if(response.status == 'success'){
+                     $("#current_password").val(''),
+                     $("#new_password").val(''),
+                     $("#confirm_password").val('')
+                  }
                });
             })
 
