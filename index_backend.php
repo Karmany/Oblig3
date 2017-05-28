@@ -34,7 +34,7 @@ $opts = $_POST['filterOpts'];
 $qMarks = str_repeat('?,', count($opts) - 1) . '?';
 $statement = $db->prepare("
 SELECT i.itemsID, i.name, i. , model, price 
-FROM mobile_phone INNER JOIN brand ON brand_id = brand.id 
+FROM items INNER JOIN categories ON categoryID = i.categoryID 
 WHERE name IN ($qMarks)");
   $statement ->execute($opts);
   $results = $statement ->fetchAll(PDO::FETCH_ASSOC);

@@ -40,28 +40,31 @@ $query = 'CREATE TABLE IF NOT EXISTS users (
 if ($db->exec($query)===false){
 	die('Query failed(4):' . $db->errorInfo()[2]);
 }
+// Create table for category
+$query = 'CREATE TABLE IF NOT EXISTS categories (
+	categoryID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(128) NOT NULL)';
+if ($db->exec($query)===false){
+	die('Query failed(6):' . $db->errorInfo()[2]);
+}
+
 
 // Create table for items
 $query = 'CREATE TABLE IF NOT EXISTS items (
 	itemID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(128) NOT NULL,
 	description VARCHAR(256) NOT NULL,
-	userID INT NOT NULL,
+	userID INT,
 	mapLong INT NOT NULL,
 	mapLat INT NOT NULL,
 	date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-	FOREIGN KEY (userID) REFERENCES users(userID))';
+	categoryID INT NOT NULL,
+	FOREIGN KEY (userID) REFERENCES users(userID),
+	FOREIGN KEY (categoryID) REFERENCES categories(categoryID))';
 if ($db->exec($query)===false){
 	die('Query failed(5):' . $db->errorInfo()[2]);
 }
 
-// Create table for category
-$query = 'CREATE TABLE IF NOT EXISTS category (
-	categoryID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(128) NOT NULL)';
-if ($db->exec($query)===false){
-	die('Query failed(6):' . $db->errorInfo()[2]);
-}
 
 // Create table for reviews
 $query = 'CREATE TABLE IF NOT EXISTS reviews (
@@ -105,4 +108,27 @@ $query = 'CREATE TABLE IF NOT EXISTS images (
 	FOREIGN KEY (itemID) REFERENCES items(itemID))';
 if ($db->exec($query)===false){
 	die('Query failed(9):' . $db->errorInfo()[2]);
+}
+
+// Insert into categories
+$query = 'INSERT INTO categories(name) VALUES
+("kunst"),
+("elektronikk"),
+("fritid"),
+("friluftsliv");
+';
+if ($db->exec($query)===false){
+	die('Query failed(9):' . $db->errorInfo()[2]);
+}
+
+//Insert into Items
+$query = 'INSERT INTO items (name, description, userID,	mapLong, mapLat, categoryID) VALUES
+("Mona Lisa", "Dette er en description", NULL, 1.123, 2.343, 1),
+("28 tommer LCD TV", "Description hyyyyype", NULL, 1.342, 2.1512, 2),
+("Maling til Warhammer figurer", "Hater å komme på ting", NULL, 2.111, 3.12, 3),
+("Tursekk 80L", "LOOOOOOOOOREM IPSUUUUUM", NULL, 1.2, 2.1, 4)
+';
+if ($db->exec($query)===false){
+	die('Query failed(9):' . $db->errorInfo()[2]);
+
 }

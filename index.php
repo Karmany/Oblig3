@@ -34,36 +34,33 @@
 
         include 'header.php';
 	?>
+
 	<body id="index">
       <div class="container-fluid">
-			<div class="col-md-10 col-md-offset-1">
-				<p>Content here</p>
-			</div>
+
           <div id="filter">
-              <h2>Filter options</h2>
+              <h2>Filtrering</h2>
               <div>
-                  <input type="checkbox" id="samsung">
-                  <label for="samsung">Samsung</label>
+                  <input type="checkbox" id="kunst">
+                  <label for="kunst">Antikviteter og kunst</label>
               </div>
               <div>
-                  <input type="checkbox" id="iphone">
-                  <label for="iphone">iPhone</label>
+                  <input type="checkbox" id="elektro">
+                  <label for="elektro">Elektronikk og hvitevarer</label>
               </div>
               <div>
-                  <input type="checkbox" id="htc">
-                  <label for="htc">HTC</label>
+                  <input type="checkbox" id="fritid">
+                  <label for="fritid">Fritid hobby og underholdning</label>
               </div>
               <div>
-                  <input type="checkbox" id="lg">
-                  <label for="lg">LG</label>
-              </div>
-              <div>
-                  <input type="checkbox" id="nokia">
-                  <label for="nokia">Nokia</label>
+                  <input type="checkbox" id="friluftsliv">
+                  <label for="friluftsliv">Sport og friluftsliv</label>
               </div>
           </div>
+          <div id="result">
+          </div>
 
-          <script src="http://code.jquery.com/jquery-latest.js"></script>
+
           <script>
 			  function get_item_filter_options(){
 				  var opts = [];
@@ -84,7 +81,8 @@
 					  cache: false,
 					  data: {filterOpts: opts},
 					  success: function(records){
-						  $('#items tbody').html(makeTable(records));
+						  var str = JSON.stringify(records, null, 2);
+						  $('#result').append(str)
 					  }
 				  });
 			  }
@@ -98,6 +96,6 @@
 			  $checkboxes.trigger("change");
           </script>
 
-          </container>
+          </div>
 	</body>
 </html>
