@@ -39,6 +39,65 @@
 			<div class="col-md-10 col-md-offset-1">
 				<p>Content here</p>
 			</div>
-		</container>
+          <div id="filter">
+              <h2>Filter options</h2>
+              <div>
+                  <input type="checkbox" id="samsung">
+                  <label for="samsung">Samsung</label>
+              </div>
+              <div>
+                  <input type="checkbox" id="iphone">
+                  <label for="iphone">iPhone</label>
+              </div>
+              <div>
+                  <input type="checkbox" id="htc">
+                  <label for="htc">HTC</label>
+              </div>
+              <div>
+                  <input type="checkbox" id="lg">
+                  <label for="lg">LG</label>
+              </div>
+              <div>
+                  <input type="checkbox" id="nokia">
+                  <label for="nokia">Nokia</label>
+              </div>
+          </div>
+
+          <script src="http://code.jquery.com/jquery-latest.js"></script>
+          <script>
+			  function get_item_filter_options(){
+				  var opts = [];
+				  $checkboxes.each(function(){
+					  if(this.checked){
+						  opts.push(this.id);
+					  }
+				  });
+
+				  return opts;
+			  }
+
+			  function update_items(opts){
+				  $.ajax({
+					  type: "POST",
+					  url: "index_backend.php",
+					  dataType : 'json',
+					  cache: false,
+					  data: {filterOpts: opts},
+					  success: function(records){
+						  $('#items tbody').html(makeTable(records));
+					  }
+				  });
+			  }
+
+			  var $checkboxes = $("input:checkbox");
+			  $checkboxes.on("change", function(){
+				  var opts = get_item_filter_options();
+				  update_items(opts);
+			  });
+
+			  $checkboxes.trigger("change");
+          </script>
+
+          </container>
 	</body>
 </html>
