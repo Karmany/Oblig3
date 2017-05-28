@@ -32,6 +32,7 @@
 		// 	echo $r->test;
 		// }
 
+        include 'header.php';
 	?>
 	<body id="index">
       <div class="container-fluid">
