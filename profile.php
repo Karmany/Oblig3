@@ -37,7 +37,7 @@
                   <h2>Name:</h2>
                   <!-- Stop form from being sent, want to do it with ajax instead -->
                   <form onsubmit="javascript: return false;">
-                     <div id="edit_name_message"><?=$msg?></div>
+                     <div id="edit_name_message"></div>
    						<label for="firstname">First name</label>
    						<input type="text" name="firstname" value="" placeholder="<?php if(isset($firstname)){echo $firstname;}?>" id="firstname"><br/>
    						<label for="lastname">Last name</label>
@@ -49,7 +49,7 @@
                <div class="edit_email col-sm-12">
                   <h2>Email:</h2>
                   <form onsubmit="javascript:return false;">
-                     <div id="edit_email_message"><?=$msg?></div>
+                     <div id="edit_email_message"></div>
                      <label for="email">Your email address:</label>
    						<input type="email" name="email" value="" placeholder="<?php if(isset($email)){echo $email;}?>" id="email"><br/>
                      <input type="submit" value="Confirm >>" id="confirm_email_change">
@@ -58,8 +58,8 @@
 
                <div class="edit_profile_img col-sm-12">
                   <h2>Profile Image:</h2>
-                  <form onsubmit="javascript: return false;">
-                     <div id="edit_profile_img_message"><?=$msg?></div>
+                  <form id= "edit_profile_image_form" onsubmit="javascript: return false;" enctype="multipart/form-data">
+                     <div id="edit_profile_img_message"></div>
                      <img src="<?=$profile_img?>" alt="Profile Image">
                      <label for="profile_img">Image:
    							<input type="file" name="profile_img">
@@ -71,7 +71,7 @@
                <div class="edit_password col-sm-12">
                   <h2>Password:</h2>
                   <form onsubmit="javascript:return false;">
-                     <div id="edit_password_message"><?=$msg?></div>
+                     <div id="edit_password_message"></div>
                      <label for="current_password">Your current password:</label>
                      <input type="password" name="current_password" id="current_password">
                      <label for="new_password">New password:</label>
@@ -138,18 +138,23 @@
 
             // ---- CHANGE PROFILE IMAGE ----
             $('#confirm_profile_img_change').click(function(){
-					// Send data from form to backend
+               // Get form data and add variable for mode to it
+               var form = $('#edit_profile_image_form')[0];
+               var form_data = new FormData(form);
+               form_data.append('mode', 'edit_profile_image');
 					$.ajax({
 						url: 'profile_backend.php',
 						method: 'POST',
-						data: {
-							// img_path: ??????,
-                     // new FormData(this),
-                     mode: 'edit_profile_image'
-						}
+						data: form_data,
+                  // Stop Content-Type header from being added automatically
+                  contentType: false,
+                  // Stop FormData from trying to convert into string
+                  processData: false
 					}).done(function(response){
                   // Give feedback
-                  $('#edit_email_message').html(response.message);
+                  $('#edit_profile_img_message').html(response.message);
+                  // Show the new profile image
+                  $('#edit_profile_image_form img').attr('src', response.profile_img);
 					});
 				})
 

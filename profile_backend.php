@@ -9,9 +9,8 @@ $user_id = $_SESSION['user_id'];
 if(isset($_POST['mode'])){
 	switch ($_POST['mode']) {
 		// --------------------------
-		// ----- EDIT PROFILE: ------
+		// ----- EDIT NAME: ---------
 		// --------------------------
-		// Edit first and last name:
 		case 'edit_name':
 			$firstname = $_POST['firstname'];
 			$lastname = $_POST['lastname'];
@@ -36,7 +35,9 @@ if(isset($_POST['mode'])){
 			}
 			break;
 
-		// Edit email:
+		// --------------------------
+		// ----- EDIT EMAIl: --------
+		// --------------------------
 		case 'edit_email':
 			$email = $_POST['email'];
 			if(empty($email)){
@@ -68,13 +69,52 @@ if(isset($_POST['mode'])){
 			}
 			break;
 
-		// Edit profile image
+		// --------------------------
+		// ----- EDIT IMAGE: --------
+		// --------------------------
 		case 'edit_profile_image':
-			echo json_encode(array("id"=>$_SESSION['user_id']));
+			// Check if file (image) has been uploaded
+			if (isset($_FILES["profile_img"]["name"])) {
+				$name = $_FILES["profile_img"]["name"];
+				$tmp_name = $_FILES['profile_img']['tmp_name'];
+				$error = $_FILES['profile_img']['error'];
+				$location = 'img/';
+
+				// Get the file extension
+				$extension = strtolower(substr($name, strpos($name, '.') +1));
+
+				// Check if file exists
+				if (!empty($name)) {
+					// Check that file is of allowed type
+					$allowed_types = array("jpg", "jpeg", "png", "gif");
+					if(!in_array($extension, $allowed_types)) {
+						echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Sorry, that filetype is not allowed.</p>"));
+					}
+					else{ // File is ok, move to the img folder
+						move_uploaded_file($tmp_name, $location.$name);
+						$img_url = $location.$name;
+
+						// Update profile image in db
+						$sql = "UPDATE users SET profileImg = ? WHERE userID = ?";
+						$stmnt = $db->prepare($sql);
+						$res = $stmnt->execute(array($img_url, $user_id));
+
+						if($res == 1){ // Successfull query
+							$_SESSION['profile_img'] = $img_url; // Update session variable
+							echo json_encode(array("status"=>"success", "profile_img"=>$img_url, "message"=>"<p class='success'>Your changes have been successfully updated</p>"));
+						}else{ // Error when running query
+							echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));
+						}
+					}
+				}else{ // User did not choose a file
+					echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Please choose a file.</p>"));
+				}
+			}
 			break;
 
-
-		// Edit password
+		// --------------------------
+		// ----- EDIT PASSWORD: -----
+		// --------------------------
 		case 'edit_password':
 			$current_password = $_POST['current_password'];
 			$new_password = $_POST['new_password'];
@@ -96,7 +136,6 @@ if(isset($_POST['mode'])){
 			$msg .= validate_password($new_password); // Validate password, see functions.php
 			if(!password_verify($current_password, $result->password)){ // user's current password does not match the one stored in db
 				$msg .= "<p class='error'>Incorrect value for current password</p>";
-				// echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Incorrect value for current password</p>"));
 			}
 
 			// Password has passed validation and there are no errors
