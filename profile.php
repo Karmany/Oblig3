@@ -31,9 +31,11 @@
 	<body id="profile">
       <div class="container-fluid">
 			<div class="row">
-				<div class="col-sm-10 col-sm-offset-1">
+            <div class="col-sm-12">
                <h1>Welcome, <span id="greeting_txt_firstname"><?=$firstname?></span> <span id="greeting_txt_lastname"><?=$lastname?></span></h1>
-
+            </div>
+				<div class="col-sm-4">
+               <h1>Profile</h1>
                <div class="edit_name col-sm-12">
                   <h2>Name:</h2>
                   <!-- Stop form from being sent, want to do it with ajax instead -->
@@ -83,6 +85,10 @@
                   </form>
                </div>
 
+            </div>
+            <div class="col-sm-8">
+               <h1>Messages</h1>
+               
             </div>
 			</div>
 		</div>
