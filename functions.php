@@ -20,3 +20,13 @@ function validate_password($password) {
 		$msg .= "<p class='error'>Password should include at least one uppercase letter.</p>";
 	return $msg;
 }
+
+// Retrieves the categories stored in the database
+function get_categories($db){
+	$query = "SELECT categoryID, name FROM categories";
+	$stmnt = $db->prepare ($query);
+	if (!$stmnt->execute (array())){
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+}
