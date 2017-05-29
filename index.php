@@ -45,8 +45,8 @@
                   <label for="kunst">Antikviteter og kunst</label>
               </div>
               <div>
-                  <input type="checkbox" id="elektro">
-                  <label for="elektro">Elektronikk og hvitevarer</label>
+                  <input type="checkbox" id="elektronikk">
+                  <label for="elektronikk">Elektronikk og hvitevarer</label>
               </div>
               <div>
                   <input type="checkbox" id="fritid">
@@ -58,10 +58,13 @@
               </div>
           </div>
           <div id="result">
+
           </div>
 
 
+
           <script>
+			  //Checks the checked boxes and puts their values into variable
 			  function get_item_filter_options(){
 				  var opts = [];
 				  $checkboxes.each(function(){
@@ -69,10 +72,9 @@
 						  opts.push(this.id);
 					  }
 				  });
-
 				  return opts;
 			  }
-
+                //
 			  function update_items(opts){
 				  $.ajax({
 					  type: "POST",
@@ -80,9 +82,44 @@
 					  dataType : 'json',
 					  cache: false,
 					  data: {filterOpts: opts},
-					  success: function(records){
-						  var str = JSON.stringify(records, null, 2);
-						  $('#result').append(str)
+					  success: function(result){
+
+						  $.each(result, function (k, v) {
+							  content += '<p>' + result[k] + '</p>';
+							  content += '<br/>';
+							  $(content).appendTo("#result");
+						  });
+
+
+
+
+                          /*
+                           var str = JSON.stringify(result);
+                           $('#result').html(str);
+
+
+
+
+
+                           $.each(parsed_result, function (key, data) {
+
+                           $.each(data, function (index, data) {
+                           content += '<p>' + index + ": " +  data + '</p>';
+                           });
+                           content += '<br/>';
+                           $(content).appendTo("#result");
+                           })
+
+
+
+                           $.each(parsed_result, function (index, data) {
+                           content += '<p>' + index + ": " +  data + '</p>';
+                           content += '<br/>';
+                           $(content).appendTo("#result");
+                           });
+
+                           */
+
 					  }
 				  });
 			  }
@@ -94,6 +131,9 @@
 			  });
 
 			  $checkboxes.trigger("change");
+
+
+
           </script>
 
           </div>
