@@ -53,7 +53,7 @@ if ($db->exec($query)===false){
 $query = 'CREATE TABLE IF NOT EXISTS items (
 	itemID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(128) NOT NULL,
-	description VARCHAR(256) NOT NULL,
+	description TEXT NOT NULL,
 	userID INT,
 	mapLong INT NOT NULL,
 	mapLat INT NOT NULL,
@@ -77,18 +77,32 @@ if ($db->exec($query)===false){
 	die('Query failed(7):' . $db->errorInfo()[2]);
 }
 
+
+$query = 'CREATE TABLE IF NOT EXISTS conversations (
+	conversationID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	itemOwnerID INT NOT NULL,
+	userID INT NOT NULL,
+	itemID INT NOT NULL,
+	FOREIGN KEY (itemID) REFERENCES items(itemID),
+	FOREIGN KEY (itemOwnerID) REFERENCES users(userID),
+	FOREIGN KEY (userID) REFERENCES users(userID)
+	)';
+if ($db->exec($query)===false){
+	die('Query failed(8):' . $db->errorInfo()[2]);
+}
+
+
 // Create table for messages
 $query = 'CREATE TABLE IF NOT EXISTS messages (
 	messageID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	receiverID INT NOT NULL,
 	writerID INT NOT NULL,
 	message TEXT NOT NULL,
 	date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-	itemID INT NOT  NULL,
 	status BOOLEAN DEFAULT 0,
-	FOREIGN KEY (itemID) REFERENCES items(itemID))';
+	conversationID INT NOT NULL,
+	FOREIGN KEY (conversationID) REFERENCES conversations(conversationID))';
 if ($db->exec($query)===false){
-	die('Query failed(8):' . $db->errorInfo()[2]);
+	die('Query failed(9):' . $db->errorInfo()[2]);
 }
 
 // Create table for rating
@@ -98,7 +112,7 @@ $query = 'CREATE TABLE IF NOT EXISTS rating (
 	down INT NOT NULL DEFAULT 0,
 	FOREIGN KEY (userID) REFERENCES users(userID))';
 if ($db->exec($query)===false){
-	die('Query failed(9):' . $db->errorInfo()[2]);
+	die('Query failed(10):' . $db->errorInfo()[2]);
 }
 
 // Create table for images
@@ -107,28 +121,66 @@ $query = 'CREATE TABLE IF NOT EXISTS images (
 	imgPath VARCHAR(256),
 	FOREIGN KEY (itemID) REFERENCES items(itemID))';
 if ($db->exec($query)===false){
-	die('Query failed(9):' . $db->errorInfo()[2]);
+	die('Query failed(11):' . $db->errorInfo()[2]);
+}
+
+// Array containing user data (firstname and lastname)
+// All of these users have the same password: 'Password123'
+$password = password_hash('Password123', PASSWORD_DEFAULT);
+$users_array = array(
+	array("Gunnar", "Grefsen", "gunnar_grefsen@gmail.com", $password),
+	array("Ole", "Kristiansen", "ole_kristiansen@gmail.com", $password),
+	array("Bjarne", "Bakken", "bjarne_bakken@gmail.com", $password),
+	array("Helene", "Svendsen", "helene_svendsen@gmail.com", $password)
+);
+
+// Inserting user data, user_id is automatically added because of AUTO_INCREMENT
+$sql = "INSERT INTO users (firstname, lastname, email, password) values (?,?,?,?)";
+$query = $db->prepare($sql);
+
+foreach($users_array as $user)
+{
+	$query->execute($user);
 }
 
 // Insert into categories
 $query = 'INSERT INTO categories(name) VALUES
-("kunst"),
-("elektronikk"),
-("fritid"),
-("friluftsliv");
+("fashion"),
+("electronics"),
+("collectibles"),
+("home"),
+("sport");
 ';
 if ($db->exec($query)===false){
 	die('Query failed(9):' . $db->errorInfo()[2]);
 }
 
+
 //Insert into Items
 $query = 'INSERT INTO items (name, description, userID,	mapLong, mapLat, categoryID) VALUES
-("Mona Lisa", "Dette er en description", NULL, 1.123, 2.343, 1),
-("28 tommer LCD TV", "Description hyyyyype", NULL, 1.342, 2.1512, 2),
-("Maling til Warhammer figurer", "Hater å komme på ting", NULL, 2.111, 3.12, 3),
-("Tursekk 80L", "LOOOOOOOOOREM IPSUUUUUM", NULL, 1.2, 2.1, 4)
+("The actual Mona Lisa", "Mona Lisa is a half-length portrait of Lisa Gherardini by the Italian Renaissance artist Leonardo da Vinci that has been described as the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world", 1, 1.123, 2.343, 3),
+
+("28 inch LCD TV", "A 4 year old TV in good condition.", 3, 1.342, 2.1512, 2),
+
+("One hoodie", "A blue hoodie with a white logo", 1, 2.111, 3.12, 1),
+
+("Corner couch", "A corner couch with three seats, where one of them is a long seat", 2, 1.2, 2.1, 4),
+
+("Squash racket", "A used squash racket, includes three balls(two 1dot and one 2dot). The racket is blue and red and has minimal wear.", 4, 1.2, 2.1, 5),
 ';
 if ($db->exec($query)===false){
 	die('Query failed(9):' . $db->errorInfo()[2]);
+}
 
+//Insert into images
+$query = 'INSERT INTO images(itemID, imgPath) VALUES
+(1, "img/mona_lisa.jpg"),
+(1, "img/mona_lisa_bean.jpg"),
+(2, "img/tv28inch.jpg"),
+(3, "img/blue_hoodie"),
+(4, "img/item_img.png"),
+
+';
+if ($db->exec($query)===false){
+	die('Query failed(9):' . $db->errorInfo()[2]);
 }

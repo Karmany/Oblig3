@@ -1,4 +1,5 @@
 <?php
+header ("Content-Type: application/json");
 session_start();
 require_once("connect.php");
 require_once("functions.php");
@@ -12,12 +13,12 @@ $statement = $db->prepare("
 SELECT items.itemID, items.name, items.description, categories.name AS category_name
 FROM items INNER JOIN categories ON categories.categoryID = items.categoryID
 WHERE categories.name IN ($qMarks)");
-  $statement ->execute($opts);
-  $results = $statement ->fetchAll(PDO::FETCH_ASSOC);
-  //Puts the results from the statement into JSON
-  $json = json_encode($results);
-  //Echos the JSON back to index.php to be displayed there
-  echo($json);
+$statement ->execute($opts);
+$results = $statement ->fetchAll(PDO::FETCH_ASSOC);
+//Puts the results from the statement into JSON
+$json = json_encode($results, JSON_PRETTY_PRINT);
+//Echos the JSON back to index.php to be displayed there
+echo($json);
 
 
 // Ting jeg ikke vil slette før jeg er done :P
@@ -28,16 +29,16 @@ $where = ' WHERE ';
 $opts = $_POST['filterOpts'];
 
 if (empty($opts)){
-  // 0 checkboxes checked
-  $where .= 'TRUE';
+// 0 checkboxes checked
+$where .= 'TRUE';
 } else {
-  if(count($opts) == 1){
-	  // 1 checkbox checked
-	  $where .= $opts[0] . ' = 1';
-  } else {
-	  // 2+ checkboxes checked
-	  $where .= implode(' = 1 OR ', $opts) . ' = 1';
-  }
+if(count($opts) == 1){
+// 1 checkbox checked
+$where .= $opts[0] . ' = 1';
+} else {
+// 2+ checkboxes checked
+$where .= implode(' = 1 OR ', $opts) . ' = 1';
+}
 }
 
 $sql = $select . $from . $where;
