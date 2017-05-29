@@ -13,6 +13,7 @@
    </head>
 
 	<?php
+      session_start();
 		require_once("connect.php");
 		// $query = 'CREATE TABLE IF NOT EXISTS test (
 		// 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -32,10 +33,11 @@
 		// 	echo $r->test;
 		// }
 
-        include 'header.php';
+
 	?>
 
 	<body id="index">
+      <?php include 'header.php'; ?>
       <div class="container-fluid">
 
           <div id="filter">

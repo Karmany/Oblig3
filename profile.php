@@ -15,6 +15,7 @@
 	session_start();
 	require_once("connect.php");
 	require_once("functions.php");
+   include 'header.php';
 
 	// Retrieving session variables for the user
 	$user_id = $_SESSION['user_id'];

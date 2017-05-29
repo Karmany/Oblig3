@@ -1,38 +1,42 @@
-<?php
-    session_start();
- ?>
+<!-- BOOTSTRAP MENU IS-SIGNED-IN -->
+<nav class="navbar navbar-default">
+   <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="index.php">Free Stuff</a>
+      </div>
 
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav">
+            <li><a href="index.php">Home</a></li>
 
-<header>
-    <nav>
-        <ul>
-
-            <li><a href="index.php">HOME</a></li>
             <?php
-            //Vises om man er logget inn
-            if (isset($_SESSION['user_id'])) {
-                echo "<li><a href='post.php'>POST</a></li>";
-                echo "<li><a href='mynews.php'>MY NEWS</a></li>";
-                echo "<li><a href='profile.php'>PROFILE</a></li>";
-                echo "<form action='includes/logout.inc.php'>
-                    button>LOG OUT</button>
-                    </form>";
-            } else {
-                // Er man ikke logget inn får man opp innloggingsskjema
-                echo "<form action='includes/login.inc.php' method='POST'>
-                    <input type='text' name='uid' placeholder='Username'>
-                    <input type='password' name='pwd' placeholder='Password'>
-                    <button type='submit'>LOGIN</button>
-                    </form>";
-            }
+               if (isset($_SESSION['user_id'])) {
+                  echo "<li><a href='#'>My Items</a></li>";
+                  echo "<li><a href='profile.php'>Profile</a></li>";
+                  echo "<li><a href='#'>New Item</a></li>";
+                  echo "<li><a href='logout.php'>Logout</a></li>";
+               } else {
+                  echo "<li><a href='register.php'>Register</a></li>";
+                  echo "<li><a href='login.php'>Login</a></li>";
+               }
+            ?>
 
-            //Er man ikke logget inn kan man registrere seg
-            if (!isset($_SESSION['id'])) {
-                echo "<li><a href='signup.php'>SIGNUP</a></li>";
-            }
+         </ul>
 
-             ?>
-
-        </ul>
-    </nav>
-</header>
+         <form class="navbar-form navbar-right">
+            <div class="form-group">
+               <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+         </form>
+      </div><!-- /.navbar-collapse -->
+   </div><!-- /.container-fluid -->
+ </nav>
