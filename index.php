@@ -11,30 +11,17 @@
       <link rel='stylesheet' type='text/css' href='css/styles.css'>
    </head>
 
-   <?php
-      require_once("connect.php");
-      // $query = 'CREATE TABLE IF NOT EXISTS test (
-      // 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      // 	test VARCHAR(100))';
-      // if ($db->exec($query)===false){
-      // 	die('Query failed(4):' . $db->errorInfo()[2]);
-      // }
-      //
-      // $sql = "SELECT * FROM test";
-      // $stmnt = $db->prepare($sql);
-      // if (!$stmnt->execute(array()))
-      // 	die('Query failed:' . $db->errorInfo()[2]);
-      //
-      // $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
-      //
-      // foreach ($result as $r) {
-      // 	echo $r->test;
-      // }
 
-      include 'header.php';
-   ?>
+	<?php
+      session_start();
+		require_once("connect.php");
 
-   <body id="index">
+
+	?>
+
+	<body id="index">
+      <?php include 'header.php'; ?>
+
       <div class="container-fluid">
 
          <div id="filter">
