@@ -44,7 +44,7 @@ if (!isset($_SESSION['isloggedin']) && isset($_POST['login'])) {
 >>>>>>> origin/master
 
 	// User is already logged in, redirect to profile.php
-	if(isset($_SESSION[isloggedin])){
+	if(isset($_SESSION['isloggedin'])){
 		header("Location: profile.php");
 	}
 
