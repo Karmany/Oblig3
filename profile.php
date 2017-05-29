@@ -25,7 +25,7 @@
    $profile_img = $_SESSION['profile_img'];
    $msg = "";
 
-   print_r($_SESSION);
+   //print_r($_SESSION);
 	?>
 
 	<body id="profile">
@@ -89,7 +89,7 @@
             <div class="col-sm-8">
                <h1>Messages</h1>
                <?php
-                  
+                  include 'messages.php';
                ?>
             </div>
 			</div>

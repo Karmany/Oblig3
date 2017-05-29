@@ -101,3 +101,8 @@ nav ul form button {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* --------- PROFILE ---------------------- */
+.msg-width {
+   display: inline-block;
+}
