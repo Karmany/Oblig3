@@ -82,8 +82,8 @@
                      <input type="submit" value="Confirm >>" id="confirm_password_change">
                   </form>
                </div>
-            </div>
 
+            </div>
 			</div>
 		</div>
 		<script>
