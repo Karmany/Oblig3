@@ -88,7 +88,9 @@
             </div>
             <div class="col-sm-8">
                <h1>Messages</h1>
-               
+               <?php
+                  
+               ?>
             </div>
 			</div>
 		</div>
