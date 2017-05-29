@@ -1,24 +1,5 @@
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Index</title>
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <link rel='stylesheet' type='text/css' href='css/styles.css'>
-   </head>
-
-
-<?php
-session_start();
-require_once("connect.php");
-require_once("functions.php");
-include 'header.php';
-=======
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +10,6 @@ include 'header.php';
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel='stylesheet' type='text/css' href='css/styles.css'>
 	</head>
->>>>>>> origin/master
 
 	<?php
 	require_once("connect.php");
@@ -97,6 +77,7 @@ include 'header.php';
 	?>
 
 	<body id="register">
+		<?php require_once("header.php"); ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
