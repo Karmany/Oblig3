@@ -24,25 +24,31 @@
 
       <div class="container-fluid">
 
+
+
          <div id="filter">
             <h2>Filter</h2>
-            <div>
-               <input type="checkbox" id="art">
-               <label for="art">Antikviteter og kunst</label>
-            </div>
-            <div>
-               <input type="checkbox" id="elektronics">
-               <label for="elektronics">Elektronikk og hvitevarer</label>
-            </div>
-            <div>
-               <input type="checkbox" id="entertainment">
-               <label for="fritid">Fritid hobby og underholdning</label>
-            </div>
-            <div>
-               <input type="checkbox" id="friluftsliv">
-               <label for="friluftsliv">Sport og friluftsliv</label>
-            </div>
+
+            <?php
+            $stmt = $db->prepare("
+            SELECT categoryID, name 
+            FROM categories
+            ");
+            $stmt->execute();
+
+            $categories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            foreach ($categories as $c){
+               echo'
+                  <div>
+                     <input type="checkbox" id="'. $c->categoryID .'">
+                     <label for="'. $c->categoryID .'">'. ucfirst($c->name) .'</label>
+                  </div>
+               ';
+            }
+            ?>
          </div>
+         <button id="hue"></button>
+
          <div id="result">
 
          </div>
@@ -67,33 +73,62 @@
                   url: "index_backend.php",
                   dataType : 'json',
                   cache: false,
-                  data: {filterOpts: opts},
+                  data: {filterOpts: opts,
+                        mode: 'update_items'},
                   success: function(result){
                      $("#result").html("");
                      for(i=0; i<result.length; i++){
                         content = '<p>' + result[i]['itemID'] + '</p>';
                         content += '<p>' + result[i]['name'] + '</p>'
                         content += '<p>' + result[i]['description'] + '</p>'
-                        content += '<p>' + result[i]['category_name'] + '</p>'
                         content += '<br/>';
                         $("#result").append(content);
+                        if (opts){
+									console.log(opts);
+                        }
+                        else
+                        	console.log(a);
                      }
                   }
                });
             }
+            function show_all(){
+            	$.ajax ({
+						method: "POST",
+						url: "index_backend.php",
+						dataType : 'json',
+						cache: false,
+						data: {mode:'show_all'},
+						success: function(result) {
+							$("#result").html("");
+							for (i = 0; i < result.length; i++) {
+								content = '<p>' + result[i]['itemID'] + '</p>';
+								content += '<p>' + result[i]['name'] + '</p>'
+								content += '<p>' + result[i]['description'] + '</p>'
+								content += '<br/>';
+								$("#result").append(content);
+							}
+						}
+               });
+            }
 
             var $checkboxes = $("input:checkbox");
-            $checkboxes.on("change", function(){
-               var opts = get_item_filter_options();
-               update_items(opts);
+            $checkboxes.on('click',function(){
+					if( $('input[type=checkbox]:checked').length>0){
+						var opts = get_item_filter_options();
+						update_items(opts);
+               }
+               else
+               	show_all()
+
             });
-
-            $checkboxes.trigger("change");
-
+			$( window ).load(show_all())
 
 
+
+
+            //$checkboxes.trigger("change");
          </script>
-
       </div>
    </body>
 </html>

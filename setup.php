@@ -78,6 +78,7 @@ if ($db->exec($query)===false){
 }
 
 
+// Create table for conversations
 $query = 'CREATE TABLE IF NOT EXISTS conversations (
 	conversationID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	itemOwnerID INT NOT NULL,
@@ -168,7 +169,7 @@ $query = 'INSERT INTO items (name, description, userID,	mapLong, mapLat, categor
 
 ("Corner couch", "A corner couch with three seats, where one of them is a long seat", 2, 1.2, 2.1, 4),
 
-("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is blue and red and has minimal wear.", 4, 1.2, 2.1, 5)
+("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 1.2, 2.1, 5)
 ';
 if ($db->exec($query)===false){
 	die('Query failed(13):' . $db->errorInfo()[2]);
@@ -180,7 +181,8 @@ $query = 'INSERT INTO images(itemID, imgPath) VALUES
 (1, "img/mona_lisa_bean.jpg"),
 (2, "img/tv28inch.jpg"),
 (3, "img/blue_hoodie"),
-(4, "img/item_img.png")
+(4, "img/squash_racket.jpg"),
+(5, "img/corner_couch.jpg")
 ';
 if ($db->exec($query)===false){
 	die('Query failed(14):' . $db->errorInfo()[2]);
