@@ -7,6 +7,22 @@ function get_post($var){
 	return $var;
 }
 
+// Check if POST array contain any empty values
+// Return feedback
+function check_for_empty_field(){
+	$msg = "";
+	foreach($_POST as $var=>$value) {
+		// If empty, give error message
+		if(empty($_POST[$var])) {
+			if($var != "msg") {
+				$msg .= "<p class='error'>Please fill out all fields</p>";
+			}
+		break;
+		}
+	}
+	return $msg;
+}
+
 // Validation of password. Checks that password contains a minimum of 5 characters.
 // Also checks that password contains at least one uppercase and lowercase letter
 // Returns appropriate message, empty if fine.

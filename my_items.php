@@ -25,21 +25,20 @@
 
 	// Retrieves category_list, See functions.php
 	$category_list = get_categories($db);
-	print_r($category_list);
-
 	?>
 	<body id="items">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
-					<div class="col-sm-12">
+					<!-- New item -->
+					<div class="col-sm-6">
 						<h2>Add new item</h2>
 						<form id="new_item_form" onsubmit="javascript:return false;" enctype="multipart/form-data">
 							<div id="new_item_message"></div>
 							<label for="item_name">Name:</label>
 							<input type="text" name="item_name" id="item_name">
 							<label for="item_description">Description:</label>
-							<input type="text" name="item_description" id="item_description">
+							<textarea name="item_description" id="item_description"></textarea>
 							<label for="mapLong">Longitude:</label>
 							<input type="text" name="mapLong" id="mapLong">
 							<label for="mapLat">Lattitude:</label>
@@ -59,6 +58,11 @@
 							</label>
 							<input type="button" value="Confirm >>" id="add_new_item">
 						</form>
+					</div>
+
+					<!-- My items -->
+					<div id="items_list" class="col-sm-6">
+
 					</div>
 				</div>
 			</div>
@@ -85,6 +89,12 @@
 					}).done(function(response){
 						// Give feedback
 						$('#new_item_message').html(response.message);
+						if(response.status == 'success'){
+							$('#item_name').val('');
+							$('#item_description').val('');
+							$('#mapLong').val('');
+							$('#mapLat').val('');
+						}
 					});
 				});
 			});

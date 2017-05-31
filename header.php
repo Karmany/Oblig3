@@ -19,7 +19,7 @@
 
             <?php
                if (isset($_SESSION['user_id'])) {
-                  echo "<li><a href='myitems.php'>My Items</a></li>";
+                  echo "<li><a href='my_items.php'>My Items</a></li>";
                   echo "<li><a href='profile.php'>Profile</a></li>";
                   echo "<li><a href='logout.php'>Logout</a></li>";
                } else {
