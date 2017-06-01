@@ -191,7 +191,9 @@ if ($db->exec($query)===false){
 //Insert into conversations
 $query = 'INSERT INTO conversations(itemOwnerID, userID, itemID) VALUES
 (1, 2, 1),
-(3, 4, 2)
+(3, 4, 2),
+(1, 3, 2),
+(1, 4, 3)
 ';
 if ($db->exec($query)===false){
 	die('Query failed(15):' . $db->errorInfo()[2]);
@@ -202,7 +204,14 @@ $query = 'INSERT INTO messages(writerID, message, conversationID) VALUES
 (2, "Dis is good man", 1),
 (4, "I lik dis shit", 2),
 (1, "Good man", 1),
-(3, "Dis shit good", 2)
+(3, "Dis shit good", 2),
+(2, "Good", 1),
+(3, "I get this", 3),
+(1, "Okay, when do you want to pick it up?", 3),
+(3, "Did it yesterday, lol", 3),
+(4,"Hello! Can I have this?", 4),
+(1, "Okay, feel free to come over!", 4),
+(4, "Will pick it up tomorrow.", 4)
 ';
 if ($db->exec($query)===false){
 	die('Query failed(16):' . $db->errorInfo()[2]);
