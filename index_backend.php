@@ -10,23 +10,9 @@ require_once("functions.php");
 if(isset($_POST['mode'])){
 	switch($_POST['mode']){
 		case 'show_all':
-			$statement = $db->prepare("
-SELECT it.name, img.imgPath
-FROM items it 
-JOIN (
-  SELECT im.itemID, im.imgPath
-    ROW_NUMBER() OVER (
-      PARTITION BY im.itemID
-      ) AS row_num
-  FROM images im
-  ) img
-  ON img.itemID = it.itemID AND row_num = 1;
-
-");
-			$statement ->execute();
-			$results = $statement ->fetchAll(PDO::FETCH_ASSOC);
+			$items = get_items_oneimg($db);
 //Puts the results from the statement into JSON
-			$json = json_encode($results, JSON_PRETTY_PRINT);
+			$json = json_encode($items, JSON_PRETTY_PRINT);
 //Echos the JSON back to index.php to be displayed there
 			echo($json);
 		break;
@@ -62,6 +48,29 @@ JOIN images im ON im.itemID = it.itemID
 	FROM images img
 	WHERE im.imgPath = img.imgPath
 )
+
+
+SELECT it.name, img.imgPath
+FROM items it
+JOIN (
+  SELECT im.itemID, im.imgPath
+    ROW_NUMBER() OVER (
+      PARTITION BY im.itemID
+      ) AS row_num
+  FROM images im
+  ) img
+  ON img.itemID = it.itemID AND row_num = 1;
+
+SELECT it.name, im.imgPath
+  FROM items it
+  LEFT JOIN images im
+    ON im.itemID = it.itemID
+   AND im.imgPath =
+        ( SELECT TOP 1 imgPath
+            FROM images img
+           WHERE img.itemID = it.itemID
+       )
+
 
 */
 

@@ -46,3 +46,23 @@ function get_categories($db){
 	}
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 }
+
+//
+function get_items_oneimg($db)
+{
+	$stmnt = $db->prepare("
+		SELECT it.name, im.imgPath 
+		FROM items it 
+		LEFT JOIN images im 
+		ON it.itemID = im.itemID 
+		AND im.imgPath = ( 
+			SELECT img.imgPath 
+			FROM images img 
+			WHERE it.itemID = img.itemID 
+			LIMIT 1)
+");
+	if (!$stmnt->execute (array())){
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+}
