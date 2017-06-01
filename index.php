@@ -103,7 +103,7 @@
 							$("#result").html("");
 							for (i = 0; i < result.length; i++) {
 								content = '<p>' + result[i]['name'] + '</p>'
-                        content = '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
+                        content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
 								content += '<br/>';
 								$("#result").append(content);
 							}

@@ -47,7 +47,7 @@ function get_categories($db){
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 }
 
-//
+// Gets Names and first imgPath for all items
 function get_items_oneimg($db)
 {
 	$stmnt = $db->prepare("
