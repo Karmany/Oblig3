@@ -42,10 +42,6 @@
 							<input type="text" name="item_name" id="item_name">
 							<label for="item_description">Description:</label>
 							<textarea name="item_description" id="item_description"></textarea>
-							<!-- <label for="mapLong">Longitude:</label>
-							<input type="text" name="mapLong" id="mapLong">
-							<label for="mapLat">Lattitude:</label> -->
-							<!-- <input type="text" name="mapLat" id="mapLat"> -->
 							<label for="img[]">Image:
 								<input type="file" name="img[]" multiple="true">
 							</label>
