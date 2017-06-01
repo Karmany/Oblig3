@@ -46,7 +46,7 @@ $query = 'CREATE TABLE IF NOT EXISTS users (
 	email VARCHAR(256),
 	address VARCHAR(256),
 	countyID INT,
-	profileImg VARCHAR(256),
+	profileImg VARCHAR(256) DEFAULT "img/profile_img.png",
 	password VARCHAR(256),
 	FOREIGN KEY (countyID) REFERENCES counties(countyID)
 	)';
