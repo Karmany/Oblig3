@@ -31,11 +31,21 @@ SELECT img.imgPath
 FROM images img 
 WHERE it.itemID = img.itemID LIMIT 1) 
 
-INNER JOIN categories c 
-ON it.categoryID = c.categoryID 
-WHERE c.categoryID IN ($qMarks)			
+INNER JOIN categories ca 
+ON it.categoryID = ca.categoryID
+INNER JOIN users u 
+ON it.userID = u.userID
+INNER JOIN counties co
+ON u.countyID = co.countyID
+WHERE ca.categoryID IN ($qMarks)
+OR co.name IN ($qMarks)
+
+
+			
 			");
-			$statement->execute($opts);
+			//Double the same values since we have to use $qMarks twice, and create twice as many ? as we have variables for
+			$array_combined = array_merge($opts, $opts);
+			$statement->execute($array_combined);
 			$results = $statement->fetchAll(PDO::FETCH_OBJ);
 //Puts the results from the statement into JSON
 			$json = json_encode($results, JSON_PRETTY_PRINT);

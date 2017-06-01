@@ -49,53 +49,87 @@
                ';
             }
             ?>
+
             <h4>Counties</h4>
-            <input type="checkbox" id="akershus">
-            <label for="akershus">Akershus</label>
-            <input type="checkbox" id="aust-agder">
-            <label for="aust-agder">Aust-agder</label>
-            <input type="checkbox" id="buskerud">
-            <label for="buskerud">Buskerud</label>
-            <input type="checkbox" id="finnmark">
-            <label for="finnmark">Finnmark</label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
-            <input type="checkbox" id="">
-            <label for=""></label>
+            <div>
+               <input type="checkbox" id="akershus">
+               <label for="akershus">Akershus</label>
+            </div>
+            <div>
+               <input type="checkbox" id="aust_agder">
+               <label for="aust_agder">Aust-agder</label>
+            </div>
+            <div>
+               <input type="checkbox" id="buskerud">
+               <label for="buskerud">Buskerud</label>
+            </div>
+            <div>
+               <input type="checkbox" id="finnmark">
+               <label for="finnmark">Finnmark</label>
+            </div>
+            <div>
+               <input type="checkbox" id="hedmark">
+               <label for="hedmark">Hedmark</label>
+            </div>
+            <div>
+               <input type="checkbox" id="hordaland">
+               <label for="hordaland">Hordaland</label>
+            </div>
+            <div>
+               <input type="checkbox" id="more_og_romsdal">
+               <label for="more_og_romsdal">Møre og romsdal</label>
+            </div>
+            <div>
+               <input type="checkbox" id="nord_trondelag">
+               <label for="nord_trondelag">Nord Trøndelag</label>
+            </div>
+            <div>
+               <input type="checkbox" id="nordland">
+               <label for="nordland">Nordland</label>
+            </div>
+            <div>
+               <input type="checkbox" id="oppland">
+               <label for="oppland">Oppland</label>
+            </div>
+            <div>
+               <input type="checkbox" id="oslo">
+               <label for="oslo">Oslo</label>
+            </div>
+            <div>
+               <input type="checkbox" id="rogaland">
+               <label for="rogaland">Rogaland</label>
+            </div>
+            <div>
+               <input type="checkbox" id="sogn_og_fjordane">
+               <label for="sogn_og_fjordane">Sogn og fjordane</label>
+            </div>
+            <div>
+               <input type="checkbox" id="sor_trondelag">
+               <label for="sor_trondelag">Sør trøndelag</label>
+            </div>
+            <div>
+               <input type="checkbox" id="telemark">
+               <label for="telemark">Telemark</label>
+            </div>
+            <div>
+               <input type="checkbox" id="troms">
+               <label for="troms">Troms</label>
+            </div>
+            <div>
+               <input type="checkbox" id="vest_agder">
+               <label for="vest_agder">Vest-agder</label>
+            </div>
+            <div>
+               <input type="checkbox" id="vestfold">
+               <label for="vestfold">Vestfold</label>
+            </div>
+            <div>
+               <input type="checkbox" id="ostfold">
+               <label for="ostfold">Østfold</label>
+            </div>
 
             <?php
+            /*
             $stmt = $db->prepare('
             SELECT countyID, name
             FROM counties
@@ -112,17 +146,19 @@
             </div>
             ';
 				}
+            */
             ?>
          </div>
 
 
-         <div id="result"class="col-sm-8">
+         <div id="result" class="col-sm-8">
          </div>
          </div>
 
 
          <script>
-         //Checks the checked boxes and puts their values into variable
+         //Checks the checked boxes and puts their values into opts array
+         //This object array is later sent to backend
             function get_item_filter_options(){
                var opts = [];
                $checkboxes.each(function(){
@@ -132,7 +168,8 @@
                });
                return opts;
             }
-            //
+            //Function that triggers when a checkbox is checked or unchecked
+            // This function sends a request to the backend file with the options array containing the filter options
             function update_items(opts){
                $.ajax({
                   method: "POST",
@@ -143,20 +180,17 @@
                         mode: 'update_items'},
                   success: function(result){
                      $("#result").html("");
-                     for(i=0; i<result.length; i++){
-                        content = '<p>' + result[i]['name'] + '</p>'
+                     for(var i=0; i<result.length; i++){
+                        var content = '<p>' + result[i]['name'] + '</p>'
                         content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
                         content += '<br/>';
                         $("#result").append(content);
-                        if (opts){
-									console.log(opts);
-                        }
-                        else
-                        	console.log(a);
                      }
                   }
                });
             }
+            //This function is called when page loads and when all checkboxes are unchecked
+            //This function shows all items
             function show_all(){
             	$.ajax ({
 						method: "POST",
@@ -166,9 +200,10 @@
 						data: {mode:'show_all'},
 						success: function(result) {
 							$("#result").html("");
-							for (i = 0; i < result.length; i++) {
-								content = '<p>' + result[i]['name'] + '</p>'
-                        content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
+							for ( var i = 0; i < result.length; i++) {
+
+								var content = '<p>' + result[i]['name'] + '</p>';
+                        content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> ';
 								content += '<br/>';
 								$("#result").append(content);
 							}
@@ -183,14 +218,10 @@
 						update_items(opts);
                }
                else
-               	show_all()
+						show_all()
 
             });
-			$( window ).load(show_all())
-
-
-
-
+            $(document).ready(show_all());
             //$checkboxes.trigger("change");
          </script>
       </div>

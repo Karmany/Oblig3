@@ -138,7 +138,7 @@ if ($db->exec($query)===false){
 
 //Insert county data
 $query = 'INSERT INTO counties (name) VALUES
-("østfold"),
+("ostfold"),
 ("akershus"),
 ("oslo"),
 ("hedmark"),
@@ -150,10 +150,10 @@ $query = 'INSERT INTO counties (name) VALUES
 ("vest-agder"),
 ("rogaland"),
 ("hordaland"),
-("sogn-og-fjordane"),
-("møre-og-romsdal"),
-("sør-trøndelag"),
-("nord-trøndelag"),
+("sogn_og_fjordane"),
+("more_og_romsdal"),
+("sor_trondelag"),
+("nord_trondelag"),
 ("nordland"),
 ("troms"),
 ("finnmark")
