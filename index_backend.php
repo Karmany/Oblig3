@@ -22,7 +22,7 @@ if(isset($_POST['mode'])){
 			$qMarks = str_repeat('?,', count($opts) - 1) . '?';
 //Statment with gets the info we want from items aswell as the category it is in(Trenge kansje ikkje dette, men må ha imgPath på et punkt)
 			$statement = $db->prepare("
-SELECT it.name, im.imgPath 
+SELECT it.name, it.date,  im.imgPath, u.firstname, u.lastname 
 FROM items it 
 LEFT JOIN images im 
 ON it.itemID = im.itemID 

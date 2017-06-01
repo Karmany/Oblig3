@@ -53,6 +53,7 @@
             ?>
 
             <h4>Counties</h4>
+            <!--
             <div>
                <input type="checkbox" id="akershus">
                <label for="akershus">Akershus</label>
@@ -129,15 +130,15 @@
                <input type="checkbox" id="ostfold">
                <label for="ostfold">Østfold</label>
             </div>
-
+-->
             <?php
 
             $counties = get_counties($db);
             foreach ($counties as $c) {
 					echo '
             <div>
-               <input type="checkbox" id="' . $c->countyID . '">
-               <label for="' . $c->countyID . '">' . ucfirst($c->name) . '</label>
+               <input type="checkbox" id="' . $c->name . '">
+               <label for="' . $c->name . '">' . ucfirst($c->name_nice) . '</label>
             </div>
             ';
 				}
