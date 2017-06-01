@@ -47,24 +47,21 @@ function get_categories($db){
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 }
 
-function get_items($db){
-	// $query = "SELECT * FROM items, images WHERE items.itemID = images.itemID";
-	$query = "SELECT items.*, images*
-		FROM items
-		LEFT JOIN images
-		ON items.itemID = images.itemID
-		ORDER BY items.name";
-	$stmnt = $db->prepare($query);
-	if (!$stmnt->execute(array())){
+function get_items_oneimg($db)
+{
+	$stmnt = $db->prepare("
+		SELECT it.name, im.imgPath
+		FROM items it
+		LEFT JOIN images im
+		ON it.itemID = im.itemID
+		AND im.imgPath = (
+			SELECT img.imgPath
+			FROM images img
+			WHERE it.itemID = img.itemID
+			LIMIT 1)"
+		);
+	if (!$stmnt->execute (array())){
 		die('Query failed:' . $db->errorInfo()[2]);
 	}
-
-// 	SELECT Customers.CustomerName, Orders.OrderID
-// FROM Customers
-// LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-// ORDER BY Customers.CustomerName;
-	$result = $stmnt->fetchAll(PDO::FETCH_OBJ);
-	foreach ($result as $item) {
-		echo $result->name;
-	}
+	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 }
