@@ -21,7 +21,8 @@ foreach ($result as $row)
       $stmnt->execute(array());
       $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-      if ($user_id == $itOwID) {
+      // Find who owns the item, and write who the message is TO/FROM
+      if ($user_id == $itOwID) { // The message is frome someone else
          $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = '$usID'";
          $stmnt = $db->prepare($sql);
          $stmnt->execute(array());
@@ -36,7 +37,7 @@ foreach ($result as $row)
          echo "<hr><br><br> <h2>Message from: " . $fName . " " . "$lName" . "</h2>";
       }
       else
-      {
+      { //If the message is from you
          $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = '$itOwID'";
          $stmnt = $db->prepare($sql);
          $stmnt->execute(array());
@@ -54,22 +55,30 @@ foreach ($result as $row)
 
 
 
-      // Print conversation
+      // Print conversations
       foreach ($result as $row)
          {
             echo "<pre>";
             if ($row->writerID == $user_id) {
-               echo "<div class='col-sm-12 text-right'><p class='messageRight'>" . $row->message . " <b>:Written by you</b> " . "</p></div><br>";
+               echo "<div class='col-sm-12 text-right'><p class='messageRight'>" . $row->message . " <b>:You</b> " . "</p></div><br>";
                //echo "Written by you: " . $row->message . "\n";
             } else {
-               echo "<div class='col-sm-12'><p class='messageLeft'>" . "<b>Written by someone else: </b>" . $row->message . "</p></div><br>";
+               echo "<div class='col-sm-12'><p class='messageLeft'>" . "<b>Other: </b>" . $row->message . "</p></div><br>";
                //echo "Written by someone else: " . $row->message . "\n";
             }
             echo "</pre>";
          }
+      echo "<div class='col-sm-12'>
+               <div class='sendMessage'>
+                  <form class='sendMessageForm' action='sendMessage.php' method='POST'>
+                     <input type='hidden' name='convID' value='" . $convID ."'>
+                     <input type='text' name='message' placeholder='Write message...'>
+                     <input type='submit' name='submit' value='Send Message'>
+                  </form>
+               </div>
+            </div>";
    }
 echo "</pre>";
-
 
 
 
