@@ -42,10 +42,10 @@
 							<input type="text" name="item_name" id="item_name">
 							<label for="item_description">Description:</label>
 							<textarea name="item_description" id="item_description"></textarea>
-							<label for="mapLong">Longitude:</label>
+							<!-- <label for="mapLong">Longitude:</label>
 							<input type="text" name="mapLong" id="mapLong">
-							<label for="mapLat">Lattitude:</label>
-							<input type="text" name="mapLat" id="mapLat">
+							<label for="mapLat">Lattitude:</label> -->
+							<!-- <input type="text" name="mapLat" id="mapLat"> -->
 							<label for="img[]">Image:
 								<input type="file" name="img[]" multiple="true">
 							</label>
@@ -59,7 +59,7 @@
 								?>
 							</select>
 							</label>
-							<input type="button" value="Confirm >>" id="add_new_item">
+							<input type="submit" value="Confirm" id="add_new_item">
 						</form>
 					</div>
 
@@ -108,7 +108,7 @@
 							$('#mapLong').val('');
 							$('#mapLat').val('');
 
-							// Show the new item withouth refreshing 
+							// Show the new item withouth refreshing
 							var content = "<div class='item'><div class='item_text'>";
 							content += "<h3>" + response.new_item.name + "</h3>";
 							content += "<span class='category_date'>Posted: " + response.new_item.date + " </span>";

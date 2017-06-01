@@ -22,8 +22,8 @@ if ( $_FILES['img']['error'][0] == 4 ){ // No image was chosen
 if($msg == ""){
 	$name = get_post('item_name');
 	$desc = get_post('item_description');
-	$long = get_post('mapLong');
-	$lat = get_post('mapLat');
+	// $long = get_post('mapLong');
+	// $lat = get_post('mapLat');
 	$cat = strtolower(get_post('category'));
 	$category_id = "";
 
@@ -36,8 +36,8 @@ if($msg == ""){
 		}
 	}
 
-	$item = array($name, $desc, $user_id, $long, $lat, $category_id);
-	$sql = "INSERT INTO items (name, description, userID, mapLong, mapLat, categoryID) VALUES(?, ?, ?, ?, ?, ?)";
+	$item = array($name, $desc, $user_id, $category_id);
+	$sql = "INSERT INTO items (name, description, userID, categoryID) VALUES(?, ?, ?, ?)";
 	$stmnt = $db->prepare($sql);
 	$res = $stmnt->execute($item);
 

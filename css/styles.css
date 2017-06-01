@@ -16,6 +16,9 @@ body {
    color: green;
 }
 
+input[type="text"], input[type="email"], input[type="password"], input[type="submit"], textarea{
+   padding: 5px;
+}
 
 /* ------------ PROFILE PAGE -----------------------*/
 
@@ -46,6 +49,17 @@ body {
    margin-top: 10px;
 }
 
+#my_items #item_name {
+   max-width: 60%;
+   width: 100%;
+}
+
+#my_items #item_description {
+   max-width: 60%;
+   width: 100%;
+   min-height: 100px;
+}
+
 #my_items label {
    display: block;
 }
@@ -58,6 +72,7 @@ body {
 #my_items .item_img {
    max-width: 100px;
    margin-top: -80px;
+   margin-bottom: 50px;
    float: left;
 }
 
