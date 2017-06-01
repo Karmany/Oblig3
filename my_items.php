@@ -15,6 +15,10 @@
 	require_once("connect.php");
 	require_once("functions.php");
 
+	if(!isset($_SESSION['isloggedin'])){
+		header("Location: login.php");
+	}
+
 	// Retrieving session variables for the user
 	$user_id = $_SESSION['user_id'];
 	$email = $_SESSION['email'];
