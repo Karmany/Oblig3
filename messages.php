@@ -14,27 +14,41 @@ foreach ($result as $row)
       $convID = $row->conversationID;
       $itOwID = $row->itemOwnerID;
       $usID = $row->userID;
-      // Get messages from database
+
+
       $sql = "SELECT messageID, writerID, message FROM messages WHERE conversationID = '$convID'";
       $stmnt = $db->prepare($sql);
       $stmnt->execute(array());
       $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
       if ($user_id == $itOwID) {
-
-         $sql = "SELECT conversationID, itemOwnerID, userID FROM users WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
+         $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = '$usID'";
          $stmnt = $db->prepare($sql);
          $stmnt->execute(array());
-         $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+         $result1 = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-         foreach ($result as $row)
+         foreach ($result1 as $row)
             {
-
+               $uID = $row->userID;
+               $fName = $row->firstname;
+               $lName = $row->lastname;
             }
+         echo "<hr><br><br> <h2>Message from: " . $fName . " " . "$lName" . "</h2>";
+      }
+      else
+      {
+         $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = '$itOwID'";
+         $stmnt = $db->prepare($sql);
+         $stmnt->execute(array());
+         $result2 = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-         echo "<hr><br><br> <h2>Message from: " . $usID . "</h2>";
-      } else {
-         echo "<hr><br><br> <h2>Message to: " . $itOwID . "</h2>";
+         foreach ($result2 as $row)
+            {
+               $uID = $row->userID;
+               $fName = $row->firstname;
+               $lName = $row->lastname;
+            }
+         echo "<hr><br><br> <h2>Message to: " . $fName . " " . "$lName" . "</h2>";
       }
 
 
