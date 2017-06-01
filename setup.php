@@ -180,7 +180,7 @@ $query = 'INSERT INTO images(itemID, imgPath) VALUES
 (1, "img/mona_lisa.jpg"),
 (1, "img/mona_lisa_bean.jpg"),
 (2, "img/tv28inch.jpg"),
-(3, "img/blue_hoodie"),
+(3, "img/blue_hoodie.jpg"),
 (4, "img/squash_racket.jpg"),
 (5, "img/corner_couch.jpg")
 ';

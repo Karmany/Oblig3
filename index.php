@@ -47,7 +47,7 @@
             }
             ?>
          </div>
-         <button id="hue"></button>
+
 
          <div id="result">
 
@@ -102,9 +102,8 @@
 						success: function(result) {
 							$("#result").html("");
 							for (i = 0; i < result.length; i++) {
-								content = '<p>' + result[i]['itemID'] + '</p>';
-								content += '<p>' + result[i]['name'] + '</p>'
-								content += '<p>' + result[i]['description'] + '</p>'
+								content = '<p>' + result[i]['name'] + '</p>'
+                        content = '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
 								content += '<br/>';
 								$("#result").append(content);
 							}

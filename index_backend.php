@@ -11,8 +11,17 @@ if(isset($_POST['mode'])){
 	switch($_POST['mode']){
 		case 'show_all':
 			$statement = $db->prepare("
-SELECT items.itemID, items.name, items.description
-FROM items INNER JOIN categories ON categories.categoryID = items.categoryID
+SELECT it.name, img.imgPath
+FROM items it 
+JOIN (
+  SELECT im.itemID, im.imgPath
+    ROW_NUMBER() OVER (
+      PARTITION BY im.itemID
+      ) AS row_num
+  FROM images im
+  ) img
+  ON img.itemID = it.itemID AND row_num = 1;
+
 ");
 			$statement ->execute();
 			$results = $statement ->fetchAll(PDO::FETCH_ASSOC);
@@ -27,9 +36,11 @@ FROM items INNER JOIN categories ON categories.categoryID = items.categoryID
 			$qMarks = str_repeat('?,', count($opts) - 1) . '?';
 //Statment with gets the info we want from items aswell as the category it is in(Trenge kansje ikkje dette, men må ha imgPath på et punkt)
 			$statement = $db->prepare("
-SELECT items.itemID, items.name, items.description
-FROM items INNER JOIN categories ON categories.categoryID = items.categoryID
-WHERE categories.categoryID IN ($qMarks)");
+SELECT it.itemID, it.name, im.imgPath
+FROM items it, 
+INNER JOIN images im ON it.itemID = im.itemID
+INNER JOIN categories c ON it.categoryID = c.categoryID
+WHERE c.categoryID IN ($qMarks)");
 			$statement->execute($opts);
 			$results = $statement->fetchAll(PDO::FETCH_OBJ);
 //Puts the results from the statement into JSON
@@ -42,6 +53,17 @@ WHERE categories.categoryID IN ($qMarks)");
 };
 
 
+/*
+SELECT it.name, im.imgPath
+FROM items it
+JOIN images im ON im.itemID = it.itemID
+	AND im.imgPath =(
+	SELECT TOP 1 img.imgPath
+	FROM images img
+	WHERE im.imgPath = img.imgPath
+)
+
+*/
 
 
 
