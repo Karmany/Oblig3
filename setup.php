@@ -31,7 +31,9 @@ if ($db->exec($query)===false){
 // Create table for county
 $query = 'CREATE TABLE IF NOT EXISTS counties (
 	countyID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(64))';
+	name VARCHAR(64),
+	name_nice VARCHAR(64))
+	';
 if ($db->exec($query)===false){
 	die('Query failed(4):' . $db->errorInfo()[2]);
 }
@@ -137,26 +139,26 @@ if ($db->exec($query)===false){
 }
 
 //Insert county data
-$query = 'INSERT INTO counties (name) VALUES
-("ostfold"),
-("akershus"),
-("oslo"),
-("hedmark"),
-("oppland"),
-("buskerud"),
-("vestfold"),
-("telemark"),
-("aust-agder"),
-("vest-agder"),
-("rogaland"),
-("hordaland"),
-("sogn_og_fjordane"),
-("more_og_romsdal"),
-("sor_trondelag"),
-("nord_trondelag"),
-("nordland"),
-("troms"),
-("finnmark")
+$query = 'INSERT INTO counties (name, name_nice) VALUES
+("ostfold", "Østfold"),
+("akershus", "Akershus"),
+("oslo", "Oslo"),
+("hedmark", "Hedmark"),
+("oppland", "Oppland"),
+("buskerud", "Buskerud"),
+("vestfold", "Vestfold"),
+("telemark", "Telemark"),
+("aust-agder", "Aust-agder"),
+("vest-agder", "Vest-agder"),
+("rogaland", "Rogaland"),
+("hordaland", "Hordaland"),
+("sogn_og_fjordane", "Sogn og fjordane"),
+("more_og_romsdal", "Møre og romsdal"),
+("sor_trondelag", "Sør trøndelag"),
+("nord_trondelag", "Nord Trøndelag"),
+("nordland", "Nordland"),
+("troms", "Troms"),
+("finnmark", "Finnmark")
 ';
 if ($db->exec($query)===false){
 	die('Query failed(12):' . $db->errorInfo()[2]);

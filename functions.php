@@ -92,3 +92,18 @@ function get_user_items_oneimg($user_id, $db)
 	}
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 }
+
+// Get all counties ordered by name
+function get_counties($db)
+{
+	$stmnt = $db->prepare('
+            SELECT countyID, name, name_nice
+            FROM counties
+            ORDER BY name
+            ');
+	if (!$stmnt->execute(array())) {
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+
+}

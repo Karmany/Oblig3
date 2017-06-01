@@ -15,6 +15,8 @@
 	<?php
       session_start();
 		require_once("connect.php");
+		require_once("functions.php");
+
 
 
 	?>
@@ -129,16 +131,9 @@
             </div>
 
             <?php
-            /*
-            $stmt = $db->prepare('
-            SELECT countyID, name
-            FROM counties
-            ORDER BY name
-            ');
-            $stmt->execute();
 
-            $categories = $stmt->fetchAll(PDO::FETCH_OBJ);
-            foreach ($categories as $c) {
+            $counties = get_counties($db);
+            foreach ($counties as $c) {
 					echo '
             <div>
                <input type="checkbox" id="' . $c->countyID . '">
@@ -146,7 +141,7 @@
             </div>
             ';
 				}
-            */
+
             ?>
          </div>
 
