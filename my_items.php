@@ -25,8 +25,11 @@
 
 	// Retrieves category_list, See functions.php
 	$category_list = get_categories($db);
+	// Retrieves items, see functions.php
+	// $items = get_items($db);
 	?>
 	<body id="items">
+		<?php include("header.php") ?>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
@@ -62,7 +65,24 @@
 
 					<!-- My items -->
 					<div id="items_list" class="col-sm-6">
-
+						<h2>My items:</h2>
+						<?php
+						$query = "SELECT items.*, images.*
+							FROM items
+							LEFT JOIN images
+							ON items.itemID = images.itemID";
+						$stmnt = $db->prepare($query);
+						if (!$stmnt->execute(array())){
+							die('Query failed:' . $db->errorInfo()[2]);
+						}
+						$items = $stmnt->fetchAll(PDO::FETCH_OBJ);
+						// foreach ($result as $item) {
+						// 	echo $result->name;
+						// }
+						foreach ($items as $item) {
+							echo $item->itemID . " " . $item->name . "<br/>";
+						}
+						?>
 					</div>
 				</div>
 			</div>

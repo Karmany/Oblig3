@@ -41,8 +41,30 @@ function validate_password($password) {
 function get_categories($db){
 	$query = "SELECT categoryID, name FROM categories";
 	$stmnt = $db->prepare ($query);
-	if (!$stmnt->execute (array())){
+	if (!$stmnt->execute(array())){
 		die('Query failed:' . $db->errorInfo()[2]);
 	}
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function get_items($db){
+	// $query = "SELECT * FROM items, images WHERE items.itemID = images.itemID";
+	$query = "SELECT items.*, images*
+		FROM items
+		LEFT JOIN images
+		ON items.itemID = images.itemID
+		ORDER BY items.name";
+	$stmnt = $db->prepare($query);
+	if (!$stmnt->execute(array())){
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+
+// 	SELECT Customers.CustomerName, Orders.OrderID
+// FROM Customers
+// LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+// ORDER BY Customers.CustomerName;
+	$result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+	foreach ($result as $item) {
+		echo $result->name;
+	}
 }
