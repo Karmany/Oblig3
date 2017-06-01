@@ -40,16 +40,48 @@ body {
    display: block;
 }
 
-/* --------- ITEMS PAGE ------------------------- */
-#items input[type="submit"] {
+/* --------- MY ITEMS PAGE ------------------------- */
+#my_items input[type="submit"] {
    display: block;
    margin-top: 10px;
 }
 
-#items label {
+#my_items label {
    display: block;
 }
 
+#my_items .item {
+   clear: both;
+   margin-bottom: 50px;
+}
+
+#my_items .item_img {
+   max-width: 100px;
+   margin-top: -80px;
+   float: left;
+}
+
+#my_items .item_text {
+   margin-left: 120px;
+}
+
+/*#my_items span {
+}*/
+
+#my_items .item_text .category_date {
+   display: block;
+   margin-bottom: 5px;
+   margin-top: -10px;
+}
+
+.category_label {
+   display: inline-block;
+   background: black;
+   color: white;
+   border-radius: 4px;
+   padding: 2px 6px;
+   font-size: 12px;
+}
 /* --------- HEADER/MENU ---------------------- */
 
 * {

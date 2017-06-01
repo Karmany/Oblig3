@@ -26,9 +26,9 @@
 	// Retrieves category_list, See functions.php
 	$category_list = get_categories($db);
 	// Retrieves items, see functions.php
-	// $items = get_items($db);
+	$items = get_user_items_oneimg($user_id, $db);
 	?>
-	<body id="items">
+	<body id="my_items">
 		<?php include("header.php") ?>
 		<div class="container-fluid">
 			<div class="row">
@@ -64,25 +64,18 @@
 					</div>
 
 					<!-- My items -->
+					<h2>My items</h2>
 					<div id="items_list" class="col-sm-6">
-						<h2>My items:</h2>
-						<?php
-						$query = "SELECT items.*, images.*
-							FROM items
-							LEFT JOIN images
-							ON items.itemID = images.itemID";
-						$stmnt = $db->prepare($query);
-						if (!$stmnt->execute(array())){
-							die('Query failed:' . $db->errorInfo()[2]);
-						}
-						$items = $stmnt->fetchAll(PDO::FETCH_OBJ);
-						// foreach ($result as $item) {
-						// 	echo $result->name;
-						// }
-						foreach ($items as $item) {
-							echo $item->itemID . " " . $item->name . "<br/>";
-						}
-						?>
+					<?php foreach ($items as $item): ?>
+						<div class="item">
+							<div class="item_text">
+								<h3><?=$item->name?></h3>
+								<span class="category_date">Posted: <?=htmlspecialchars(date("d-m-Y H:i", strtotime($item->date)))?></span>
+								<span class="category_label"><?=ucfirst($item->category_name)?></span>
+							</div>
+							<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
+						</div>
+					<?php endforeach; ?>
 					</div>
 				</div>
 			</div>
@@ -114,6 +107,15 @@
 							$('#item_description').val('');
 							$('#mapLong').val('');
 							$('#mapLat').val('');
+
+							// Show the new item withouth refreshing 
+							var content = "<div class='item'><div class='item_text'>";
+							content += "<h3>" + response.new_item.name + "</h3>";
+							content += "<span class='category_date'>Posted: " + response.new_item.date + " </span>";
+							content += "<span class='category_label'>Posted: " + response.new_item.category + " </span></div>";
+							content += "<img class='item_img' src='" + response.new_item.img_path + "' alt=Image of '" + response.new_item.name + "'/>";
+							content += "</div>";
+							$('#items_list').append(content);
 						}
 					});
 				});

@@ -67,3 +67,28 @@ function get_items_oneimg($db)
 	}
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 }
+
+// Returns name and first imgPath for all items for a specific user
+function get_user_items_oneimg($user_id, $db)
+{
+	$stmnt = $db->prepare("
+	SELECT it.name, it.date, im.imgPath, c.name AS category_name
+		FROM items it
+		LEFT JOIN images im
+		ON it.itemID = im.itemID
+		AND im.imgPath = (
+			SELECT img.imgPath
+			FROM images img
+			WHERE it.itemID = img.itemID
+			LIMIT 1)
+		INNER JOIN users u
+		ON u.userID = it.userID
+		  INNER JOIN categories c
+		  ON it.categoryID = c.categoryID
+		WHERE u.userID = ?"
+		);
+	if (!$stmnt->execute (array($user_id))){
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+}

@@ -7,6 +7,7 @@ $user_id = $_SESSION['user_id'];
 $img_paths = array();
 $msg = "";
 $status = "error";
+$new_item = array();
 
 // Check that input fields are not empty, see functions.php
 $msg .= check_for_empty_field();
@@ -16,27 +17,6 @@ if ( $_FILES['img']['error'][0] == 4 ){ // No image was chosen
 	$msg .= "<p class='error'>No image(s) selected</p>";
 	$status = "error";
 }
-// else{ // Loop through all images and validate them
-	// foreach ($_FILES['img']['name'] as $index => $name) {
-	// 	$name = $_FILES['img']['name'][$index];
-	// 	$tmp_name = $_FILES['img']['tmp_name'][$index];
-	// 	$type = $_FILES['img']['type'][$index];
-	// 	$error = $_FILES['img']['error'][$index];
-	// 	$allowed_types = array("jpg", "jpeg", "png", "gif");
-	// 	$location = "img/";
-	//
-	// 	// Check if the file is of allowed type
-	// 	$extension = strtolower(substr($name, strpos($name, '.') +1));
-	// 	if(!in_array($extension, $allowed_types)){
-	// 		$msg .= "<p class='error'>Error: $name could not be uploaded, $extension is an invalid filetype.</p>";
-	// 	}else{ // Valid filetype, move to img folder
-	// 		move_uploaded_file($tmp_name, $location.$name);
-	// 		$path = $location.$name;
-	// 		$img_paths[] = $path;
-	// 		$msg .= "<p class='success'>$name was successfully uploaded.</p>";
-	// 	}
-	// }
-// }
 
 // INSERT ITEM
 if($msg == ""){
@@ -65,6 +45,8 @@ if($msg == ""){
 	if($res == 1){ // Successfull query
 		$msg .= "<p class='success'>Your item has been posted.</p>";
 		$status = "success";
+		// Create array for new item to be returned to my_items page, img path is added later
+		$new_item = array("name"=>$name, "category"=>ucfirst($cat), "date"=>date("d-m-Y H:i"));
 		// Get the item_id for the last inserted item
 		$last_id = $db->lastInsertId();
 		// echo json_encode(array("status"=>"success", "message"=>$msg));
@@ -105,4 +87,9 @@ if($msg == ""){
 	}
 }
 
-echo json_encode(array("status"=>$status, "message"=>$msg, "file_paths"=>$img_paths));
+if($status == 'success'){
+	// Add image path to the item array
+	$new_item['img_path'] = $img_paths[0];
+}
+
+echo json_encode(array("status"=>$status, "message"=>$msg, "new_item"=>$new_item));
