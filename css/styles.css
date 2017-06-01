@@ -16,7 +16,7 @@ body {
    color: green;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="submit"], textarea{
+input[type="text"], input[type="email"], input[type="password"], input[type="submit"], textarea, select {
    padding: 5px;
 }
 
@@ -160,4 +160,13 @@ nav ul form button {
 #result img {
     width: 100px;
     height: 100px;
+}
+
+/* ------------- REGISTER -------------------- */
+#register #registerForm input, #register #registerForm select {
+   padding: 5px;
+   max-width: 47%;
+   width: 100%;
+   margin-right: 10px;
+   margin-bottom: 10px;
 }
