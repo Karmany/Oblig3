@@ -39,7 +39,7 @@ function validate_password($password) {
 
 // Retrieves the categories stored in the database
 function get_categories($db){
-	$query = "SELECT categoryID, name FROM categories";
+	$query = "SELECT categoryID, name FROM categories ORDER BY name";
 	$stmnt = $db->prepare ($query);
 	if (!$stmnt->execute(array())){
 		die('Query failed:' . $db->errorInfo()[2]);

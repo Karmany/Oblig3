@@ -34,14 +34,7 @@
             <h4>Categories</h4>
 
             <?php
-            $stmt = $db->prepare("
-            SELECT categoryID, name 
-            FROM categories
-            ORDER BY name
-            ");
-            $stmt->execute();
-
-            $categories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $categories = get_categories($db);
             foreach ($categories as $c){
                echo'
                   <div>
@@ -53,6 +46,7 @@
             ?>
 
             <h4>Counties</h4>
+            <!--
             <div>
                <input type="checkbox" id="akershus">
                <label for="akershus">Akershus</label>
@@ -129,15 +123,16 @@
                <input type="checkbox" id="ostfold">
                <label for="ostfold">Østfold</label>
             </div>
-
+-->
             <?php
-
+            // Run the county function that gets all counties ordered by name.
             $counties = get_counties($db);
+            // Loop through the counties and max a checkbox for each one to filter with
             foreach ($counties as $c) {
 					echo '
             <div>
-               <input type="checkbox" id="' . $c->countyID . '">
-               <label for="' . $c->countyID . '">' . ucfirst($c->name) . '</label>
+               <input type="checkbox" id="' . $c->name . '">
+               <label for="' . $c->name . '">' . $c->name_nice . '</label>
             </div>
             ';
 				}
@@ -199,23 +194,29 @@
 
 								var content = '<p>' + result[i]['name'] + '</p>';
                         content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> ';
-								content += '<br/>';
+								content += '';
+
+                        content += '<br/>';
 								$("#result").append(content);
 							}
 						}
                });
             }
+            //Script that reacts on click on any checkbox and runs one of the two functions to show data.
 
             var $checkboxes = $("input:checkbox");
             $checkboxes.on('click',function(){
+            	//If any is checked get filter options and run the update items function
 					if( $('input[type=checkbox]:checked').length>0){
 						var opts = get_item_filter_options();
 						update_items(opts);
                }
+               //If the click was unchecking the last checked box, and no boxes are checked show all the content
                else
 						show_all()
 
             });
+            //Show all content on first load
             $(document).ready(show_all());
             //$checkboxes.trigger("change");
          </script>

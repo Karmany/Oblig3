@@ -77,18 +77,6 @@ if ($db->exec($query)===false){
 }
 
 
-// Create table for reviews
-$query = 'CREATE TABLE IF NOT EXISTS reviews (
-	reviewsID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	receiverID INT NOT NULL,
-	writerID INT NOT NULL,
-	FOREIGN KEY (receiverID) REFERENCES users(userID),
-	FOREIGN KEY (writerID) REFERENCES users(userID))';
-if ($db->exec($query)===false){
-	die('Query failed(7):' . $db->errorInfo()[2]);
-}
-
-
 // Create table for conversations
 $query = 'CREATE TABLE IF NOT EXISTS conversations (
 	conversationID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -117,16 +105,6 @@ $query = 'CREATE TABLE IF NOT EXISTS messages (
 	)';
 if ($db->exec($query)===false){
 	die('Query failed(9):' . $db->errorInfo()[2]);
-}
-
-// Create table for rating
-$query = 'CREATE TABLE IF NOT EXISTS rating (
-	userID INT NOT NULL,
-	up INT NOT NULL DEFAULT 0,
-	down INT NOT NULL DEFAULT 0,
-	FOREIGN KEY (userID) REFERENCES users(userID))';
-if ($db->exec($query)===false){
-	die('Query failed(10):' . $db->errorInfo()[2]);
 }
 
 // Create table for images
