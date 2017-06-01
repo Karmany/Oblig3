@@ -4,7 +4,6 @@ session_start();
 
 require_once("connect.php");
 require_once("functions.php");
-// $user_id = $_SESSION['user_id'];
 
 // Retrieve all counties
 $counties = get_counties($db);
@@ -37,12 +36,6 @@ foreach ($counties as $c) {
 	}
 }
 
-// DEBUG
-// var_dump($county);
-// var_dump($county_id);
-// print_r($counties);
-// echo json_encode($county_id);
-
 // Check password for length and characters
 $msg .= validate_password($password);
 
@@ -66,7 +59,7 @@ if($_POST['password'] != $_POST['confirmed_password']){
 }
 
 // Hash/encrypt password before storing in the database later
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$password = password_hash($password, PASSWORD_DEFAULT);
 
 // Make sure there are no errors, then register user
 if($msg == ""){
@@ -79,7 +72,6 @@ if($msg == ""){
 	}
 	else{
 		$status = "success";
-		// $msg = "<p class='success'>You have been successfully registered</p>";
 	}
 }
 
