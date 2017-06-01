@@ -22,11 +22,19 @@ if(isset($_POST['mode'])){
 			$qMarks = str_repeat('?,', count($opts) - 1) . '?';
 //Statment with gets the info we want from items aswell as the category it is in(Trenge kansje ikkje dette, men må ha imgPath på et punkt)
 			$statement = $db->prepare("
-SELECT it.itemID, it.name, im.imgPath
-FROM items it, 
-INNER JOIN images im ON it.itemID = im.itemID
-INNER JOIN categories c ON it.categoryID = c.categoryID
-WHERE c.categoryID IN ($qMarks)");
+SELECT it.name, im.imgPath 
+FROM items it 
+LEFT JOIN images im 
+ON it.itemID = im.itemID 
+AND im.imgPath = ( 
+SELECT img.imgPath 
+FROM images img 
+WHERE it.itemID = img.itemID LIMIT 1) 
+
+INNER JOIN categories c 
+ON it.categoryID = c.categoryID 
+WHERE c.categoryID IN ($qMarks)			
+			");
 			$statement->execute($opts);
 			$results = $statement->fetchAll(PDO::FETCH_OBJ);
 //Puts the results from the statement into JSON

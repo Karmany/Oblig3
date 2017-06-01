@@ -8,7 +8,7 @@ if ($db->exec($query)===false){
 }
 
 // Create database
-$query = 'CREATE DATABASE IF NOT EXISTS oblig3';
+$query = 'CREATE DATABASE IF NOT EXISTS oblig3 CHARACTER SET utf8 COLLATE utf8_general_ci';
 // Runs query. Returns false if some error has happened.
 // exec returns number of rows affected by the query. If query does not actually affect any rows
 // this can be 0. Must therefore check for false to see if something wrong happened with the query
@@ -28,6 +28,13 @@ if ($db->exec($query)===false){
 	die('Query failed(3):' . $db->errorInfo()[2]);
 }
 
+// Create table for county
+$query = 'CREATE TABLE IF NOT EXISTS counties (
+	countyID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(64))';
+if ($db->exec($query)===false){
+	die('Query failed(4):' . $db->errorInfo()[2]);
+}
 
 // Create table for users
 $query = 'CREATE TABLE IF NOT EXISTS users (
@@ -35,10 +42,14 @@ $query = 'CREATE TABLE IF NOT EXISTS users (
 	firstname VARCHAR(64),
 	lastname VARCHAR(64),
 	email VARCHAR(256),
+	address VARCHAR(256),
+	countyID INT,
 	profileImg VARCHAR(256),
-	password VARCHAR(256))';
+	password VARCHAR(256),
+	FOREIGN KEY (countyID) REFERENCES counties(countyID)
+	)';
 if ($db->exec($query)===false){
-	die('Query failed(4):' . $db->errorInfo()[2]);
+	die('Query failed(4b):' . $db->errorInfo()[2]);
 }
 // Create table for category
 $query = 'CREATE TABLE IF NOT EXISTS categories (
@@ -55,8 +66,6 @@ $query = 'CREATE TABLE IF NOT EXISTS items (
 	name VARCHAR(128) NOT NULL,
 	description TEXT NOT NULL,
 	userID INT,
-	mapLong INT NOT NULL,
-	mapLat INT NOT NULL,
 	date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	categoryID INT NOT NULL,
 	FOREIGN KEY (userID) REFERENCES users(userID),
@@ -127,18 +136,45 @@ if ($db->exec($query)===false){
 	die('Query failed(11):' . $db->errorInfo()[2]);
 }
 
+//Insert county data
+$query = 'INSERT INTO counties (name) VALUES
+("østfold"),
+("akershus"),
+("oslo"),
+("hedmark"),
+("oppland"),
+("buskerud"),
+("vestfold"),
+("telemark"),
+("aust-agder"),
+("vest-agder"),
+("rogaland"),
+("hordaland"),
+("sogn-og-fjordane"),
+("møre-og-romsdal"),
+("sør-trøndelag"),
+("nord-trøndelag"),
+("nordland"),
+("troms"),
+("finnmark")
+';
+if ($db->exec($query)===false){
+	die('Query failed(12):' . $db->errorInfo()[2]);
+}
+
+
 // Array containing user data (firstname and lastname)
 // All of these users have the same password: 'Password123'
 $password = password_hash('Password123', PASSWORD_DEFAULT);
 $users_array = array(
-	array("Gunnar", "Grefsen", "gunnar_grefsen@gmail.com", $password),
-	array("Ole", "Kristiansen", "ole_kristiansen@gmail.com", $password),
-	array("Bjarne", "Bakken", "bjarne_bakken@gmail.com", $password),
-	array("Helene", "Svendsen", "helene_svendsen@gmail.com", $password)
+	array("Gunnar", "Grefsen", "gunnar_grefsen@gmail.com","Tulipanvegen 3, 4100 Jørpeland",2, $password),
+	array("Ole", "Kristiansen", "ole_kristiansen@gmail.com","Granåsbakken 3, 2827 Hunndalen",8, $password),
+	array("Bjarne", "Bakken", "bjarne_bakken@gmail.com","Granveien 11, 1430 Ås",12, $password),
+	array("Helene", "Svendsen", "helene_svendsen@gmail.com","Frants Olsens veg 20, 2817 Gjøvik",17, $password)
 );
 
 // Inserting user data, user_id is automatically added because of AUTO_INCREMENT
-$sql = "INSERT INTO users (firstname, lastname, email, password) values (?,?,?,?)";
+$sql = "INSERT INTO users (firstname, lastname, email, address, countyID, password) values (?,?,?,?,?,?)";
 $query = $db->prepare($sql);
 
 foreach($users_array as $user)
@@ -155,24 +191,24 @@ $query = 'INSERT INTO categories(name) VALUES
 ("sport");
 ';
 if ($db->exec($query)===false){
-	die('Query failed(12):' . $db->errorInfo()[2]);
+	die('Query failed(13):' . $db->errorInfo()[2]);
 }
 
 
 //Insert into Items
-$query = 'INSERT INTO items (name, description, userID,	mapLong, mapLat, categoryID) VALUES
-("The actual Mona Lisa", "Mona Lisa is a half-length portrait of Lisa Gherardini by the Italian Renaissance artist Leonardo da Vinci that has been described as the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world", 1, 1.123, 2.343, 3),
+$query = 'INSERT INTO items (name, description, userID, categoryID) VALUES
+("The actual Mona Lisa", "Mona Lisa is a half-length portrait of Lisa Gherardini by the Italian Renaissance artist Leonardo da Vinci that has been described as the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world", 1,3),
 
-("28 inch LCD TV", "A 4 year old TV in good condition.", 3, 1.342, 2.1512, 2),
+("28 inch LCD TV", "A 4 year old TV in good condition.", 3, 2),
 
-("One hoodie", "A blue hoodie with a white logo", 1, 2.111, 3.12, 1),
+("One hoodie", "A blue hoodie with a white logo", 1, 1),
 
-("Corner couch", "A corner couch with three seats, where one of them is a long seat", 2, 1.2, 2.1, 4),
+("Corner couch", "A corner couch with three seats, where one of them is a long seat", 2,  4),
 
-("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 1.2, 2.1, 5)
+("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 5)
 ';
 if ($db->exec($query)===false){
-	die('Query failed(13):' . $db->errorInfo()[2]);
+	die('Query failed(14):' . $db->errorInfo()[2]);
 }
 
 //Insert into images
@@ -185,7 +221,7 @@ $query = 'INSERT INTO images(itemID, imgPath) VALUES
 (5, "img/corner_couch.jpg")
 ';
 if ($db->exec($query)===false){
-	die('Query failed(14):' . $db->errorInfo()[2]);
+	die('Query failed(15):' . $db->errorInfo()[2]);
 }
 
 //Insert into conversations
@@ -197,7 +233,7 @@ $query = 'INSERT INTO conversations(itemOwnerID, userID, itemID) VALUES
 (2, 1, 4)
 ';
 if ($db->exec($query)===false){
-	die('Query failed(15):' . $db->errorInfo()[2]);
+	die('Query failed(16):' . $db->errorInfo()[2]);
 }
 
 //Insert into messages
@@ -217,5 +253,5 @@ $query = 'INSERT INTO messages(writerID, message, conversationID) VALUES
 (2, "Yeah, want it?", 5)
 ';
 if ($db->exec($query)===false){
-	die('Query failed(16):' . $db->errorInfo()[2]);
+	die('Query failed(17):' . $db->errorInfo()[2]);
 }

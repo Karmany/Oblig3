@@ -24,15 +24,18 @@
 
       <div class="container-fluid">
 
+         <div class="row">
 
-
-         <div id="filter">
+         <div id="filter" class="col-sm-2 col-sm-offset-1">
             <h2>Filter</h2>
+
+            <h4>Categories</h4>
 
             <?php
             $stmt = $db->prepare("
             SELECT categoryID, name 
             FROM categories
+            ORDER BY name
             ");
             $stmt->execute();
 
@@ -46,13 +49,76 @@
                ';
             }
             ?>
+            <h4>Counties</h4>
+            <input type="checkbox" id="akershus">
+            <label for="akershus">Akershus</label>
+            <input type="checkbox" id="aust-agder">
+            <label for="aust-agder">Aust-agder</label>
+            <input type="checkbox" id="buskerud">
+            <label for="buskerud">Buskerud</label>
+            <input type="checkbox" id="finnmark">
+            <label for="finnmark">Finnmark</label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+            <input type="checkbox" id="">
+            <label for=""></label>
+
+            <?php
+            $stmt = $db->prepare('
+            SELECT countyID, name
+            FROM counties
+            ORDER BY name
+            ');
+            $stmt->execute();
+
+            $categories = $stmt->fetchAll(PDO::FETCH_OBJ);
+            foreach ($categories as $c) {
+					echo '
+            <div>
+               <input type="checkbox" id="' . $c->countyID . '">
+               <label for="' . $c->countyID . '">' . ucfirst($c->name) . '</label>
+            </div>
+            ';
+				}
+            ?>
          </div>
 
 
-         <div id="result">
-
+         <div id="result"class="col-sm-8">
          </div>
-
+         </div>
 
 
          <script>
@@ -78,9 +144,8 @@
                   success: function(result){
                      $("#result").html("");
                      for(i=0; i<result.length; i++){
-                        content = '<p>' + result[i]['itemID'] + '</p>';
-                        content += '<p>' + result[i]['name'] + '</p>'
-                        content += '<p>' + result[i]['description'] + '</p>'
+                        content = '<p>' + result[i]['name'] + '</p>'
+                        content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
                         content += '<br/>';
                         $("#result").append(content);
                         if (opts){
