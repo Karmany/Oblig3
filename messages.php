@@ -2,22 +2,43 @@
 // ID of current user
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT conversationID FROM conversations WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
+$sql = "SELECT conversationID, itemOwnerID, userID FROM conversations WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
 $stmnt = $db->prepare($sql);
 $stmnt->execute(array());
 $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
 
+
 foreach ($result as $row)
    {
       $convID = $row->conversationID;
+      $itOwID = $row->itemOwnerID;
+      $usID = $row->userID;
       // Get messages from database
       $sql = "SELECT messageID, writerID, message FROM messages WHERE conversationID = '$convID'";
       $stmnt = $db->prepare($sql);
       $stmnt->execute(array());
       $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-      echo "<hr><br><br> <h2>ConversationID =" . $convID . "</h2>";
+      if ($user_id == $itOwID) {
+
+         $sql = "SELECT conversationID, itemOwnerID, userID FROM users WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
+         $stmnt = $db->prepare($sql);
+         $stmnt->execute(array());
+         $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+
+         foreach ($result as $row)
+            {
+
+            }
+
+         echo "<hr><br><br> <h2>Message from: " . $usID . "</h2>";
+      } else {
+         echo "<hr><br><br> <h2>Message to: " . $itOwID . "</h2>";
+      }
+
+
+
 
       // Print conversation
       foreach ($result as $row)

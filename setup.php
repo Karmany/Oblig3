@@ -193,7 +193,8 @@ $query = 'INSERT INTO conversations(itemOwnerID, userID, itemID) VALUES
 (1, 2, 1),
 (3, 4, 2),
 (1, 3, 2),
-(1, 4, 3)
+(1, 4, 3),
+(2, 1, 4)
 ';
 if ($db->exec($query)===false){
 	die('Query failed(15):' . $db->errorInfo()[2]);
@@ -211,7 +212,9 @@ $query = 'INSERT INTO messages(writerID, message, conversationID) VALUES
 (3, "Did it yesterday, lol", 3),
 (4,"Hello! Can I have this?", 4),
 (1, "Okay, feel free to come over!", 4),
-(4, "Will pick it up tomorrow.", 4)
+(4, "Will pick it up tomorrow.", 4),
+(1, "Sup? Nice item.", 5),
+(2, "Yeah, want it?", 5)
 ';
 if ($db->exec($query)===false){
 	die('Query failed(16):' . $db->errorInfo()[2]);
