@@ -106,6 +106,8 @@ echo "</pre>";
                $('#newmessage_status').html(response.message);
                if(response.status == 'success'){
                   console.log("Status: successfull!");
+               } else {
+                  console.log("Status: UNsuccessfull!");
                }
 
             }
