@@ -40,9 +40,7 @@ input[type="submit"]{
 
 input:focus, textarea:focus, select:focus{
    outline: none !important;
-   /*border: 1px solid;*/
    border-color: #4f5052;
- /*box-shadow: 0 0 10px #719ECE;*/
 }
 
 /* ------------ NAVIGATION/MENU --------------------- */
@@ -102,10 +100,9 @@ input:focus, textarea:focus, select:focus{
 }
 
 #profile img {
-   /*display: block;*/
    height: 75px;
    width: 75px;
-   /*border-radius: 100%;*/
+   margin-bottom: 10px;
 }
 
 #profile input[type="submit"] {

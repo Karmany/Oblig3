@@ -42,8 +42,19 @@
 			<div class="row">
 				<div id="profile_section" class="col-sm-4">
                <h1 class="section_heading">Profile information</h1>
+
+               <div class="edit_profile_img col-sm-12">
+                  <!-- <h2>Profile Image:</h2> -->
+                  <form id= "edit_profile_image_form" onsubmit="javascript: return false;" enctype="multipart/form-data">
+                     <div id="edit_profile_img_message"></div>
+                     <label for="profile_img">Upload custom profile image:</label>
+                     <img src="<?=$profile_img?>" alt="Profile Image">
+                     <input type="file" name="profile_img">
+                     <input type="submit" value="Confirm" id="confirm_profile_img_change">
+                  </form>
+               </div>
+
                <div class="edit_name col-sm-12">
-                  <!-- <h2>Name:</h2> -->
                   <!-- Stop form from being sent, want to do it with ajax instead -->
                   <form onsubmit="javascript: return false;">
                      <div id="edit_name_message"></div>
@@ -62,18 +73,6 @@
                      <label for="email">Your email address:</label>
    						<input type="email" name="email" value="" placeholder="<?php if(isset($email)){echo $email;}?>" id="email"><br/>
                      <input type="submit" value="Confirm" id="confirm_email_change">
-                  </form>
-               </div>
-
-               <div class="edit_profile_img col-sm-12">
-                  <!-- <h2>Profile Image:</h2> -->
-                  <form id= "edit_profile_image_form" onsubmit="javascript: return false;" enctype="multipart/form-data">
-                     <div id="edit_profile_img_message"></div>
-                     <img src="<?=$profile_img?>" alt="Profile Image">
-                     <label for="profile_img">Image:
-   							<input type="file" name="profile_img">
-   						</label>
-                     <input type="submit" value="Confirm" id="confirm_profile_img_change">
                   </form>
                </div>
 
