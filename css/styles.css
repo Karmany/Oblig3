@@ -76,7 +76,7 @@ input:focus, textarea:focus{
 
 /* ------------ PROFILE PAGE -----------------------*/
 
-#profile input[type="text"], #profile input[type="email"], #profile input[type="password"], #profile textarea {
+#profile input[type="text"], #profile input[type="email"], #profile input[type="password"], #profile select, #profile textarea {
    max-width: 75%;
    width: 100%;
 }
@@ -114,6 +114,11 @@ input:focus, textarea:focus{
 
 #profile label {
    display: block;
+}
+
+#profile #messages_section h2 {
+   font-size: 16px;
+   margin-top: -5px;
 }
 
 /* --------- MY ITEMS PAGE ------------------------- */
