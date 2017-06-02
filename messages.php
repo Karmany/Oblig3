@@ -45,7 +45,7 @@ foreach ($result as $row)
                $fName = $row->firstname;
                $lName = $row->lastname;
             }
-         echo "<hr><br><br> <h2 class='msgToFrom'>Message from: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
+         echo "<hr><br><br> <h2 class='msgToFrom'>Message from: " . $fName . " " . "$lName" . " about " . "<a href='item.php?itemID=" . $itemID . "'>$itemName</a></h2>";
       }
       else
       { //If the message is from you
@@ -60,7 +60,7 @@ foreach ($result as $row)
                $fName = $row->firstname;
                $lName = $row->lastname;
             }
-         echo "<hr><br><br> <h2 class='msgToFrom'>Message to: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
+         echo "<hr><br><br> <h2 class='msgToFrom'>Message to: " . $fName . " " . "$lName" . " about " . "<a href='item.php?itemID=" . $itemID . "'>$itemName</a></h2>";
       }
 
 

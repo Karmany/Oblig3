@@ -179,15 +179,10 @@ if ($db->exec($query)===false){
 //Insert into Items
 $query = 'INSERT INTO items (name, description, userID, categoryID) VALUES
 ("The actual Mona Lisa", "Mona Lisa is a half-length portrait of Lisa Gherardini by the Italian Renaissance artist Leonardo da Vinci that has been described as the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world", 1, 3),
-
 ("28 inch LCD TV", "A 4 year old TV in good condition.", 3, 2),
-
 ("One hoodie", "A blue hoodie with a white logo", 1, 1),
-
 ("Corner couch", "A corner couch with three seats, where one of them is a long seat", 2,  4),
-
 ("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 5),
-
 ("Football jerseys", "10 diffrent football jerseys in multiple colors. Including multiple premier league jerseys", 5, 5),
 ("100+ pokemon cards", "Giving away many pokemon cards, both rare and common. Including Charizard, Machamp, Blastoise, Alakazam and Gyarados.", 2, 3),
 ("Refridgerator, white", "Refridgerator with a small freezer on top", 4, 4),
