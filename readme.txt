@@ -1,6 +1,6 @@
 How to get started:
 1. The files are php files, so this application must use localhost.
---- Move folder to localhost, if you use XAMPP move this is the htdocs-folder.
+--- Move folder to localhost, if you use XAMPP move this to the htdocs-folder.
 
 2. The application need a database, we have made one with some dummy-data.
 --- Change connection details in the beginning of connect.php as needed.
