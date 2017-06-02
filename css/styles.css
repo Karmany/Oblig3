@@ -45,7 +45,7 @@ input:focus, textarea:focus, select:focus{
 
 /* ------------ NAVIGATION/MENU --------------------- */
 .navbar {
-   border-radius: none !important;
+   border-radius: none !important:
 }
 
 .navbar-default {
@@ -104,6 +104,7 @@ input:focus, textarea:focus, select:focus{
 #profile input[type="text"], #profile input[type="email"], #profile input[type="password"], #profile select, #profile textarea {
    max-width: 75%;
    width: 100%;
+    cursor: text;
 }
 
 #profile .section_heading {

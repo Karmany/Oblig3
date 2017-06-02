@@ -45,84 +45,7 @@
             ?>
 
             <h4>Counties</h4>
-            <!--
-            <div>
-               <input type="checkbox" id="akershus">
-               <label for="akershus">Akershus</label>
-            </div>
-            <div>
-               <input type="checkbox" id="aust_agder">
-               <label for="aust_agder">Aust-agder</label>
-            </div>
-            <div>
-               <input type="checkbox" id="buskerud">
-               <label for="buskerud">Buskerud</label>
-            </div>
-            <div>
-               <input type="checkbox" id="finnmark">
-               <label for="finnmark">Finnmark</label>
-            </div>
-            <div>
-               <input type="checkbox" id="hedmark">
-               <label for="hedmark">Hedmark</label>
-            </div>
-            <div>
-               <input type="checkbox" id="hordaland">
-               <label for="hordaland">Hordaland</label>
-            </div>
-            <div>
-               <input type="checkbox" id="more_og_romsdal">
-               <label for="more_og_romsdal">Møre og romsdal</label>
-            </div>
-            <div>
-               <input type="checkbox" id="nord_trondelag">
-               <label for="nord_trondelag">Nord Trøndelag</label>
-            </div>
-            <div>
-               <input type="checkbox" id="nordland">
-               <label for="nordland">Nordland</label>
-            </div>
-            <div>
-               <input type="checkbox" id="oppland">
-               <label for="oppland">Oppland</label>
-            </div>
-            <div>
-               <input type="checkbox" id="oslo">
-               <label for="oslo">Oslo</label>
-            </div>
-            <div>
-               <input type="checkbox" id="rogaland">
-               <label for="rogaland">Rogaland</label>
-            </div>
-            <div>
-               <input type="checkbox" id="sogn_og_fjordane">
-               <label for="sogn_og_fjordane">Sogn og fjordane</label>
-            </div>
-            <div>
-               <input type="checkbox" id="sor_trondelag">
-               <label for="sor_trondelag">Sør trøndelag</label>
-            </div>
-            <div>
-               <input type="checkbox" id="telemark">
-               <label for="telemark">Telemark</label>
-            </div>
-            <div>
-               <input type="checkbox" id="troms">
-               <label for="troms">Troms</label>
-            </div>
-            <div>
-               <input type="checkbox" id="vest_agder">
-               <label for="vest_agder">Vest-agder</label>
-            </div>
-            <div>
-               <input type="checkbox" id="vestfold">
-               <label for="vestfold">Vestfold</label>
-            </div>
-            <div>
-               <input type="checkbox" id="ostfold">
-               <label for="ostfold">Østfold</label>
-            </div>
--->
+
             <?php
             // Run the county function that gets all counties ordered by name.
             $counties = get_counties($db);
@@ -172,15 +95,20 @@
                   data: {filterOpts: opts,
                         mode: 'update_items'},
                   success: function(result){
-                     $("#result").html("");
+                  	// Delete the current conent in #result, which is the items
+                  	$("#result").html("");
+                  	// Add new content in #result that fit the filter options
                      for(var i=0; i<result.length; i++){
+                     	//Make a variable with html to display item
 								var content = '<a href="item.php?itemID='+ result[i]['itemID'] +'" class="col-sm-4 one_item"> ';
+								// Add more and more html to the same variable
 								content += '<h3>' + result[i]['name'] + '</h3>';
 								content += '<div class="index_img_wrap"><img class="item_img" src="' + result[i]['imgPath'] + '"></div> ';
 								content += '<p class="index_name">By: ' + capitalizeFirstLetter(result[i]['firstname']) + ' ' + capitalizeFirstLetter(result[i]['lastname']) + '</p>';
 								content += '<p class="category_label index_category_label">'+ capitalizeFirstLetter(result[i]['category_name']) +'</p>';
 								content += '<p class="index_date">' + result[i]['date'] + '</p>';
 								content += '</a>';
+								// Add the content of the variable into result and start over with the next item.
                         $("#result").append(content);
                      }
                   }
@@ -198,6 +126,7 @@
 						success: function(result) {
 							$("#result").html("");
                      console.log(result);
+                     // Go through each item and show them on the page.
 							for ( var i = 0; i < result.length; i++) {
 								var content = '<a href="item.php?itemID='+ result[i]['itemID'] +'" class="col-sm-4 one_item"> ';
 								content += '<h3>' + result[i]['name'] + '</h3>';
@@ -212,7 +141,6 @@
                });
             }
             //Script that reacts on click on any checkbox and runs one of the two functions to show data.
-
             var $checkboxes = $("input:checkbox");
             $checkboxes.on('click',function(){
             	//If any is checked get filter options and run the update items function
@@ -223,7 +151,6 @@
                //If the click was unchecking the last checked box, and no boxes are checked show all the content
                else
 						show_all()
-
             });
             //Show all content on first load
             $(document).ready(show_all());
