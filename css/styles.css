@@ -221,9 +221,12 @@ nav ul form button {
 
 .item_profile {
     text-align: center;
+    background-color: #eee;
+    padding: 20px 10px;
+    border-radius: 2px;
 }
 .item_profile img {
-    width: 70%;
+    width: 80%;
     margin-bottom: 20px;
 }
 

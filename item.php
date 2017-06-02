@@ -55,7 +55,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="item_profile">
-								<img src="<?php echo $item->profileImg ?>" alt="">
+								<img src="<?php echo $item->profileImg ?>" class="img-circle" alt="">
 								<p class="item_profile_name"><?php echo ucfirst($item->firstname) . ' ' . ucfirst($item->lastname) ?></p>
 								<p><a href="mailto:<?php echo $item->email ?>"><?php echo $item->email ?></a></p>
 								<p><?php echo $item->address . ', ' . $item->county_name?></p>
