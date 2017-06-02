@@ -66,20 +66,20 @@
 					<!-- My items -->
 					<h2>My items</h2>
 					<div id="items_list" class="col-sm-6">
-					<?php foreach ($items as $item): ?>
-						<div class="item">
-							<div class="item_text">
-								<h3><?=$item->name?></h3>
-								<span class="category_date">Posted: <?=htmlspecialchars(date("d-m-Y H:i", strtotime($item->date)))?></span>
-								<span class="category_label"><?=ucfirst($item->category_name)?></span>
+						<?php foreach ($items as $item): ?>
+							<div class="item" id="item_id<?=$item->itemID?>">
+								<div class="item_text">
+									<h3><?=$item->name?></h3>
+									<span class="category_date">Posted: <?=htmlspecialchars(date("d-m-Y H:i", strtotime($item->date)))?></span>
+									<span class="category_label"><?=ucfirst($item->category_name)?></span>
+								</div>
+								<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
+								<?php echo $item->itemID ?>
+								<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item">Delete</button>
 							</div>
-							<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
-							<?php echo $item->itemID ?>
-							<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item">Delete</button>
-						</div>
-					<?php endforeach; ?>
+						<?php endforeach; ?>
+						<div id="items_message"></div>
 					</div>
-					<div id="items_message"></div>
 				</div>
 			</div>
 		</div>
@@ -136,7 +136,12 @@
 						},
 						cache:false
 					}).done(function(response){
+						if(response.status == "success"){
+							// Remove item
+							$('#item_id' + del_id).remove();
+						}
 						// Give feedback
+						$('#items_message').html(response.message);
 					});
 				});
 
