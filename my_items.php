@@ -74,7 +74,7 @@
 									<span class="category_label"><?=ucfirst($item->category_name)?></span>
 								</div>
 								<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
-								<?php echo $item->itemID ?>
+
 								<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item">Delete</button>
 							</div>
 						<?php endforeach; ?>

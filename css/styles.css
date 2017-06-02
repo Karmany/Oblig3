@@ -197,6 +197,21 @@ input:focus, textarea:focus, select:focus{
    padding: 2px 6px;
    font-size: 12px;
 }
+
+.delete_item {
+    float: right;
+    position: relative;
+    bottom: 30px;
+    background-color: #e84e4f;
+    color: #fdfdfd;
+    border: none;
+    padding: 6px 10px;
+
+    border-radius: 2px;
+
+}
+
+
 /* --------- HEADER/MENU ---------------------- */
 
 * {
