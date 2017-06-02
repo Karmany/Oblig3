@@ -37,7 +37,7 @@ if(empty($newmessage)){
       if(isset($result)){
          // Update session parameters
          $newmessage_status = "<p class='success'>" . $lastMessage . "<b> IS SENDT</b></p>";
-         echo json_encode(array("status"=>"success", "message"=>$newmessage_status));
+         echo json_encode(array("status"=>"success", "message"=>$newmessage_status, "bubbleMessage"=>"<pre><div class='col-sm-12 text-right'><p class='messageRight'>" . $lastMessage . " <b>:You</b> " . "</p></div><br></pre>"));
          return;
       } else {
          // Error when running query
