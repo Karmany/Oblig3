@@ -83,7 +83,7 @@ $query = 'CREATE TABLE IF NOT EXISTS conversations (
 	itemOwnerID INT NOT NULL,
 	userID INT NOT NULL,
 	itemID INT NOT NULL,
-	FOREIGN KEY (itemID) REFERENCES items(itemID),
+	FOREIGN KEY (itemID) REFERENCES items(itemID) ON DELETE CASCADE,
 	FOREIGN KEY (itemOwnerID) REFERENCES users(userID),
 	FOREIGN KEY (userID) REFERENCES users(userID)
 	)';
@@ -101,7 +101,7 @@ $query = 'CREATE TABLE IF NOT EXISTS messages (
 	status BOOLEAN DEFAULT 0,
 	conversationID INT NOT NULL,
 	FOREIGN KEY (writerID) REFERENCES users(userID),
-	FOREIGN KEY (conversationID) REFERENCES conversations(conversationID)
+	FOREIGN KEY (conversationID) REFERENCES conversations(conversationID) ON DELETE CASCADE
 	)';
 if ($db->exec($query)===false){
 	die('Query failed(9):' . $db->errorInfo()[2]);
@@ -111,7 +111,7 @@ if ($db->exec($query)===false){
 $query = 'CREATE TABLE IF NOT EXISTS images (
 	itemID INT NOT NULL,
 	imgPath VARCHAR(256),
-	FOREIGN KEY (itemID) REFERENCES items(itemID))';
+	FOREIGN KEY (itemID) REFERENCES items(itemID) ON DELETE CASCADE)';
 if ($db->exec($query)===false){
 	die('Query failed(11):' . $db->errorInfo()[2]);
 }
