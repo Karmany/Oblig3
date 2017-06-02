@@ -36,9 +36,9 @@
             // Go though all categories in result of previous function and make a checkbox for each one
             foreach ($categories as $c){
                echo'
-                  <div>
+                  <div class="filter_wrap">
                      <input type="checkbox" id="'. $c->categoryID .'">
-                     <label for="'. $c->categoryID .'">'. ucfirst($c->name) .'</label>
+                     <label for="'. $c->categoryID .'" class="filter_text">'. ucfirst($c->name) .'</label>
                   </div>
                ';
             }
@@ -129,9 +129,9 @@
             // Loop through the counties and max a checkbox for each one to filter with
             foreach ($counties as $c) {
 					echo '
-            <div>
+            <div class="filter_wrap">
                <input type="checkbox" id="' . $c->name . '">
-               <label for="' . $c->name . '">' . $c->name_nice . '</label>
+               <label for="' . $c->name . '" class="filter_text">' . $c->name_nice . '</label>
             </div>
             ';
 				}

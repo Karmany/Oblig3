@@ -31,7 +31,7 @@
 					<h2><?php echo $item->name ?></h2>
 					<div class="row">
 						<div class="col-sm-8">
-							<div class="row">
+							<div class="row item_img_wrap">
 							<?php
 
 							$images = get_images($db, $itemID);
@@ -46,7 +46,7 @@
 							}
 							?>
 							</div>
-							<div class="row">
+							<div class="row item_desc_wrap">
 								<div>
 									<h3>Description</h3>
 									<p><?php echo $item->description ?></p>
@@ -64,7 +64,19 @@
 						</div>
 					</div>
 					<div class="row">
-						
+						<h3>Message</h3>
+					</div>
+					<div class="row">
+						<?php
+						if(isset($_SESSION['isloggedin'])){
+
+						}
+						else {
+							echo '<div class="col-sm-12 interested_wrap"></div><p> You need to be logged in to send a message </p>';
+							echo '<a href="register.php" class="item_button">Register</a> <a href="login.php" class="item_button">Login</a></div>';
+						}
+						?>
+
 					</div>
 
 					
