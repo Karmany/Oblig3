@@ -3,7 +3,7 @@
 $user_id = $_SESSION['user_id'];
 $mesg = '';
 
-$sql = "SELECT conversationID, itemOwnerID, userID FROM conversations WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
+$sql = "SELECT conversationID, itemOwnerID, userID, itemID FROM conversations WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
 $stmnt = $db->prepare($sql);
 $stmnt->execute(array());
 $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
@@ -15,7 +15,17 @@ foreach ($result as $row)
       $convID = $row->conversationID;
       $itOwID = $row->itemOwnerID;
       $usID = $row->userID;
+      $itemID = $row->itemID;
 
+      $sql = "SELECT name FROM items WHERE itemID = '$itemID'";
+      $stmnt = $db->prepare($sql);
+      $stmnt->execute(array());
+      $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+
+      foreach ($result as $row)
+         {
+            $itemName = $row->name;
+         }
 
       $sql = "SELECT messageID, writerID, message FROM messages WHERE conversationID = '$convID'";
       $stmnt = $db->prepare($sql);
@@ -35,7 +45,7 @@ foreach ($result as $row)
                $fName = $row->firstname;
                $lName = $row->lastname;
             }
-         echo "<hr><br><br> <h2>Message from: " . $fName . " " . "$lName" . "</h2>";
+         echo "<hr><br><br> <h2>Message from: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
       }
       else
       { //If the message is from you
@@ -50,7 +60,7 @@ foreach ($result as $row)
                $fName = $row->firstname;
                $lName = $row->lastname;
             }
-         echo "<hr><br><br> <h2>Message to: " . $fName . " " . "$lName" . "</h2>";
+         echo "<hr><br><br> <h2>Message to: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
       }
 
 
@@ -64,7 +74,7 @@ foreach ($result as $row)
                echo "<div class='col-sm-12 text-right'><p class='messageRight'>" . $row->message . " <b>:You</b> " . "</p></div><br>";
                //echo "Written by you: " . $row->message . "\n";
             } else {
-               echo "<div class='col-sm-12'><p class='messageLeft'>" . "<b>Other: </b>" . $row->message . "</p></div><br>";
+               echo "<div class='col-sm-12'><p class='messageLeft'>" . "<b>" . $fName . ": </b>" . $row->message . "</p></div><br>";
                //echo "Written by someone else: " . $row->message . "\n";
             }
             echo "</pre>";
@@ -95,6 +105,7 @@ foreach ($result as $row)
                }).done(function(response){
                      // Make new message
                      console.log('Done runs!');
+                     $('#newmessage" . $convID . "').val('');
                      $( response.bubbleMessage ).insertBefore( $( '#formNo" . $convID . "' ) );
                      $('#newmessage_status" . $convID . "').html(response.message);
 
