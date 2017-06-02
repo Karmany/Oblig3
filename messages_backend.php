@@ -4,17 +4,18 @@ session_start();
 require_once("connect.php");
 require_once("functions.php");
 
+// Vars from SESSION and POST recived from message sendt
 $user_id = $_SESSION['user_id'];
 $convID = $_POST['convID'];
 $newmessage = $_POST['newmessage'];
 
 
 
-if(empty($newmessage)){
+if(empty($newmessage)){ //If message empty, return errormessage
    echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Message cannot be empty</p>"));
    return;
    }
-   else
+   else //If message is NOT empty
    {
       // Put message in DB
       $sql = "INSERT INTO messages (writerID, conversationID, message) VALUES (?,?,?)";

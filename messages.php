@@ -69,49 +69,46 @@ foreach ($result as $row)
             }
             echo "</pre>";
          }
-      echo "<div class='col-sm-12' id='formNo1" . $convID . "'>
+      echo "<div class='col-sm-12' id='formNo" . $convID . "'>
                <div class='sendMessageOuter'>
-               <div id='newmessage_status'></div>
+               <div id='newmessage_status" . $convID . "'></div>
                   <form onsubmit='javascript: return false;' class='sendMessageForm' method='POST'>
-                     <input type='hidden' name='convID' value='" . $convID ."' id='convID'>
-                     <input type='text' name='message' placeholder='Write message...' id='newmessage'>
-                     <input type='submit' name='submit' value='Send Message' id='sendMessage1'>
+                     <input type='hidden' name='convID' value='" . $convID ."' id='convID" . $convID . "'>
+                     <input type='text' name='message' placeholder='Write message...' id='newmessage" . $convID . "'>
+                     <input type='submit' name='submit' value='Send Message' id='sendMessage" . $convID . "'>
                   </form>
                </div>
             </div>";
+      echo "<script type='text/javascript'>
+         $(function(){
+            // ---- UPDATE MESSAGES -----
+            $('#sendMessage" . $convID . "').click(function(){
+               // Send data from form to backend
+               console.log('Submit pressed!');
+               $.ajax({
+                  url: 'messages_backend.php',
+                  method: 'POST',
+                  data: {
+                     convID: $('#convID" . $convID . "').val(),
+                     newmessage: $('#newmessage" . $convID . "').val()
+                  }
+               }).done(function(response){
+                     // Make new message
+                     console.log('Done runs!');
+                     $( response.bubbleMessage ).insertBefore( $( '#formNo" . $convID . "' ) );
+                     $('#newmessage_status" . $convID . "').html(response.message);
+
+                     if(response.status == 'success'){
+                        console.log('Status: successfull!');
+                     }
+
+                  }
+               );
+            });
+         });
+      </script>";
    }
 echo "</pre>";
  ?>
 
-<?php
-/*action='sendMessage.php'*/ ?>
-
-
-<script type="text/javascript">
-   $(function(){
-      // ---- UPDATE MESSAGES -----
-      $('#sendMessage1').click(function(){
-         // Send data from form to backend
-         console.log("Submit pressed!");
-         $.ajax({
-            url: 'messages_backend.php',
-            method: 'POST',
-            data: {
-               convID: $('#convID').val(),
-               newmessage: $('#newmessage').val()
-            }
-         }).done(function(response){
-               // Make new message
-               console.log("Done runs!");
-               $( response.bubbleMessage ).insertBefore( $( "#formNo<?php $convID ?>" ) );
-               $('#newmessage_status').html(response.message);
-
-               if(response.status == 'success'){
-                  console.log("Status: successfull!");
-               }
-
-            }
-         );
-      });
-   });
-</script>
+<?php /*OLD NO-AJAX SOULUTION FOR FORM   ----     action='sendMessage.php'*/ ?>
