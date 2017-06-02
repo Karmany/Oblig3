@@ -1,5 +1,12 @@
 /* ------------ GENERAL STYLES --------------------- */
 
+/*
+   COLORS:
+   White: #FDFDFD
+   Green: #A7D89E
+   Black: #2A2F36
+*/
+
 .row {
    margin: 0;
 }
@@ -27,12 +34,20 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
    margin-bottom: 50px;
 }
 
+#profile .section_heading {
+   font-size: 20px;
+}
+
 #profile #profile_section h1 {
    margin-left: 15px;
 }
 
 #profile #messages_section h1 {
-   margin-right: -15px;
+   margin-left: -15px;
+}
+
+#profile form {
+   margin-bottom: 20px;
 }
 
 #profile img {

@@ -44,9 +44,9 @@
                <h1 id="greeting_txt">Welcome, <span id="greeting_txt_firstname"><?=$firstname?></span> <span id="greeting_txt_lastname"><?=$lastname?></span></h1>
             </div>
 				<div id="profile_section" class="col-sm-4">
-               <h1>Profile</h1>
+               <h1 class="section_heading">Profile information</h1>
                <div class="edit_name col-sm-12">
-                  <h2>Name:</h2>
+                  <!-- <h2>Name:</h2> -->
                   <!-- Stop form from being sent, want to do it with ajax instead -->
                   <form onsubmit="javascript: return false;">
                      <div id="edit_name_message"></div>
@@ -54,34 +54,34 @@
    						<input type="text" name="firstname" value="" placeholder="<?php if(isset($firstname)){echo $firstname;}?>" id="firstname"><br/>
    						<label for="lastname">Last name</label>
    						<input type="text" name="lastname" value="" placeholder="<?php if(isset($lastname)){echo $lastname;}?>" id="lastname"><br/>
-   						<input type="submit" value="Confirm >>" id="confirm_name_change">
+   						<input type="submit" value="Confirm" id="confirm_name_change">
    					</form>
                </div>
 
                <div class="edit_email col-sm-12">
-                  <h2>Email:</h2>
+                  <!-- <h2>Email:</h2> -->
                   <form onsubmit="javascript:return false;">
                      <div id="edit_email_message"></div>
                      <label for="email">Your email address:</label>
    						<input type="email" name="email" value="" placeholder="<?php if(isset($email)){echo $email;}?>" id="email"><br/>
-                     <input type="submit" value="Confirm >>" id="confirm_email_change">
+                     <input type="submit" value="Confirm" id="confirm_email_change">
                   </form>
                </div>
 
                <div class="edit_profile_img col-sm-12">
-                  <h2>Profile Image:</h2>
+                  <!-- <h2>Profile Image:</h2> -->
                   <form id= "edit_profile_image_form" onsubmit="javascript: return false;" enctype="multipart/form-data">
                      <div id="edit_profile_img_message"></div>
                      <img src="<?=$profile_img?>" alt="Profile Image">
                      <label for="profile_img">Image:
    							<input type="file" name="profile_img">
    						</label>
-                     <input type="submit" value="Confirm >>" id="confirm_profile_img_change">
+                     <input type="submit" value="Confirm" id="confirm_profile_img_change">
                   </form>
                </div>
 
                <div class="edit_password col-sm-12">
-                  <h2>Password:</h2>
+                  <!-- <h2>Password:</h2> -->
                   <form onsubmit="javascript:return false;">
                      <div id="edit_password_message"></div>
                      <label for="current_password">Your current password:</label>
@@ -90,12 +90,12 @@
                      <input type="password" name="new_password" id="new_password">
                      <label for="confirm_password">Confirm password:</label>
                      <input type="password" name="confirm_password" id="confirm_password">
-                     <input type="submit" value="Confirm >>" id="confirm_password_change">
+                     <input type="submit" value="Confirm" id="confirm_password_change">
                   </form>
                </div>
 
                <div class="edit_address col-sm-12">
-                  <h2>Address:</h2>
+                  <!-- <h2>Address:</h2> -->
                   <form onsubmit="javascript:return false;">
                      <div id="edit_address_message"></div>
                      <input type="text" name="address" value="" placeholder="<?=$user->address?>" id="address"><br/>
@@ -117,10 +117,10 @@
 
             </div>
 
-            <div id="messages_section"class="col-sm-8">
+            <div id="messages_section" class="col-sm-8">
                <div class="row">
                   <div class="col-sm-12">
-                     <h1>Messages</h1>
+                     <h1 class="section_heading">Messages</h1>
                   </div>
                   <?php
                      include 'messages.php';
