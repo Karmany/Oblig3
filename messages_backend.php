@@ -11,7 +11,6 @@ $newmessage = $_POST['newmessage'];
 
 
 if(empty($newmessage)){
-   //echo json_encode(array("test"=>"halla"));
    echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Message cannot be empty</p>"));
    return;
    }
@@ -34,15 +33,17 @@ if(empty($newmessage)){
             $lastMessage = $row->message;
          }
 
-      if($result == 1){ // Successfull query
+      // Successfull query
+      if(isset($result)){
          // Update session parameters
          $newmessage_status = "<p class='success'>" . $lastMessage . "<b> IS SENDT</b></p>";
-         echo json_encode(array("status"=>"success", "message"=>$newmessage_status));
-         }
-         else
-         { // Error when running query
-            echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));
-         }
+         echo json_encode(array("status"=>"success", "message"=>$newmessage_status, "bubbleMessage"=>"<pre><div class='col-sm-12 text-right'><p class='messageRight'>" . $lastMessage . " <b>:You</b> " . "</p></div><br></pre>"));
+         return;
+      } else {
+         // Error when running query
+         echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));
+         return;
+      }
    }
 break;
  ?>

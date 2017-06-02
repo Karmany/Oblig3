@@ -174,13 +174,13 @@
                   success: function(result){
                      $("#result").html("");
                      for(var i=0; i<result.length; i++){
-								var content = '<div class="col-sm-4 one_item"> ';
+								var content = '<a href="item.php?itemID='+ result[i]['itemID'] +'" class="col-sm-4 one_item"> ';
 								content += '<h3>' + result[i]['name'] + '</h3>';
 								content += '<div class="index_img_wrap"><img class="item_img" src="' + result[i]['imgPath'] + '"></div> ';
-								content += '<p class="category_date index_date">Posted: ' + result[i]['date'] + '</p>';
+								content += '<p class="index_name">By: ' + capitalizeFirstLetter(result[i]['firstname']) + ' ' + capitalizeFirstLetter(result[i]['lastname']) + '</p>';
 								content += '<p class="category_label index_category_label">'+ capitalizeFirstLetter(result[i]['category_name']) +'</p>';
-
-								content += '<hr></div>';
+								content += '<p class="index_date">' + result[i]['date'] + '</p>';
+								content += '</a>';
                         $("#result").append(content);
                      }
                   }

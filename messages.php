@@ -69,7 +69,7 @@ foreach ($result as $row)
             }
             echo "</pre>";
          }
-      echo "<div class='col-sm-12'>
+      echo "<div class='col-sm-12' id='formNo1'>
                <div class='sendMessageOuter'>
                <div id='newmessage_status'></div>
                   <form onsubmit='javascript: return false;' class='sendMessageForm' method='POST'>
@@ -103,11 +103,11 @@ echo "</pre>";
          }).done(function(response){
                // Make new message
                console.log("Done runs!");
+               $( response.bubbleMessage ).insertBefore( $( "#formNo1" ) );
                $('#newmessage_status').html(response.message);
+
                if(response.status == 'success'){
                   console.log("Status: successfull!");
-               } else {
-                  console.log("Status: UNsuccessfull!");
                }
 
             }
