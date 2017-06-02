@@ -112,8 +112,8 @@ if(isset($_POST['mode'])){
 			$status = "error";
 
 			$sql = "DELETE FROM items WHERE itemID = ?";
-			$stmnt->prepare($sql);
-			$res = $stmnt->execute($item);
+			$stmnt = $db->prepare($sql);
+			$res = $stmnt->execute(array($item_id));
 
 			if($res == 1){ // Successfull query
 				$msg .= "<p class='success'>Item has been removed.</p>";

@@ -135,6 +135,8 @@
 							item_id: del_id
 						},
 						cache:false
+					}).done(function(response){
+						// Give feedback
 					});
 				});
 
