@@ -3,7 +3,9 @@
 if (isset($_GET['itemID'])) {
     $currItem = (int)$_GET['itemID'];
 }
-$user_id = $_SESSION['user_id'];
+if(isset($_SESSION['isloggedin'])){
+   $user_id = $_SESSION['user_id'];
+}
 
 // Ask DB what ID owns the current item
 $sql = "SELECT userID FROM items WHERE itemID = '$currItem'";
@@ -18,17 +20,19 @@ foreach ($result as $row)
    }
 
 // See if the
-$sql = "SELECT conversationID FROM conversations WHERE itemID = '$currItem' AND userID = '$user_id'";
-$stmnt = $db->prepare($sql);
-$stmnt->execute(array());
-$result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+if(isset($_SESSION['isloggedin'])){
+   $sql = "SELECT conversationID FROM conversations WHERE itemID = '$currItem' AND userID = '$user_id'";
+   $stmnt = $db->prepare($sql);
+   $stmnt->execute(array());
+   $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-// Put results in var
-foreach ($result as $row)
-   {
-      $oldConv = $row->conversationID;
-   }
 
+   // Put results in var
+   foreach ($result as $row)
+      {
+         $oldConv = $row->conversationID;
+      }
+}
 /*
 if (isset($oldConv)) {
    echo "There is an old conversation!";
