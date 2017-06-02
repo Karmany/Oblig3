@@ -74,9 +74,12 @@
 								<span class="category_label"><?=ucfirst($item->category_name)?></span>
 							</div>
 							<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
+							<?php echo $item->itemID ?>
+							<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item">Delete</button>
 						</div>
 					<?php endforeach; ?>
 					</div>
+					<div id="items_message"></div>
 				</div>
 			</div>
 		</div>
@@ -88,6 +91,7 @@
 					// Get form data and add variable for mode to it
 					var form = $('#new_item_form')[0];
 					var form_data = new FormData(form);
+					form_data.append('mode', 'add_new_item');
 
 					// form_data.append('mode', 'edit_profile_image');
 					$.ajax({
@@ -119,6 +123,21 @@
 						}
 					});
 				});
+
+				$('.delete_item').click(function(){
+					// Get the correct id for the cosen item
+					var del_id = $(this).attr('id');
+					$.ajax({
+						url:"my_items_backend.php",
+						method: "POST",
+						data: {
+							mode: 'delete_item',
+							item_id: del_id
+						},
+						cache:false
+					});
+				});
+
 			});
 		</script>
 	</body>

@@ -74,10 +74,10 @@ function get_images($db, $itemID){
 function get_item($db, $itemID){
 	$query = "
 			SELECT i.name, i.description, i.date, u.firstname, u.lastname, u.email, u.address, u.profileImg, c.name_nice AS county_name
-			FROM items i 
+			FROM items i
 			INNER JOIN users u ON u.userID = i.userID
 			INNER JOIN counties c ON u.countyID = c.countyID
-			
+
 			WHERE i.itemID = ?
 ";
 	$stmnt = $db->prepare ($query);
@@ -120,7 +120,7 @@ function get_items_oneimg($db)
 function get_user_items_oneimg($user_id, $db)
 {
 	$stmnt = $db->prepare("
-	SELECT it.name, it.date, im.imgPath, c.name AS category_name
+	SELECT it.itemID, it.name, it.date, im.imgPath, c.name AS category_name
 		FROM items it
 		LEFT JOIN images im
 		ON it.itemID = im.itemID
