@@ -189,21 +189,13 @@ $query = 'INSERT INTO items (name, description, userID, categoryID) VALUES
 ("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 5),
 
 ("Football jerseys", "10 diffrent football jerseys in multiple colors. Including multiple premier league jerseys", 5, 5),
-
 ("100+ pokemon cards", "Giving away many pokemon cards, both rare and common. Including Charizard, Machamp, Blastoise, Alakazam and Gyarados.", 2, 3),
-
 ("Refridgerator, white", "Refridgerator with a small freezer on top", 4, 4),
-
 ("Microwave", "Well used microwave, includes a plate to use in the microwave and a cover to use inside the microwave.", 3, 4),
-
 ("Headset with microphone", "A headset used occasionaly for skypecalls and not much else. It has a microphone and works completely", 5, 2),
-
-("Miscellaneous clothes", "This includes one pair of jeans, a sweater and multiple t-shirts", 2),
-
+("Miscellaneous clothes", "This includes one pair of jeans, a sweater and multiple t-shirts", 2, 1),
 ("Giving away ps2 games", "Giving away 30+ playstation 2 games. Some titles include: Crash Bandicoot, Castlevaina, Call of Duty, Max Payne and both GTA Vice City and San Andreas.", 5, 2),
-
 ("Boxing bag, with gloves", "A little used boxing bag including a pair of gloves.", 1, 5)
-
 ';
 if ($db->exec($query)===false){
 	die('Query failed(14):' . $db->errorInfo()[2]);
@@ -216,7 +208,19 @@ $query = 'INSERT INTO images(itemID, imgPath) VALUES
 (2, "img/tv28inch.jpg"),
 (3, "img/blue_hoodie.jpg"),
 (5, "img/squash_racket.jpg"),
-(4, "img/corner_couch.jpg")
+(4, "img/corner_couch.jpg"),
+(6, "img/football_kits.jpg"),
+(7, "img/pokemon_cards.jpg"),
+(8, "img/refridgerator.jpeg"),
+(9, "img/microwave.jpg"),
+(10, "img/headset.jpg"),
+(11, "img/tshirts.jpg"),
+(11, "img/jeans.jpg"),
+(11, "img/hoodie.jpeg"),
+(12, "img/ps2_games.jpg"),
+(12, "img/more_ps2_games.jpg"),
+(13, "img/boxing_bag.jpg"),
+(13, "img/boxing_gloves.jpg")
 ';
 if ($db->exec($query)===false){
 	die('Query failed(15):' . $db->errorInfo()[2]);
