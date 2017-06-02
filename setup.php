@@ -148,9 +148,10 @@ if ($db->exec($query)===false){
 $password = password_hash('Password123', PASSWORD_DEFAULT);
 $users_array = array(
 	array("Gunnar", "Grefsen", "gunnar_grefsen@gmail.com","Tulipanvegen 3, 4100 Jørpeland",2, $password),
-	array("Ole", "Kristiansen", "ole_kristiansen@gmail.com","Granåsbakken 3, 2827 Hunndalen",8, $password),
-	array("Bjarne", "Bakken", "bjarne_bakken@gmail.com","Granveien 11, 1430 Ås",12, $password),
-	array("Helene", "Svendsen", "helene_svendsen@gmail.com","Frants Olsens veg 20, 2817 Gjøvik",17, $password)
+	array("Ole", "Kristiansen", "ole_kristiansen@gmail.com","Granåsbakken 3, 2827 Hunndalen",4, $password),
+	array("Bjarne", "Bakken", "bjarne_bakken@gmail.com","Granveien 11, 1430 Ås",6, $password),
+	array("Helene", "Svendsen", "helene_svendsen@gmail.com","Frants Olsens veg 20, 2817 Gjøvik",9, $password),
+	array("Chistoffer", "Horvei", "chistoffer_horvei@gmail.com","Lien 28, 5057 Bergen",19, $password)
 );
 
 // Inserting user data, user_id is automatically added because of AUTO_INCREMENT
@@ -185,7 +186,24 @@ $query = 'INSERT INTO items (name, description, userID, categoryID) VALUES
 
 ("Corner couch", "A corner couch with three seats, where one of them is a long seat", 2,  4),
 
-("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 5)
+("Squash racket", "A used squash racket, includes three balls, two 1dot and one 2dot. The racket is black red and white and has minimal wear.", 4, 5),
+
+("Football jerseys", "10 diffrent football jerseys in multiple colors. Including multiple premier league jerseys", 5, 5),
+
+("100+ pokemon cards", "Giving away many pokemon cards, both rare and common. Including Charizard, Machamp, Blastoise, Alakazam and Gyarados.", 2, 3),
+
+("Refridgerator, white", "Refridgerator with a small freezer on top", 4, 4),
+
+("Microwave", "Well used microwave, includes a plate to use in the microwave and a cover to use inside the microwave.", 3, 4),
+
+("Headset with microphone", "A headset used occasionaly for skypecalls and not much else. It has a microphone and works completely", 5, 2),
+
+("Miscellaneous clothes", "This includes one pair of jeans, a sweater and multiple t-shirts", 2),
+
+("Giving away ps2 games", "Giving away 30+ playstation 2 games. Some titles include: Crash Bandicoot, Castlevaina, Call of Duty, Max Payne and both GTA Vice City and San Andreas.", 5, 2),
+
+("Boxing bag, with gloves", "A little used boxing bag including a pair of gloves.", 1, 5)
+
 ';
 if ($db->exec($query)===false){
 	die('Query failed(14):' . $db->errorInfo()[2]);
