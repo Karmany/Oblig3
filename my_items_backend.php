@@ -53,10 +53,10 @@ if(isset($_POST['mode'])){
 				if($res == 1){ // Successfull query
 					$msg .= "<p class='success'>Your item has been posted.</p>";
 					$status = "success";
-					// Create array for new item to be returned to my_items page, img path is added later
-					$new_item = array("name"=>$name, "category"=>ucfirst($cat), "date"=>date("d-m-Y H:i"));
 					// Get the item_id for the last inserted item
 					$last_id = $db->lastInsertId();
+					// Create array for new item to be returned to my_items page, img path is added later
+					$new_item = array("name"=>$name, "category"=>ucfirst($cat), "date"=>date("d-m-Y H:i"), "itemID"=>$last_id);
 					// echo json_encode(array("status"=>"success", "message"=>$msg));
 				}else { // Error when running query
 					echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));

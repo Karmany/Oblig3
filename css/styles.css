@@ -106,6 +106,9 @@ input:focus, textarea:focus, select:focus{
    width: 100%;
     cursor: text;
 }
+#profile #county:hover {
+    cursor: pointer;
+}
 
 #profile .section_heading {
    font-size: 30px;
@@ -155,6 +158,10 @@ input:focus, textarea:focus, select:focus{
 #my_items #item_name {
    max-width: 60%;
    width: 100%;
+}
+
+#my_items #item_name:hover{
+    cursor: text;
 }
 
 #my_items #item_description {

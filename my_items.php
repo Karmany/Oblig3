@@ -114,21 +114,22 @@
 							$('#mapLat').val('');
 
 							// Show the new item withouth refreshing
-							var content = "<div class='item'><div class='item_text'>";
+							var content = "<div class='item' id='item_id" + response.new_item.itemID + "'><div class='item_text'>";
 							content += "<h3>" + response.new_item.name + "</h3>";
 							content += "<span class='category_date'>Posted: " + response.new_item.date + " </span>";
-							content += "<span class='category_label'>Posted: " + response.new_item.category + " </span></div>";
+							content += "<span class='category_label'>" + response.new_item.category + " </span></div>";
 							content += "<img class='item_img' src='" + response.new_item.img_path + "' alt=Image of '" + response.new_item.name + "'/>";
-							content += '<button type="submit" class="delete_item" id="' . <?=$item->itemID?> . '" name="delete_item" onclick="return confirm(\'Are you sure you want to delete this item?\');">Delete</button>'
+							content += '<button type="submit" class="delete_item" id="' + response.new_item.itemID +  '" name="delete_item" onclick="return confirm(\'Are you sure you want to delete this item?\');">Delete</button>';
 							content += "</div>";
 							$('#items_list').append(content);
 						}
 					});
 				});
-
-				$('.delete_item').click(function(){
+				//$('.delete_item').click(function()
+				$(document).on("click",".delete_item",function(){
 					// Get the correct id for the cosen item
 					var del_id = $(this).attr('id');
+					console.log(del_id);
 					$.ajax({
 						url:"my_items_backend.php",
 						method: "POST",
@@ -140,6 +141,7 @@
 					}).done(function(response){
 						if(response.status == "success"){
 							// Remove item
+                     console.log('in success if');
 							$('#item_id' + del_id).remove();
 						}
 						// Give feedback
