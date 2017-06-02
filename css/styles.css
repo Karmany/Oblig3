@@ -25,17 +25,67 @@ body {
 
 input[type="text"], input[type="email"], input[type="password"], input[type="submit"], textarea, select {
    padding: 5px;
+   border: 1px solid #dadada;
+}
+
+input[type="submit"]{
+   display: block;
+   margin-top: 10px;
+   background: #4f5052;
+   color: #9dd29d;
+   border: none;
+   font-size: 12px;
+}
+
+input:focus, textarea:focus{
+   outline: none !important;
+   /*border: 1px solid;*/
+   border-color: #4f5052;
+ /*box-shadow: 0 0 10px #719ECE;*/
+}
+
+/* ------------ NAVIGATION/MENU --------------------- */
+.navbar {
+   border-radius: none !important;
+}
+
+.navbar-default {
+   background-color: #2A2F36;
+   border: none;
+}
+
+.navbar-default .navbar-nav>li>a {
+   color: #FDFDFD;
+   text-transform: uppercase;
+   font-weight: bold;
+   font-size: 14px;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+   color: #A7D89E;
+}
+
+.navbar-default .navbar-brand {
+   color: #A7D89E;
+   text-transform: uppercase;
+}
+
+.navbar-default .navbar-brand:hover {
+   color: white;
 }
 
 /* ------------ PROFILE PAGE -----------------------*/
 
-#profile #greeting_txt {
-   text-align: center;
-   margin-bottom: 50px;
+#profile input[type="text"], #profile input[type="email"], #profile input[type="password"], #profile textarea {
+   max-width: 75%;
+   width: 100%;
 }
 
 #profile .section_heading {
-   font-size: 20px;
+   font-size: 30px;
+   border-bottom: 1px solid #97cf97;
+   display: inline-block;
+   padding-bottom: 10px;
 }
 
 #profile #profile_section h1 {

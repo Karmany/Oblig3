@@ -40,9 +40,6 @@
 	<body id="profile">
       <div class="container-fluid">
 			<div class="row">
-            <div class="col-sm-12">
-               <h1 id="greeting_txt">Welcome, <span id="greeting_txt_firstname"><?=$firstname?></span> <span id="greeting_txt_lastname"><?=$lastname?></span></h1>
-            </div>
 				<div id="profile_section" class="col-sm-4">
                <h1 class="section_heading">Profile information</h1>
                <div class="edit_name col-sm-12">
