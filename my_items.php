@@ -119,6 +119,7 @@
 							content += "<span class='category_date'>Posted: " + response.new_item.date + " </span>";
 							content += "<span class='category_label'>Posted: " + response.new_item.category + " </span></div>";
 							content += "<img class='item_img' src='" + response.new_item.img_path + "' alt=Image of '" + response.new_item.name + "'/>";
+							content += '<button type="submit" class="delete_item" id="' . <?=$item->itemID?> . '" name="delete_item" onclick="return confirm(\'Are you sure you want to delete this item?\');">Delete</button>'
 							content += "</div>";
 							$('#items_list').append(content);
 						}
