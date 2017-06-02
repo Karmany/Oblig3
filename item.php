@@ -67,20 +67,12 @@
 						<h3>Message</h3>
 					</div>
 					<div class="row">
-						<?php
-						if(isset($_SESSION['isloggedin'])){
-
-						}
-						else {
-							echo '<div class="col-sm-12 interested_wrap"></div><p> You need to be logged in to send a message </p>';
-							echo '<a href="register.php" class="item_button">Register</a> <a href="login.php" class="item_button">Login</a></div>';
-						}
-						?>
+						<?php include 'itemMsg.php'; ?>
 
 					</div>
 
-					
-					
+
+
 
 				</div>
 			</div>
