@@ -73,7 +73,7 @@ function get_images($db, $itemID){
 
 function get_item($db, $itemID){
 	$query = "
-			SELECT i.name, i.description, i.date, u.firstname, u.lastname, u.email, u.address, u.profileImg, c.name_nice AS county_name
+			SELECT i.name, i.userID, i.description, i.date, u.firstname, u.lastname, u.email, u.address, u.profileImg, c.name_nice AS county_name
 			FROM items i
 			INNER JOIN users u ON u.userID = i.userID
 			INNER JOIN counties c ON u.countyID = c.countyID

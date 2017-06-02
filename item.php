@@ -64,7 +64,15 @@
 						</div>
 					</div>
 					<div class="row">
-						<h3 id='StartConvTitle'>Start conversation</h3>
+						<?php
+						if(isset($_SESSION['isloggedin'])){
+						   $cur_id = $_SESSION['user_id'];
+							if ($item->userID != $cur_id) {
+								echo "<h3 id='StartConvTitle'>Start conversation</h3>";
+							}
+						}
+						 ?>
+
 					</div>
 					<div class="row">
 						<?php include 'itemMsg.php'; ?>

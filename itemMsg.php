@@ -44,11 +44,11 @@ if (isset($oldConv)) {
 if(isset($_SESSION['isloggedin'])){ // If user is signed in
    if ($usID == $user_id) { // If user owns the item
       //echo "<p class='error'>This is your item!</p><br>";
-      echo "<script>
+      /*echo "<script>
                $( document ).ready(function() {
                   $( '#StartConvTitle' ).remove();
                });
-            </script>";
+            </script>";*/
    } else if (!isset($oldConv)){ // If user don't own the item
       //echo "Not ur item <br>";
       $convID = 1;
