@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Index</title>
+      <title>Item</title>
       <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,9 +16,6 @@
       session_start();
 		require_once("connect.php");
 		require_once("functions.php");
-
-
-
 	?>
 
 	<body id="index">
@@ -34,7 +31,9 @@
             <h4>Categories</h4>
 
             <?php
+            //Calls a function that runs a query that gets all categories ordered by name
             $categories = get_categories($db);
+            // Go though all categories in result of previous function and make a checkbox for each one
             foreach ($categories as $c){
                echo'
                   <div>
@@ -141,8 +140,9 @@
          </div>
 
 
-         <div id="result" class="col-sm-8">
-         </div>
+         <div class="col-sm-8">
+            <div class="row" id="result"></div>
+         </>
          </div>
 
 
@@ -158,6 +158,9 @@
                });
                return opts;
             }
+            function capitalizeFirstLetter(string) {
+               return string.charAt(0).toUpperCase() + string.slice(1);
+            }
             //Function that triggers when a checkbox is checked or unchecked
             // This function sends a request to the backend file with the options array containing the filter options
             function update_items(opts){
@@ -171,9 +174,13 @@
                   success: function(result){
                      $("#result").html("");
                      for(var i=0; i<result.length; i++){
-                        var content = '<p>' + result[i]['name'] + '</p>'
-                        content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> '
-                        content += '<br/>';
+								var content = '<div class="col-sm-4 one_item"> ';
+								content += '<h3>' + result[i]['name'] + '</h3>';
+								content += '<div class="index_img_wrap"><img class="item_img" src="' + result[i]['imgPath'] + '"></div> ';
+								content += '<p class="category_date index_date">Posted: ' + result[i]['date'] + '</p>';
+								content += '<p class="category_label index_category_label">'+ capitalizeFirstLetter(result[i]['category_name']) +'</p>';
+
+								content += '<hr></div>';
                         $("#result").append(content);
                      }
                   }
@@ -190,13 +197,15 @@
 						data: {mode:'show_all'},
 						success: function(result) {
 							$("#result").html("");
+                     console.log(result);
 							for ( var i = 0; i < result.length; i++) {
-
-								var content = '<p>' + result[i]['name'] + '</p>';
-                        content += '<img class="item_img" src="' + result[i]['imgPath'] + '"> ';
-								content += '';
-
-                        content += '<br/>';
+								var content = '<a href="item.php?itemID='+ result[i]['itemID'] +'" class="col-sm-4 one_item"> ';
+								content += '<h3>' + result[i]['name'] + '</h3>';
+                        content += '<div class="index_img_wrap"><img class="item_img" src="' + result[i]['imgPath'] + '"></div> ';
+								content += '<p class="index_name">By: ' + capitalizeFirstLetter(result[i]['firstname']) + ' ' + capitalizeFirstLetter(result[i]['lastname']) + '</p>';
+								content += '<p class="category_label index_category_label">'+ capitalizeFirstLetter(result[i]['category_name']) +'</p>';
+								content += '<p class="index_date">' + result[i]['date'] + '</p>';
+                        content += '</a>';
 								$("#result").append(content);
 							}
 						}

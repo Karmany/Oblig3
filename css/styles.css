@@ -162,9 +162,73 @@ nav ul form button {
 
 /* --------- INDEX ---------------------- */
 
+#result {
+    margin-top:22px;
+}
+.index_category_label{
+    float: right;
+    margin-top: 20px;
+}
+.index_name {
+    float: left;
+    width: 50%;
+    margin: 7px 0;
+}
+.index_date{
+    float: left;
+}
+
+
+.one_item{
+    margin-bottom: 30px;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+.one_item:hover{
+    text-decoration: none;
+    color: black
+}
+
+#result hr {
+    margin-top: 50px;
+    margin-bottom: -3px;
+    width: 100%;
+    background-color: dimgrey;
+    height: 1px;
+
+}
+
 #result img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+}
+.index_img_wrap{
+    overflow: hidden;
+    height: 260px;
+}
+
+
+
+/*-------------- ITEM----------------- */
+
+.gallery {
+    display: inline-block;
+    margin-top: 20px;
+}
+.one_picture{
+    width: 100%;
+}
+
+.item_profile {
+    text-align: center;
+}
+.item_profile img {
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+.item_profile_name {
+    font-size: 22px;
 }
 
 /* ------------- REGISTER -------------------- */

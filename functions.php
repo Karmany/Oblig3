@@ -58,11 +58,43 @@ function get_categories($db){
 }
 
 
+// Retrives all images for one item
+function get_images($db, $itemID){
+	$query = "SELECT imgPath FROM images WHERE itemID = ?";
+	$stmnt = $db->prepare ($query);
+	if (!$stmnt->execute(array($itemID))){
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+// Retrives all info on a specific item
+
+function get_item($db, $itemID){
+	$query = "
+			SELECT i.name, i.description, i.date, u.firstname, u.lastname, u.email, u.address, u.profileImg, c.name_nice AS county_name
+			FROM items i 
+			INNER JOIN users u ON u.userID = i.userID
+			INNER JOIN counties c ON u.countyID = c.countyID
+			
+			WHERE i.itemID = ?
+";
+	$stmnt = $db->prepare ($query);
+	if (!$stmnt->execute(array($itemID))){
+		die('Query (get_item) failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetch(PDO::FETCH_OBJ);
+}
+
+
+
+
 // Gets Names and first imgPath for all items
 function get_items_oneimg($db)
 {
 	$stmnt = $db->prepare("
-		SELECT it.name, im.imgPath
+		SELECT it.itemID, it.name, it.date, im.imgPath, u.firstname, u.lastname, c.name AS category_name
 		FROM items it
 		LEFT JOIN images im
 		ON it.itemID = im.itemID
@@ -70,7 +102,13 @@ function get_items_oneimg($db)
 			SELECT img.imgPath
 			FROM images img
 			WHERE it.itemID = img.itemID
-			LIMIT 1)"
+			LIMIT 1)
+		INNER JOIN users u
+		ON it.userID = u.userID
+		INNER JOIN categories c
+		ON it.categoryID = c.categoryID
+		ORDER BY it.date DESC
+			"
 		);
 	if (!$stmnt->execute (array())){
 		die('Query failed:' . $db->errorInfo()[2]);

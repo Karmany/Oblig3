@@ -177,7 +177,7 @@ if ($db->exec($query)===false){
 
 //Insert into Items
 $query = 'INSERT INTO items (name, description, userID, categoryID) VALUES
-("The actual Mona Lisa", "Mona Lisa is a half-length portrait of Lisa Gherardini by the Italian Renaissance artist Leonardo da Vinci that has been described as the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world", 1,3),
+("The actual Mona Lisa", "Mona Lisa is a half-length portrait of Lisa Gherardini by the Italian Renaissance artist Leonardo da Vinci that has been described as the best known, the most visited, the most written about, the most sung about, the most parodied work of art in the world", 1, 3),
 
 ("28 inch LCD TV", "A 4 year old TV in good condition.", 3, 2),
 
@@ -197,8 +197,8 @@ $query = 'INSERT INTO images(itemID, imgPath) VALUES
 (1, "img/mona_lisa_bean.jpg"),
 (2, "img/tv28inch.jpg"),
 (3, "img/blue_hoodie.jpg"),
-(4, "img/squash_racket.jpg"),
-(5, "img/corner_couch.jpg")
+(5, "img/squash_racket.jpg"),
+(4, "img/corner_couch.jpg")
 ';
 if ($db->exec($query)===false){
 	die('Query failed(15):' . $db->errorInfo()[2]);

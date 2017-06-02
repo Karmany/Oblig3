@@ -11,6 +11,11 @@ if(isset($_POST['mode'])){
 	switch($_POST['mode']){
 		case 'show_all':
 			$items = get_items_oneimg($db);
+
+			foreach ($items as $r){
+				$r->date = htmlspecialchars(date("d-m-Y H:i", strtotime($r->date)));
+			}
+
 //Puts the results from the statement into JSON
 			$json = json_encode($items, JSON_PRETTY_PRINT);
 //Echos the JSON back to index.php to be displayed there
@@ -22,7 +27,7 @@ if(isset($_POST['mode'])){
 			$qMarks = str_repeat('?,', count($opts) - 1) . '?';
 //Statment with gets the info we want from items aswell as the category it is in(Trenge kansje ikkje dette, men må ha imgPath på et punkt)
 			$statement = $db->prepare("
-SELECT it.name, it.date,  im.imgPath, u.firstname, u.lastname 
+SELECT it.itemID, it.name, it.date,  im.imgPath, u.firstname, u.lastname, ca.name AS category_name
 FROM items it 
 LEFT JOIN images im 
 ON it.itemID = im.itemID 
@@ -39,6 +44,7 @@ INNER JOIN counties co
 ON u.countyID = co.countyID
 WHERE ca.categoryID IN ($qMarks)
 OR co.name IN ($qMarks)
+ORDER BY it.date DESC
 
 
 			
@@ -47,6 +53,10 @@ OR co.name IN ($qMarks)
 			$array_combined = array_merge($opts, $opts);
 			$statement->execute($array_combined);
 			$results = $statement->fetchAll(PDO::FETCH_OBJ);
+			foreach ($results as $r){
+				$r->date = htmlspecialchars(date("d-m-Y H:i", strtotime($r->date)));
+			}
+
 //Puts the results from the statement into JSON
 			$json = json_encode($results, JSON_PRETTY_PRINT);
 //Echos the JSON back to index.php to be displayed there
@@ -55,43 +65,4 @@ OR co.name IN ($qMarks)
 			break;
 	}
 };
-
-
-/*
-SELECT it.name, im.imgPath
-FROM items it
-JOIN images im ON im.itemID = it.itemID
-	AND im.imgPath =(
-	SELECT TOP 1 img.imgPath
-	FROM images img
-	WHERE im.imgPath = img.imgPath
-)
-
-
-SELECT it.name, img.imgPath
-FROM items it
-JOIN (
-  SELECT im.itemID, im.imgPath
-    ROW_NUMBER() OVER (
-      PARTITION BY im.itemID
-      ) AS row_num
-  FROM images im
-  ) img
-  ON img.itemID = it.itemID AND row_num = 1;
-
-SELECT it.name, im.imgPath
-  FROM items it
-  LEFT JOIN images im
-    ON im.itemID = it.itemID
-   AND im.imgPath =
-        ( SELECT TOP 1 imgPath
-            FROM images img
-           WHERE img.itemID = it.itemID
-       )
-
-
-*/
-
-
-
 ?>
