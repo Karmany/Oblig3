@@ -38,6 +38,11 @@ input[type="submit"]{
    font-size: 12px;
 }
 
+input[type="submit"]:hover{
+   color: white;
+   cursor: pointer;
+}
+
 input:focus, textarea:focus, select:focus{
    outline: none !important;
    border-color: #4f5052;
@@ -75,25 +80,25 @@ input:focus, textarea:focus, select:focus{
 
 /* ------------ PROFILE PAGE -----------------------*/
 
-.messageLeft, .messageRight {
+#profile .messageLeft, #profile .messageRight {
    /*background-color: grey;*/
    padding: 10px;
    /*border: 1px solid #A7D89E;*/
 }
 
-.messageLeft {
+#profile .messageLeft {
    border-left: 1px solid #A7D89E;
 }
 
-.messageRight {
+#profile .messageRight {
    border-right: 1px solid #A7D89E;
 }
 
-.mesgFormC {
+#profile .mesgFormC {
    margin-bottom: 30px;
 }
 
-.msg-width {
+#profile .msg-width {
    display: inline-block;
 }
 
@@ -104,10 +109,10 @@ input:focus, textarea:focus, select:focus{
 #profile input[type="text"], #profile input[type="email"], #profile input[type="password"], #profile select, #profile textarea {
    max-width: 75%;
    width: 100%;
-    cursor: text;
+   cursor: text;
 }
 #profile #county:hover {
-    cursor: pointer;
+   cursor: pointer;
 }
 
 #profile .section_heading {
@@ -172,6 +177,10 @@ input:focus, textarea:focus, select:focus{
 
 #my_items label {
    display: block;
+}
+
+#my_items #items_list {
+   margin-left: -15px;
 }
 
 #my_items .item {
@@ -331,32 +340,32 @@ nav ul form button {
 
 
 /*-------------- ITEM----------------- */
-.item_title {
+#item .item_title {
     font-size: 30px;
     border-bottom: solid 1px #a7d89e;
     padding-bottom: 10px;
     display: inline-block;
     width: auto;
 }
-.gallery {
+#item .gallery {
     display: inline-block;
     margin-top: 20px;
 }
-.one_picture{
+#item .one_picture{
     width: 100%;
 }
-.item_img_wrap{
+#item .item_img_wrap{
     position: relative;
     left: -27px;
 }
 
-.item_desc_wrap{
+#item .item_desc_wrap{
     position: relative;
     left: -13px;
 }
 
 
-.item_profile {
+#item .item_profile {
     text-align: center;
     background-color: #2a2f36;
     color: #fdfdfd;
@@ -364,22 +373,32 @@ nav ul form button {
     margin-top: 5px;
     border-radius: 2px;
 }
-.item_profile p a {
+#item .item_profile p a {
     color:  #A7D89E;
 }
 
-.item_profile img {
+#item .item_profile img {
     width: 80%;
     margin-bottom: 20px;
 }
 
-.item_profile_name {
+#item .item_profile_name {
     font-size: 22px;
 }
 
+#item #firstMessage {
+   cursor: text;
+}
 
+#item #startConvOuter {
+   margin-left: -15px;
+}
 
-.item_button {
+#item #firstMessage {
+   min-width: 50%;
+}
+
+#item .item_button {
     display: inline-block;
     text-decoration: none;
     background-color: #2a2f36;
@@ -389,7 +408,7 @@ nav ul form button {
     border-radius: 2px;
 
 }
-.item_button:hover {
+#item .item_button:hover {
     text-decoration: none;
     color: #fdfdfd;
 }
@@ -401,6 +420,11 @@ nav ul form button {
    width: 100%;
    margin-right: 10px;
    margin-bottom: 10px;
+   cursor: text;
+}
+
+#register #registerForm select:hover, #register #registerForm input[type="submit"]:hover {
+   cursor: pointer;
 }
 
 /* ------------- LOGIN -------------------- */
@@ -420,6 +444,11 @@ nav ul form button {
    margin-left: 15%;
    margin-right: 15%;
    margin-bottom: 10px;
+   cursor: text;
+}
+
+#login #loginFormWrapper input[type="submit"] {
+   cursor: pointer;
 }
 
 #login #login_message {

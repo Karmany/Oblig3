@@ -21,7 +21,7 @@
 	$itemID = $_GET['itemID'];
 	?>
 
-	<body id="index">
+	<body id="item">
 		<?php include 'header.php'; ?>
 		<?php $item = get_item($db, $itemID); ?>
 		<div class="container-fluid">
