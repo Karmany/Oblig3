@@ -43,7 +43,12 @@ if (isset($oldConv)) {
 
 if(isset($_SESSION['isloggedin'])){ // If user is signed in
    if ($usID == $user_id) { // If user owns the item
-      echo "<p class='error'>This is your item!</p><br>";
+      //echo "<p class='error'>This is your item!</p><br>";
+      echo "<script>
+               $( document ).ready(function() {
+                  $( '#StartConvTitle' ).remove();
+               });
+            </script>";
    } else if (!isset($oldConv)){ // If user don't own the item
       //echo "Not ur item <br>";
       $convID = 1;
@@ -60,7 +65,7 @@ if(isset($_SESSION['isloggedin'])){ // If user is signed in
                </div>
             </div>";
    } else {
-      echo "Cannot start new conversation, one already exists. See your profile.";
+      echo "<p>Cannot start new conversation, one already exists. See your profile.</p><br> <a href='profile.php' class='item_button'>Profile</a>";
    }
 } else { // Not signed in
    echo '<div class="col-sm-12 interested_wrap"></div><p> You need to be logged in to send a message </p>';
@@ -90,6 +95,7 @@ if(isset($_SESSION['isloggedin'])){ // If user is signed in
                $('#newConvStatus').html(response.message);
                if(response.status == 'success'){
                   $( "#startConvInner" ).remove();
+                  $( "<br><br><a href='profile.php' class='item_button'>Profile</a>" ).insertAfter( "#newConvStatus" );
                   console.log('Status: successfull!');
                }
             }

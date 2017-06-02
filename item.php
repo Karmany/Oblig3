@@ -64,7 +64,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<h3>Message</h3>
+						<h3 id='StartConvTitle'>Start conversation</h3>
 					</div>
 					<div class="row">
 						<?php include 'itemMsg.php'; ?>
