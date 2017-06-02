@@ -111,8 +111,8 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
 
 .category_label {
    display: inline-block;
-   background: black;
-   color: white;
+   background: #2A2F36;
+   color: #A7D89E;
    border-radius: 4px;
    padding: 2px 6px;
    font-size: 12px;
