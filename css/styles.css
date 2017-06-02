@@ -80,9 +80,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
    margin-left: 120px;
 }
 
-/*#my_items span {
-}*/
-
 #my_items .item_text .category_date {
    display: block;
    margin-bottom: 5px;
@@ -169,4 +166,28 @@ nav ul form button {
    width: 100%;
    margin-right: 10px;
    margin-bottom: 10px;
+}
+
+/* ------------- LOGIN -------------------- */
+#login #loginFormWrapper {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+      justify-content: center;
+   -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+#login #loginFormWrapper input {
+   width: 70%;
+   margin-left: 15%;
+   margin-right: 15%;
+   margin-bottom: 10px;
+}
+
+#login #login_message {
+   text-align: center;
+   margin-top: 10px;
 }
