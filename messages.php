@@ -1,13 +1,14 @@
 <?php
 // ID of current user
 $user_id = $_SESSION['user_id'];
+$mesg = '';
 
 $sql = "SELECT conversationID, itemOwnerID, userID FROM conversations WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
 $stmnt = $db->prepare($sql);
 $stmnt->execute(array());
 $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-
+// SELECT * FROM messages ORDER BY messageID DESC LIMIT 1
 
 foreach ($result as $row)
    {
@@ -69,17 +70,46 @@ foreach ($result as $row)
             echo "</pre>";
          }
       echo "<div class='col-sm-12'>
-               <div class='sendMessage'>
-                  <form class='sendMessageForm' action='sendMessage.php' method='POST'>
-                     <input type='hidden' name='convID' value='" . $convID ."'>
-                     <input type='text' name='message' placeholder='Write message...'>
-                     <input type='submit' name='submit' value='Send Message'>
+               <div class='sendMessageOuter'>
+               <div id='newmessage_status'></div>
+                  <form onsubmit='javascript: return false;' class='sendMessageForm' method='POST'>
+                     <input type='hidden' name='convID' value='" . $convID ."' id='convID'>
+                     <input type='text' name='message' placeholder='Write message...' id='newmessage'>
+                     <input type='submit' name='submit' value='Send Message' class='sendMessage'>
                   </form>
                </div>
             </div>";
    }
 echo "</pre>";
-
-
-
  ?>
+
+<?php
+/*action='sendMessage.php'*/ ?>
+
+
+<script type="text/javascript">
+   $(function(){
+      // ---- UPDATE MESSAGES -----
+      $('.sendMessage').click(function(){
+         // Send data from form to backend
+         console.log("Submit pressed!");
+         $.ajax({
+            url: 'messages_backend.php',
+            method: 'POST',
+            data: {
+               convID: $('#convID').val(),
+               newmessage: $('#newmessage').val()
+            }
+         }).done(function(response){
+               // Make new message
+               console.log("Done runs!");
+               $('#newmessage_status').html(response.message);
+               if(response.status == 'success'){
+                  console.log("Status: successfull!");
+               }
+
+            }
+         );
+      });
+   });
+</script>
