@@ -75,7 +75,7 @@
 								</div>
 								<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
 								<?php echo $item->itemID ?>
-								<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item">Delete</button>
+								<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
 							</div>
 						<?php endforeach; ?>
 						<div id="items_message"></div>
