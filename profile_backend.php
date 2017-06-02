@@ -4,6 +4,7 @@ session_start();
 require_once("connect.php");
 require_once("functions.php");
 $user_id = $_SESSION['user_id'];
+// $user = get_user($user_id, $db);
 
 // Execute code based on the mode sent via POST
 if(isset($_POST['mode'])){
@@ -12,8 +13,8 @@ if(isset($_POST['mode'])){
 		// ----- EDIT NAME: ---------
 		// --------------------------
 		case 'edit_name':
-			$firstname = $_POST['firstname'];
-			$lastname = $_POST['lastname'];
+			$firstname = get_post('firstname');
+			$lastname = get_post('lastname');
 			if(empty($firstname) || empty($lastname)){
 				echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Name cannot be empty</p>"));
 			}
@@ -39,7 +40,7 @@ if(isset($_POST['mode'])){
 		// ----- EDIT EMAIl: --------
 		// --------------------------
 		case 'edit_email':
-			$email = $_POST['email'];
+			$email = get_post('email');
 			if(empty($email)){
 				echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Email cannot be empty</p>"));
 			}
@@ -116,9 +117,9 @@ if(isset($_POST['mode'])){
 		// ----- EDIT PASSWORD: -----
 		// --------------------------
 		case 'edit_password':
-			$current_password = $_POST['current_password'];
-			$new_password = $_POST['new_password'];
-			$confirm_password = $_POST['confirm_password'];
+			$current_password = get_post('current_password');
+			$new_password = get_post('new_password');
+			$confirm_password = get_post('confirm_password');
 			$msg = "";
 
 			if(empty($current_password) || empty($new_password) || empty($confirm_password)){ // At least one empty input field
@@ -156,6 +157,43 @@ if(isset($_POST['mode'])){
 			}else{
 				echo json_encode(array("status"=>"error", "message"=>$msg));
 			}
+			break;
+		// --------------------------
+		// ----- EDIT ADDRESS: -----
+		// --------------------------
+		case 'edit_address':
+			$address = get_post('address');
+			$county = $_POST['county'];
+			$county_id = "";
+			$msg = "";
+
+			if(empty($address)){
+				$msg = "<p class='error'>Address cannot be empty</p>";
+			}
+
+			$counties = get_counties($db); // Get all counties, see functions.php
+			foreach ($counties as $c) {
+				if($county == $c->name_nice){
+					$county_id = $c->countyID;
+				}
+			}
+
+			// Update address and county
+			if($msg == ""){
+				$sql = "UPDATE users SET address = ?, countyID = ? WHERE userID = ?";
+				$stmnt = $db->prepare($sql);
+				$res = $stmnt->execute(array($address, $county_id, $user_id));
+
+				if($res == 1){ // Successfull query
+					echo json_encode(array("status"=>"success", "message"=>"<p class='success'>Your changes have been successfully updated</p>", "address"=>$address, "county"=>$county));
+				}else{ // Error when running query
+					echo json_encode(array("status"=>"error", "message"=>$stmnt->errorInfo()[2]));
+				}
+			}else{ // Address did not pass validation, send feedback
+				echo json_encode(array("status"=>"error", "message"=>$msg));
+			}
+
+			// echo json_encode($address);
 			break;
 	}
 }

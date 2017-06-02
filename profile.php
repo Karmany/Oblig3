@@ -23,18 +23,27 @@
 	$firstname = $_SESSION['firstname'];
 	$lastname = $_SESSION['lastname'];
    $profile_img = $_SESSION['profile_img'];
-   $msg = "";
+   $user = get_user($user_id, $db);
+   $counties = get_counties($db);
+   $current_county = "";
 
-   //print_r($_SESSION);
+   // Get the correct county name
+   foreach ($counties as $county) {
+      if($user->countyID == $county->countyID){
+         $current_county = $county->name_nice;
+      }
+   }
+
+   $msg = "";
 	?>
 
 	<body id="profile">
       <div class="container-fluid">
 			<div class="row">
             <div class="col-sm-12">
-               <h1>Welcome, <span id="greeting_txt_firstname"><?=$firstname?></span> <span id="greeting_txt_lastname"><?=$lastname?></span></h1>
+               <h1 id="greeting_txt">Welcome, <span id="greeting_txt_firstname"><?=$firstname?></span> <span id="greeting_txt_lastname"><?=$lastname?></span></h1>
             </div>
-				<div class="col-sm-4">
+				<div id="profile_section" class="col-sm-4">
                <h1>Profile</h1>
                <div class="edit_name col-sm-12">
                   <h2>Name:</h2>
@@ -85,8 +94,30 @@
                   </form>
                </div>
 
+               <div class="edit_address col-sm-12">
+                  <h2>Address:</h2>
+                  <form onsubmit="javascript:return false;">
+                     <div id="edit_address_message"></div>
+                     <input type="text" name="address" value="" placeholder="<?=$user->address?>" id="address"><br/>
+   						<label for="lastname">County</label>
+                     <select id="county" name="county">
+                        <?php
+                        // Make sure the selected option is the original category
+                        echo "<option selected='$current_county'>$current_county</option>";
+                        foreach ($counties as $county) {
+                           if($county->name_nice != $current_county){
+										echo "<option>" . $county->name_nice . "</option>";
+									}
+                        }
+                        ?>
+                     </select>
+                     <input type="submit" value="Confirm" id="confirm_address_change">
+                  </form>
+               </div>
+
             </div>
-            <div class="col-sm-8">
+
+            <div id="messages_section"class="col-sm-8">
                <div class="row">
                   <div class="col-sm-12">
                      <h1>Messages</h1>
@@ -95,8 +126,8 @@
                      include 'messages.php';
                   ?>
                </div>
-
             </div>
+
 			</div>
 		</div>
 		<script>
@@ -192,6 +223,29 @@
                      $("#current_password").val(''),
                      $("#new_password").val(''),
                      $("#confirm_password").val('')
+                  }
+               });
+            })
+
+            // ---- CHANGE PASSWORD ----
+            $('#confirm_address_change').click(function(){
+               // Send data from form to backend
+               $.ajax({
+                  url: 'profile_backend.php',
+                  method: 'POST',
+                  data: {
+                     address: $("#address").val(),
+                     county: $("#county").val(),
+                     mode: 'edit_address'
+                  }
+               }).done(function(response){
+                  // Give feedback
+                  $('#edit_address_message').html(response.message);
+                  // Clear input fields
+                  if(response.status == 'success'){
+                     $("#address").val(''),
+                     $("#address").attr('placeholder', response.address),
+                     $("#county option[value='" + response.county +"']").attr("selected", "selected");
                   }
                });
             })

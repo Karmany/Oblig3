@@ -39,8 +39,6 @@ if (!isset($_SESSION['isloggedin'])) {
 
 				// Redirect user to index.php
 				$status = "success";
-				// header("Location: index.php");
-				// die();
 			}
 			// Bad password
 			else {

@@ -22,9 +22,17 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sub
 
 /* ------------ PROFILE PAGE -----------------------*/
 
-#profile h1 {
+#profile #greeting_txt {
    text-align: center;
    margin-bottom: 50px;
+}
+
+#profile #profile_section h1 {
+   margin-left: 15px;
+}
+
+#profile #messages_section h1 {
+   margin-right: -15px;
 }
 
 #profile img {

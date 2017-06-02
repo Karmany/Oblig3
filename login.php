@@ -28,7 +28,7 @@
 						<form class="loginForm" action="login.php" onsubmit="javascript:return false;">
 							<input id="email" type="email" name="email" placeholder="Email" value="<?php if(isset($_POST['email'])){ echo $_POST['email']; } ?>">
 							<input id="password" type="password" name="password" placeholder="Password">
-							<input id="login" type="submit" name="login" value="Log in">
+							<input id="login_submit" type="submit" name="login" value="Log in">
 						</form>
 					</div>
 					<div id="login_message"></div>
@@ -38,7 +38,7 @@
 		<script>
 			// When page has loaded, run function
 			$(function(){
-				$('#login').click(function(){
+				$('#login_submit').click(function(){
 					$.ajax({
 						url: 'login_backend.php',
 						method: 'POST',

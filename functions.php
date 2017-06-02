@@ -37,6 +37,16 @@ function validate_password($password) {
 	return $msg;
 }
 
+// Get data for a spesific user
+function get_user($user_id, $db){
+	$query = "SELECT * FROM users WHERE userID = ?";
+	$stmnt = $db->prepare ($query);
+	if (!$stmnt->execute(array($user_id))){
+		die('Query failed:' . $db->errorInfo()[2]);
+	}
+	return $result = $stmnt->fetch(PDO::FETCH_OBJ);
+}
+
 // Retrieves the categories stored in the database
 function get_categories($db){
 	$query = "SELECT categoryID, name FROM categories ORDER BY name";
