@@ -28,7 +28,7 @@
 			<div class="row">
 
 				<div class='col-sm-8 col-sm-offset-2 list-group gallery'>
-					<h2><?php echo $item->name ?></h2>
+					<h2 class="item_title"><?php echo $item->name ?></h2>
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="row item_img_wrap">

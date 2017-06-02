@@ -290,7 +290,13 @@ nav ul form button {
 
 
 /*-------------- ITEM----------------- */
-
+.item_title {
+    font-size: 30px;
+    border-bottom: solid 1px #a7d89e;
+    padding-bottom: 10px;
+    display: inline-block;
+    width: auto;
+}
 .gallery {
     display: inline-block;
     margin-top: 20px;
@@ -314,6 +320,7 @@ nav ul form button {
     background-color: #2a2f36;
     color: #fdfdfd;
     padding: 20px 10px;
+    margin-top: 5px;
     border-radius: 2px;
 }
 .item_profile p a {
@@ -337,7 +344,13 @@ nav ul form button {
     background-color: #2a2f36;
     color: #a7d89e;
     padding: 10px;
+    font-size: 14px;
+    border-radius: 2px;
 
+}
+.item_button:hover {
+    text-decoration: none;
+    color: #fdfdfd;
 }
 
 /* ------------- REGISTER -------------------- */
