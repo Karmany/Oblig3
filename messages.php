@@ -3,9 +3,9 @@
 $user_id = $_SESSION['user_id'];
 $mesg = '';
 
-$sql = "SELECT conversationID, itemOwnerID, userID, itemID FROM conversations WHERE itemOwnerID = '$user_id' OR userID = '$user_id'";
+$sql = "SELECT conversationID, itemOwnerID, userID, itemID FROM conversations WHERE itemOwnerID = ? OR userID = ?";
 $stmnt = $db->prepare($sql);
-$stmnt->execute(array());
+$stmnt->execute(array($user_id, $user_id));
 $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
 // SELECT * FROM messages ORDER BY messageID DESC LIMIT 1
@@ -17,9 +17,9 @@ foreach ($result as $row)
       $usID = $row->userID;
       $itemID = $row->itemID;
 
-      $sql = "SELECT name FROM items WHERE itemID = '$itemID'";
+      $sql = "SELECT name FROM items WHERE itemID = ?";
       $stmnt = $db->prepare($sql);
-      $stmnt->execute(array());
+      $stmnt->execute(array($itemID));
       $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
       foreach ($result as $row)
@@ -27,16 +27,16 @@ foreach ($result as $row)
             $itemName = $row->name;
          }
 
-      $sql = "SELECT messageID, writerID, message FROM messages WHERE conversationID = '$convID'";
+      $sql = "SELECT messageID, writerID, message FROM messages WHERE conversationID = ?";
       $stmnt = $db->prepare($sql);
-      $stmnt->execute(array());
+      $stmnt->execute(array($convID));
       $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
       // Find who owns the item, and write who the message is TO/FROM
       if ($user_id == $itOwID) { // The message is frome someone else
-         $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = '$usID'";
+         $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = ?";
          $stmnt = $db->prepare($sql);
-         $stmnt->execute(array());
+         $stmnt->execute(array($usID));
          $result1 = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
          foreach ($result1 as $row)
@@ -49,9 +49,9 @@ foreach ($result as $row)
       }
       else
       { //If the message is from you
-         $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = '$itOwID'";
+         $sql = "SELECT userID, firstname, lastname FROM users WHERE userID = ?";
          $stmnt = $db->prepare($sql);
-         $stmnt->execute(array());
+         $stmnt->execute(array($itOwID));
          $result2 = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
          foreach ($result2 as $row)

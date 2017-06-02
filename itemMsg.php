@@ -8,9 +8,9 @@ if(isset($_SESSION['isloggedin'])){
 }
 
 // Ask DB what ID owns the current item
-$sql = "SELECT userID FROM items WHERE itemID = '$currItem'";
+$sql = "SELECT userID FROM items WHERE itemID = ?";
 $stmnt = $db->prepare($sql);
-$stmnt->execute(array());
+$stmnt->execute(array($currItem));
 $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
 // Put owner of item in a variable
@@ -21,9 +21,9 @@ foreach ($result as $row)
 
 // See if the
 if(isset($_SESSION['isloggedin'])){
-   $sql = "SELECT conversationID FROM conversations WHERE itemID = '$currItem' AND userID = '$user_id'";
+   $sql = "SELECT conversationID FROM conversations WHERE itemID = ? AND userID = ?";
    $stmnt = $db->prepare($sql);
-   $stmnt->execute(array());
+   $stmnt->execute(array($currItem, $user_id));
    $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
 
