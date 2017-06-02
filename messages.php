@@ -69,13 +69,13 @@ foreach ($result as $row)
             }
             echo "</pre>";
          }
-      echo "<div class='col-sm-12' id='formNo1'>
+      echo "<div class='col-sm-12' id='formNo1" . $convID . "'>
                <div class='sendMessageOuter'>
                <div id='newmessage_status'></div>
                   <form onsubmit='javascript: return false;' class='sendMessageForm' method='POST'>
                      <input type='hidden' name='convID' value='" . $convID ."' id='convID'>
                      <input type='text' name='message' placeholder='Write message...' id='newmessage'>
-                     <input type='submit' name='submit' value='Send Message' class='sendMessage'>
+                     <input type='submit' name='submit' value='Send Message' id='sendMessage1'>
                   </form>
                </div>
             </div>";
@@ -90,7 +90,7 @@ echo "</pre>";
 <script type="text/javascript">
    $(function(){
       // ---- UPDATE MESSAGES -----
-      $('.sendMessage').click(function(){
+      $('#sendMessage1').click(function(){
          // Send data from form to backend
          console.log("Submit pressed!");
          $.ajax({
@@ -103,7 +103,7 @@ echo "</pre>";
          }).done(function(response){
                // Make new message
                console.log("Done runs!");
-               $( response.bubbleMessage ).insertBefore( $( "#formNo1" ) );
+               $( response.bubbleMessage ).insertBefore( $( "#formNo<?php $convID ?>" ) );
                $('#newmessage_status').html(response.message);
 
                if(response.status == 'success'){
