@@ -45,7 +45,7 @@ foreach ($result as $row)
                $fName = $row->firstname;
                $lName = $row->lastname;
             }
-         echo "<hr><br><br> <h2>Message from: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
+         echo "<hr><br><br> <h2 class='msgToFrom'>Message from: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
       }
       else
       { //If the message is from you
@@ -60,7 +60,7 @@ foreach ($result as $row)
                $fName = $row->firstname;
                $lName = $row->lastname;
             }
-         echo "<hr><br><br> <h2>Message to: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
+         echo "<hr><br><br> <h2 class='msgToFrom'>Message to: " . $fName . " " . "$lName" . " about " . $itemName . "</h2>";
       }
 
 
@@ -69,7 +69,7 @@ foreach ($result as $row)
       // Print conversations
       foreach ($result as $row)
          {
-            echo "<pre>";
+            //echo "<pre>";
             if ($row->writerID == $user_id) {
                echo "<div class='col-sm-12 text-right'><p class='messageRight'>" . $row->message . " <b>:You</b> " . "</p></div><br>";
                //echo "Written by you: " . $row->message . "\n";
@@ -77,9 +77,9 @@ foreach ($result as $row)
                echo "<div class='col-sm-12'><p class='messageLeft'>" . "<b>" . $fName . ": </b>" . $row->message . "</p></div><br>";
                //echo "Written by someone else: " . $row->message . "\n";
             }
-            echo "</pre>";
+            //echo "</pre>";
          }
-      echo "<div class='col-sm-12' id='formNo" . $convID . "'>
+      echo "<div class='col-sm-12 mesgFormC' id='formNo" . $convID . "'>
                <div class='sendMessageOuter'>
                <div id='newmessage_status" . $convID . "'></div>
                   <form onsubmit='javascript: return false;' class='sendMessageForm' method='POST'>

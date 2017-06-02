@@ -75,6 +75,32 @@ input:focus, textarea:focus, select:focus{
 
 /* ------------ PROFILE PAGE -----------------------*/
 
+.messageLeft, .messageRight {
+   /*background-color: grey;*/
+   padding: 10px;
+   /*border: 1px solid #A7D89E;*/
+}
+
+.messageLeft {
+   border-left: 1px solid #A7D89E;
+}
+
+.messageRight {
+   border-right: 1px solid #A7D89E;
+}
+
+.mesgFormC {
+   margin-bottom: 30px;
+}
+
+.msg-width {
+   display: inline-block;
+}
+
+#messages_section {
+   border-left: 1px solid #A7D89E;
+}
+
 #profile input[type="text"], #profile input[type="email"], #profile input[type="password"], #profile select, #profile textarea {
    max-width: 75%;
    width: 100%;
@@ -220,11 +246,6 @@ nav ul form button {
     color: #222;
     font-size: 16px;
     cursor: pointer;
-}
-
-/* --------- PROFILE ---------------------- */
-.msg-width {
-   display: inline-block;
 }
 
 
