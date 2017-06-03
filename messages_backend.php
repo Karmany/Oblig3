@@ -9,8 +9,6 @@ $user_id = $_SESSION['user_id'];
 $convID = $_POST['convID'];
 $newmessage = $_POST['newmessage'];
 
-
-
 if(empty($newmessage)){ //If message empty, return errormessage
    echo json_encode(array("status"=>"error", "message"=>"<p class='error'>Message cannot be empty</p>"));
    return;
@@ -46,5 +44,4 @@ if(empty($newmessage)){ //If message empty, return errormessage
          return;
       }
    }
-//break;
  ?>

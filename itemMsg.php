@@ -33,24 +33,10 @@ if(isset($_SESSION['isloggedin'])){
          $oldConv = $row->conversationID;
       }
 }
-/*
-if (isset($oldConv)) {
-   echo "There is an old conversation!";
-} else {
-   echo "No old conversation.";
-}
-*/
 
 if(isset($_SESSION['isloggedin'])){ // If user is signed in
    if ($usID == $user_id) { // If user owns the item
-      //echo "<p class='error'>This is your item!</p><br>";
-      /*echo "<script>
-               $( document ).ready(function() {
-                  $( '#StartConvTitle' ).remove();
-               });
-            </script>";*/
    } else if (!isset($oldConv)){ // If user don't own the item
-      //echo "Not ur item <br>";
       $convID = 1;
       echo "<div class='col-sm-12' id='startConvOuter'>
                <div id='newConvStatus'></div>

@@ -70,25 +70,20 @@ function get_images($db, $itemID){
 
 
 // Retrives all info on a specific item
-
 function get_item($db, $itemID){
 	$query = "
-			SELECT i.name, i.userID, i.description, i.date, u.firstname, u.lastname, u.email, u.address, u.profileImg, c.name_nice AS county_name
-			FROM items i
-			INNER JOIN users u ON u.userID = i.userID
-			INNER JOIN counties c ON u.countyID = c.countyID
+		SELECT i.name, i.userID, i.description, i.date, u.firstname, u.lastname, u.email, u.address, u.profileImg, c.name_nice AS county_name
+		FROM items i
+		INNER JOIN users u ON u.userID = i.userID
+		INNER JOIN counties c ON u.countyID = c.countyID
 
-			WHERE i.itemID = ?
-";
+		WHERE i.itemID = ?";
 	$stmnt = $db->prepare ($query);
 	if (!$stmnt->execute(array($itemID))){
 		die('Query (get_item) failed:' . $db->errorInfo()[2]);
 	}
 	return $result = $stmnt->fetch(PDO::FETCH_OBJ);
 }
-
-
-
 
 // Gets Names and first imgPath for all items
 function get_items_oneimg($db)
@@ -107,8 +102,7 @@ function get_items_oneimg($db)
 		ON it.userID = u.userID
 		INNER JOIN categories c
 		ON it.categoryID = c.categoryID
-		ORDER BY it.date DESC
-			"
+		ORDER BY it.date DESC"
 		);
 	if (!$stmnt->execute (array())){
 		die('Query failed:' . $db->errorInfo()[2]);
@@ -145,13 +139,12 @@ function get_user_items_oneimg($user_id, $db)
 function get_counties($db)
 {
 	$stmnt = $db->prepare('
-            SELECT countyID, name, name_nice
-            FROM counties
-            ORDER BY name
-            ');
+      SELECT countyID, name, name_nice
+      FROM counties
+      ORDER BY name
+      ');
 	if (!$stmnt->execute(array())) {
 		die('Query failed:' . $db->errorInfo()[2]);
 	}
 	return $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
-
 }

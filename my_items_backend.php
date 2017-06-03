@@ -30,8 +30,6 @@ if(isset($_POST['mode'])){
 			if($msg == ""){
 				$name = get_post('item_name');
 				$desc = get_post('item_description');
-				// $long = get_post('mapLong');
-				// $lat = get_post('mapLat');
 				$cat = strtolower(get_post('category'));
 				$category_id = "";
 

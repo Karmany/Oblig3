@@ -36,8 +36,6 @@ if (!isset($_SESSION['isloggedin'])) {
 				$_SESSION['email'] = $email;
 				$_SESSION['profile_img'] = $user->profileImg;
 				$_SESSION['isloggedin'] = true;
-
-				// Redirect user to index.php
 				$status = "success";
 			}
 			// Bad password

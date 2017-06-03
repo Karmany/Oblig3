@@ -33,7 +33,6 @@
 						<div class="col-sm-8">
 							<div class="row item_img_wrap">
 							<?php
-
 							$images = get_images($db, $itemID);
 							foreach ($images as $i) {
 								echo '
@@ -63,6 +62,7 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="row">
 						<?php
 						if(isset($_SESSION['isloggedin'])){
@@ -72,15 +72,11 @@
 							}
 						}
 						 ?>
-
 					</div>
+
 					<div class="row">
 						<?php include 'itemMsg.php'; ?>
-
 					</div>
-
-
-
 
 				</div>
 			</div>

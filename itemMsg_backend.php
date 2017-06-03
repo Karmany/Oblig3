@@ -38,8 +38,6 @@ if(empty($firstMessage)){ //If message empty, return errormessage
       $stmnt = $db->prepare($sql);
       $res = $stmnt->execute(array($userID, $lastConversation, $firstMessage));
 
-
-
       // Successfull query
       if(isset($res)){
          // Update session parameters

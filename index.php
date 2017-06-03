@@ -172,13 +172,6 @@
 							var opts_county = get_item_filter_options();
 							update_items({options:opts_county, category:0, county:1});
                   }
-/*
-                  else if ($('input:checkbox[class="filter_categories"]:checked').length>0) {
-							console.log(5);
-							var opts_category = get_item_filter_options();
-                     update_items({options:opts_category, category:1, county:0});
-			         }
-			         */
                }
                //If the click was unchecking the last checked box, and no boxes are checked show all the content
                else{

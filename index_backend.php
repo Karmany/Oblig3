@@ -5,8 +5,6 @@ require_once("connect.php");
 require_once("functions.php");
 
 //gets the checked boxes from index.php
-
-
 if(isset($_POST['mode'])){
 	switch($_POST['mode']){
 		case 'show_all':
@@ -16,9 +14,9 @@ if(isset($_POST['mode'])){
 				$r->date = htmlspecialchars(date("d-m-Y H:i", strtotime($r->date)));
 			}
 
-//Puts the results from the statement into JSON
+			//Puts the results from the statement into JSON
 			$json = json_encode($items, JSON_PRETTY_PRINT);
-//Echos the JSON back to index.php to be displayed there
+			//Echos the JSON back to index.php to be displayed there
 			echo($json);
 		break;
 		case 'update_items';
@@ -26,26 +24,23 @@ if(isset($_POST['mode'])){
 			$is_category_active = $_POST['category_active'];
 			$is_county_active = $_POST['county_active'];
 			$qMarks = str_repeat('?,', count($opts) - 1) . '?';
-//Statment with gets the info we want for showing items, including name og category, the image path and the user who posted it
+			//Statment with gets the info we want for showing items, including name og category, the image path and the user who posted it
 			$most_of_statement = "
-SELECT it.itemID, it.name, it.date,  im.imgPath, u.firstname, u.lastname, ca.name AS category_name
-FROM items it 
-LEFT JOIN images im 
-ON it.itemID = im.itemID 
-AND im.imgPath = ( 
-SELECT img.imgPath 
-FROM images img 
-WHERE it.itemID = img.itemID LIMIT 1) 
+				SELECT it.itemID, it.name, it.date,  im.imgPath, u.firstname, u.lastname, ca.name AS category_name
+				FROM items it
+				LEFT JOIN images im
+				ON it.itemID = im.itemID
+				AND im.imgPath = (
+				SELECT img.imgPath
+				FROM images img
+				WHERE it.itemID = img.itemID LIMIT 1)
 
-INNER JOIN categories ca 
-ON it.categoryID = ca.categoryID
-INNER JOIN users u 
-ON it.userID = u.userID
-INNER JOIN counties co
-ON u.countyID = co.countyID ";
-
-
-
+				INNER JOIN categories ca
+				ON it.categoryID = ca.categoryID
+				INNER JOIN users u
+				ON it.userID = u.userID
+				INNER JOIN counties co
+				ON u.countyID = co.countyID ";
 
 			if($is_category_active == 1 && $is_county_active == 1) {
 				$where = 'WHERE ca.categoryID IN ('.$qMarks.') AND co.name IN ('.$qMarks.') ';
@@ -62,34 +57,7 @@ ON u.countyID = co.countyID ";
 
 			$order_by = "ORDER BY it.date DESC";
 
-
 			$query = $most_of_statement . $where . $order_by;
-
-/*
-			$statement = $db->prepare("
-SELECT it.itemID, it.name, it.date,  im.imgPath, u.firstname, u.lastname, ca.name AS category_name
-FROM items it 
-LEFT JOIN images im 
-ON it.itemID = im.itemID 
-AND im.imgPath = ( 
-SELECT img.imgPath 
-FROM images img 
-WHERE it.itemID = img.itemID LIMIT 1) 
-
-INNER JOIN categories ca 
-ON it.categoryID = ca.categoryID
-INNER JOIN users u 
-ON it.userID = u.userID
-INNER JOIN counties co
-ON u.countyID = co.countyID
-WHERE ca.categoryID IN ($qMarks)
-OR co.name IN ($qMarks)
-ORDER BY it.date DESC
-
-
-			
-			");
-*/
 
 			$statement = $db->prepare($query);
 			if($is_category_active == 1 && $is_county_active == 1) {
@@ -105,9 +73,9 @@ ORDER BY it.date DESC
 				$r->date = htmlspecialchars(date("d-m-Y H:i", strtotime($r->date)));
 			}
 
-//Puts the results from the statement into JSON
+			//Puts the results from the statement into JSON
 			$json = json_encode($results);
-//Echos the JSON back to index.php to be displayed there
+			//Echos the JSON back to index.php to be displayed there
 			echo($json);
 
 			break;

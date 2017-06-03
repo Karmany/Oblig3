@@ -71,7 +71,6 @@
                </div>
 
                <div class="edit_email col-sm-12">
-                  <!-- <h2>Email:</h2> -->
                   <form onsubmit="javascript:return false;">
                      <div id="edit_email_message"></div>
                      <label for="email">Your email address:</label>
@@ -81,7 +80,6 @@
                </div>
 
                <div class="edit_password col-sm-12">
-                  <!-- <h2>Password:</h2> -->
                   <form onsubmit="javascript:return false;">
                      <div id="edit_password_message"></div>
                      <label for="current_password">Your current password:</label>
@@ -95,7 +93,6 @@
                </div>
 
                <div class="edit_address col-sm-12">
-                  <!-- <h2>Address:</h2> -->
                   <form onsubmit="javascript:return false;">
                      <div id="edit_address_message"></div>
                      <input type="text" name="address" value="" placeholder="<?=$user->address?>" id="address"><br/>

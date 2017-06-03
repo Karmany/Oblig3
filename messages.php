@@ -8,8 +8,6 @@ $stmnt = $db->prepare($sql);
 $stmnt->execute(array($user_id, $user_id));
 $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-// SELECT * FROM messages ORDER BY messageID DESC LIMIT 1
-
 foreach ($result as $row)
    {
       $convID = $row->conversationID;
@@ -63,21 +61,14 @@ foreach ($result as $row)
          echo "<hr><br><br> <h2 class='msgToFrom'>Message to: " . $fName . " " . "$lName" . " about " . "<a href='item.php?itemID=" . $itemID . "'>$itemName</a></h2>";
       }
 
-
-
-
       // Print conversations
       foreach ($result as $row)
          {
-            //echo "<pre>";
             if ($row->writerID == $user_id) {
                echo "<div class='col-sm-12 text-right'><p class='messageRight'>" . $row->message . " <b>:You</b> " . "</p></div><br>";
-               //echo "Written by you: " . $row->message . "\n";
             } else {
                echo "<div class='col-sm-12'><p class='messageLeft'>" . "<b>" . $fName . ": </b>" . $row->message . "</p></div><br>";
-               //echo "Written by someone else: " . $row->message . "\n";
             }
-            //echo "</pre>";
          }
       echo "<div class='col-sm-12 mesgFormC' id='formNo" . $convID . "'>
                <div class='sendMessageOuter'>
@@ -120,6 +111,4 @@ foreach ($result as $row)
       </script>";
    }
 echo "</pre>";
- ?>
-
-<?php /*OLD NO-AJAX SOULUTION FOR FORM   ----     action='sendMessage.php'*/ ?>
+?>

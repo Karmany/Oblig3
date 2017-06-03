@@ -4,7 +4,6 @@ session_start();
 require_once("connect.php");
 require_once("functions.php");
 $user_id = $_SESSION['user_id'];
-// $user = get_user($user_id, $db);
 
 // Execute code based on the mode sent via POST
 if(isset($_POST['mode'])){
