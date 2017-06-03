@@ -61,7 +61,6 @@ if ($db->exec($query)===false){
 	die('Query failed(5):' . $db->errorInfo()[2]);
 }
 
-
 // Create table for items
 $query = 'CREATE TABLE IF NOT EXISTS items (
 	itemID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -76,7 +75,6 @@ if ($db->exec($query)===false){
 	die('Query failed(6):' . $db->errorInfo()[2]);
 }
 
-
 // Create table for conversations
 $query = 'CREATE TABLE IF NOT EXISTS conversations (
 	conversationID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -90,7 +88,6 @@ $query = 'CREATE TABLE IF NOT EXISTS conversations (
 if ($db->exec($query)===false){
 	die('Query failed(8):' . $db->errorInfo()[2]);
 }
-
 
 // Create table for messages
 $query = 'CREATE TABLE IF NOT EXISTS messages (
@@ -142,7 +139,6 @@ if ($db->exec($query)===false){
 	die('Query failed(12):' . $db->errorInfo()[2]);
 }
 
-
 // Array containing user data (firstname and lastname)
 // All of these users have the same password: 'Password123'
 $password = password_hash('Password123', PASSWORD_DEFAULT);
@@ -174,7 +170,6 @@ $query = 'INSERT INTO categories(name) VALUES
 if ($db->exec($query)===false){
 	die('Query failed(13):' . $db->errorInfo()[2]);
 }
-
 
 //Insert into Items
 $query = 'INSERT INTO items (name, description, userID, categoryID) VALUES
