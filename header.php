@@ -17,7 +17,8 @@
          <ul class="nav navbar-nav">
             <li><a href="index.php">Home</a></li>
 
-            <?php
+
+            <?php // Change menu if the user is logged in
                if (isset($_SESSION['user_id'])) {
                   echo "<li><a href='my_items.php'>My Items</a></li>";
                   echo "<li><a href='profile.php'>Profile</a></li>";
