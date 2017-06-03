@@ -37,7 +37,7 @@
             foreach ($categories as $c){
                echo'
                   <div class="filter_wrap">
-                     <input type="checkbox" id="'. $c->categoryID .'">
+                     <input type="checkbox" class="filter_categories" id="'. $c->categoryID .'">
                      <label for="'. $c->categoryID .'" class="filter_text">'. ucfirst($c->name) .'</label>
                   </div>
                ';
@@ -53,7 +53,7 @@
             foreach ($counties as $c) {
 					echo '
             <div class="filter_wrap">
-               <input type="checkbox" id="' . $c->name . '">
+               <input type="checkbox" class="filter_counties" id="' . $c->name . '">
                <label for="' . $c->name . '" class="filter_text">' . $c->name_nice . '</label>
             </div>
             ';
@@ -86,17 +86,20 @@
             }
             //Function that triggers when a checkbox is checked or unchecked
             // This function sends a request to the backend file with the options array containing the filter options
-            function update_items(opts){
+            function update_items(context){
                $.ajax({
                   method: "POST",
                   url: "index_backend.php",
                   dataType : 'json',
                   cache: false,
-                  data: {filterOpts: opts,
+                  data: {filterOpts: context.options,
+                         category_active: context.category,
+                         county_active: context.county,
                         mode: 'update_items'},
                   success: function(result){
                   	// Delete the current conent in #result, which is the items
                   	$("#result").html("");
+							console.log(result);
                   	// Add new content in #result that fit the filter options
                      for(var i=0; i<result.length; i++){
                      	//Make a variable with html to display item
@@ -125,7 +128,7 @@
 						data: {mode:'show_all'},
 						success: function(result) {
 							$("#result").html("");
-                     console.log(result);
+                     //console.log(result);
                      // Go through each item and show them on the page.
 							for ( var i = 0; i < result.length; i++) {
 								var content = '<a href="item.php?itemID='+ result[i]['itemID'] +'" class="col-sm-4 one_item"> ';
@@ -142,15 +145,46 @@
             }
             //Script that reacts on click on any checkbox and runs one of the two functions to show data.
             var $checkboxes = $("input:checkbox");
+
+
             $checkboxes.on('click',function(){
+
             	//If any is checked get filter options and run the update items function
 					if( $('input[type=checkbox]:checked').length>0){
-						var opts = get_item_filter_options();
-						update_items(opts);
+						console.log(1);
+						if( $('input:checkbox[class="filter_categories"]:checked').length>0) {
+							console.log(2);
+                        if( $('input:checkbox[class="filter_counties"]:checked').length>0){
+									console.log(3);
+                           var opts_both = get_item_filter_options();
+									update_items({options:opts_both, category:1, county:1});
+
+                        }
+                        else{
+									console.log(5);
+									var opts_category = get_item_filter_options();
+									update_items({options:opts_category, category:1, county:0});
+                        }
+						}
+
+						else if( $('input:checkbox[class="filter_counties"]:checked').length>0){
+							console.log(4);
+							var opts_county = get_item_filter_options();
+							update_items({options:opts_county, category:0, county:1});
+                  }
+/*
+                  else if ($('input:checkbox[class="filter_categories"]:checked').length>0) {
+							console.log(5);
+							var opts_category = get_item_filter_options();
+                     update_items({options:opts_category, category:1, county:0});
+			         }
+			         */
                }
                //If the click was unchecking the last checked box, and no boxes are checked show all the content
-               else
+               else{
 						show_all()
+               }
+
             });
             //Show all content on first load
             $(document).ready(show_all());

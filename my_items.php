@@ -75,7 +75,7 @@
 								</div>
 								<img class="item_img" src="<?=$item->imgPath?>" alt="Image of <?=$item->name?>">
 								
-								<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+								<button type="submit" class="delete_item" id="<?=$item->itemID?>" name="delete_item" ">Delete</button>
 
 							</div>
 						<?php endforeach; ?>
@@ -119,7 +119,7 @@
 							content += "<span class='category_date'>Posted: " + response.new_item.date + " </span>";
 							content += "<span class='category_label'>" + response.new_item.category + " </span></div>";
 							content += "<img class='item_img' src='" + response.new_item.img_path + "' alt=Image of '" + response.new_item.name + "'/>";
-							content += '<button type="submit" class="delete_item" id="' + response.new_item.itemID +  '" name="delete_item" onclick="return confirm(\'Are you sure you want to delete this item?\');">Delete</button>';
+							content += '<button type="submit" class="delete_item" id="' + response.new_item.itemID +  '" name="delete_item" ">Delete</button>';
 							content += "</div>";
 							$('#items_list').append(content);
 						}
@@ -128,6 +128,7 @@
 				//$('.delete_item').click(function()
 				$(document).on("click",".delete_item",function(){
 					// Get the correct id for the cosen item
+					if (!confirm('Are you sure?')) return false;
 					var del_id = $(this).attr('id');
 					console.log(del_id);
 					$.ajax({

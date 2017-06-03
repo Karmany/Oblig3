@@ -46,5 +46,5 @@ if(empty($newmessage)){ //If message empty, return errormessage
          return;
       }
    }
-break;
+//break;
  ?>
