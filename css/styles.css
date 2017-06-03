@@ -49,9 +49,6 @@ input:focus, textarea:focus, select:focus{
 }
 
 /* ------------ NAVIGATION/MENU --------------------- */
-.navbar {
-   border-radius: none !important:
-}
 
 .navbar-default {
    background-color: #2A2F36;
